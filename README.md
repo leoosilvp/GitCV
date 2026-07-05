@@ -1,12 +1,12 @@
 <div align="center">
 
-<a href="https://cv-hub-jet.vercel.app/">
-  <img src="./src/assets/svg/logo-dark.svg" width="300px" />
+<a href="https://gitcv-app.vercel.app/">
+  <img src="./src/assets/svg/logo.svg" width="300px" />
 </a>
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-cv--hub.vercel.app-0A66C2?style=for-the-badge)](https://cv-hub-jet.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-cv--hub.vercel.app-0A66C2?style=for-the-badge)](https://gitcv-app.vercel.app/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.5.0-black?style=for-the-badge)]()
 [![Status](https://img.shields.io/badge/Status-Active%20Development-success?style=for-the-badge)]()

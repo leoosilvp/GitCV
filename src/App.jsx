@@ -1,7 +1,7 @@
 import './css/index.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
-import Contribute from './pages/Contribute';
+import Home from './routes/Home';
+import Contribute from './routes/Contribute';
 
 function App() {
   return (

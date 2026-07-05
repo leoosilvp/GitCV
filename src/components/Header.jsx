@@ -33,14 +33,13 @@ function Header({ path, user }) {
             <img src="https://avatars.githubusercontent.com/u/182553526?v=4" />
           </Link>
         )}
-
       </section>
 
       <nav>
         <ul>
           <NavLink to='/home'><Home size={16} /> Home</NavLink>
           <NavLink to='/contribute'><Coffee size={16} /> Contribute</NavLink>
-          <NavLink to='https://github.com/leoosilvp/CVHub' target='_blank'><Github size={16} /> GitHub</NavLink>
+          <NavLink to='https://github.com/leoosilvp/GitCV' target='_blank'><Github size={16} /> GitHub</NavLink>
           <NavLink to='/resume'><FileText size={16} />My resume</NavLink>
         </ul>
       </nav>

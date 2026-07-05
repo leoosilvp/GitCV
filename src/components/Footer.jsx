@@ -17,7 +17,7 @@ const Footer = () => {
             </section>
 
             <section className='footer-credits'>
-                <p>CVHub&copy; | 2026 - All rights reserved. <a href="https://github.com/leoosilvp">"leoosilvp"</a></p>
+                <p>GitCV&copy; 2026 - All rights reserved. <a href="https://github.com/leoosilvp">"leoosilvp"</a></p>
             </section>
         </footer>
     )

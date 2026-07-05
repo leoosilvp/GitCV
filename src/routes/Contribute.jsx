@@ -19,12 +19,12 @@ const Contribute = () => {
         <main className='contribute-main'>
             <Header path={'Contribute'} />
             <section className='contribute-content'>
-                <h1>Contribution to CVHub</h1>
-                <p>CVHub is an independent project built with a strong focus on performance, usability, and professional presentation. Financial support helps ensure continuous development, new features, and the long-term sustainability of the platform.</p>
+                <h1>Contribution to GitCV</h1>
+                <p>GitCV is an independent project built with a strong focus on performance, usability, and professional presentation. Financial support helps ensure continuous development, new features, and the long-term sustainability of the platform.</p>
 
                 <h2>Why contribute?</h2>
                 <hr />
-                <p>Unlike traditional resume platforms, CVHub does not rely on intrusive advertising or the exploitation of user data. Instead, it is built around transparency and a developer-first approach, transforming GitHub profiles into professional resumes and enabling meaningful profile comparisons. Community support plays a key role in maintaining the platform’s quality, reliability, and continuous innovation.</p>
+                <p>Unlike traditional resume platforms, GitCV does not rely on intrusive advertising or the exploitation of user data. Instead, it is built around transparency and a developer-first approach, transforming GitHub profiles into professional resumes and enabling meaningful profile comparisons. Community support plays a key role in maintaining the platform’s quality, reliability, and continuous innovation.</p>
 
                 <h2>How are the resources used?</h2>
                 <hr />
@@ -61,7 +61,7 @@ const Contribute = () => {
                         <p>After payment, there is no need to send proof of payment. Your contribution is already part of the ongoing support for the project.</p>
                         <div>
                             <span>Account holder</span>
-                            <p>Leonardo Da Silva Pinto - BTG Bank</p>
+                            <p>Leonardo Silva - BTG Bank</p>
                         </div>
                     </section>
                 </section>
@@ -69,7 +69,7 @@ const Contribute = () => {
                 <hr />
 
                 <section className="contribute-footer">
-                    <p>Thank you for your interest in supporting Snakr. Every contribution is used responsibly and with a focus on the project's progress.</p>
+                    <p>Thank you for your interest in supporting GitCV. Every contribution is used responsibly and with a focus on the project's progress.</p>
                 </section>
 
             </section>

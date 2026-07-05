@@ -10,15 +10,14 @@
 }
 
 :root {
-  --primary-color: #00101f;
   --light-color: #f5f5f5;
   --black: #000;
   --dark-color: #151515;
   --gray-color: #969696;
-  --color-line: #5d5d5d41;
-  --border: 4px;
+  --color-line: #101010;
   --transition: all 0.2s ease;
 }
+
 
 body {
   display: flex;
@@ -42,7 +41,6 @@ body::-webkit-scrollbar-thumb {
 
 
 /* HEADER */
-
 .header-main {
   position: fixed;
   top: 0;
@@ -174,12 +172,7 @@ body::-webkit-scrollbar-thumb {
 
 
 
-
-
-
-
 /* Footer */
-
 .footer-main {
   margin-top: 50px;
   display: flex;
