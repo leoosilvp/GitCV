@@ -1,9 +1,19 @@
 import '../css/login.css'
 import logo from '../assets/svg/logo1-dark.svg'
 import { Checkmark, LogoGithub } from '@carbon/icons-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useUser } from '../hooks/useUser'
 
 const Login = () => {
+
+    const { user } = useUser()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user) navigate('/home', { replace: true })
+    }, [user, navigate])
+
     return (
         <main className="login-main">
             <section className='login-wrapper'>
@@ -19,7 +29,7 @@ const Login = () => {
                     <p><Checkmark size={16} />Secure authentication</p>
                 </div>
                 <span>Powered by GitHub OAuth</span>
-                <button><LogoGithub size={20} />Continue With GitHub</button>
+                <button onClick={() => window.location.href = 'https://api-gitcv-app.vercel.app/api/auth/github'}><LogoGithub size={20} />Continue With GitHub</button>
                 <hr />
                 <footer>
                     <Link>Terms of Service</Link>
