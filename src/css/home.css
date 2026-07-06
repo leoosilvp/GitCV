@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
+    height: 100%;
     align-items: center;
 }
 
@@ -9,8 +10,8 @@
     margin-top: 100px;
     display: flex;
     flex-direction: column;
-    width: 1200px;
-    max-width: 95%;
+    width: 97%;
+    max-width: 1500px;
 }
 
 .home-welcome {
@@ -19,7 +20,7 @@
     justify-content: center;
 }
 
-.home-welcome h1{
+.home-welcome h1 {
     font-size: 3.5rem;
     font-weight: 300;
 }

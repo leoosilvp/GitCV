@@ -39,7 +39,7 @@ function Header({ path }) {
         <ul>
           <NavLink to='/home'><Home className='icon' size={17} /> Home</NavLink>
           <NavLink to='/contribute'><Cafe className='icon' size={17} /> Contribute</NavLink>
-          <NavLink to='https://github.com/leoosilvp/GitCV' target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
+          <NavLink to={`https://github.com/${user?.username}`} target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
           <NavLink to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={17} />My resume</NavLink>
         </ul>
       </nav>
