@@ -54,7 +54,7 @@ body::-webkit-scrollbar-thumb {
   padding-bottom: 0;
   height: fit-content;
   background: #080808;
-  border-bottom: 1.5px solid var(--color-line);
+  border-bottom: 1.5px solid var(--hover-2);
   gap: 10px;
   transition: var(--transition);
 }
@@ -68,6 +68,7 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: default;
 }
 
 .header-content-left img {
@@ -75,50 +76,40 @@ body::-webkit-scrollbar-thumb {
   width: 30px;
 }
 
-.header-content-left span {
+.header-content-left div {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.header-content-left span p {
+.header-content-left div p {
   font-size: 1.5rem;
   color: #2f2f2f;
 }
 
-.header-content-left span h2 {
-  font-size: 1rem;
+.header-content-left div h2 {
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
 .header-content-right {
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-.header-content-right h1 {
-  font-size: 0.90rem;
-  font-weight: 400;
-  color: var(--gray-color);
-  transition: var(--transition);
-}
-
-.header-content-right h1:hover {
-  color: var(--light-color);
+  gap: 10px;
 }
 
 .header-content-right img {
   display: flex;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--dark-color);
+  width: 33px;
+  height: 33px;
+  border: 1px solid #393939;
   border-radius: 50%;
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .header-content-right img:hover {
-  border-color: var(--light-color);
+  border-color: var(--gray-color-3);
 }
 
 .header-main nav ul {
@@ -128,10 +119,10 @@ body::-webkit-scrollbar-thumb {
 .header-main nav a {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  padding: 10px 10px 10px 10px;
+  font-size: 0.9rem;
+  padding: 11px 12px;
   border-bottom: 1.5px solid transparent;
-  color: var(--gray-color);
+  color: var(--gray-color-1);
   transition: var(--transition);
   gap: 7px;
 }
@@ -140,9 +131,17 @@ body::-webkit-scrollbar-thumb {
   color: var(--light-color);
 }
 
+.header-main nav a:hover .icon {
+  color: var(--gray-color-1);
+}
+
 .header-main nav a.active {
-  color: var(--light-color);
   border-color: var(--light-color);
+}
+
+.header-main nav a .icon {
+  color: var(--gray-color-3);
+  transition: var(--transition);
 }
 
 .header-main-scrolled {

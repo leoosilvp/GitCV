@@ -2,8 +2,11 @@ import icon from '../assets/svg/icon.svg'
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Cafe, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
+import { useUser } from '../hooks/useUser';
 
-function Header({ path, user }) {
+function Header({ path }) {
+
+  const { user } = useUser()
 
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -17,30 +20,27 @@ function Header({ path, user }) {
     <header className={`header-main ${isScrolled ? 'header-main-scrolled' : ''}`}>
       <section className='header-content'>
         <article className='header-content-left'>
-          <Link>
+          <Link to='/'>
             <img src={icon} />
           </Link>
 
-          <span>
+          <div>
             <p>/</p>
             <h2>{path}</h2>
-          </span>
+          </div>
         </article>
 
-        {user && (
-          <Link to={`https://github.com/${user}`} className='header-content-right'>
-            <h1>{user}</h1>
-            <img src="https://avatars.githubusercontent.com/u/182553526?v=4" />
-          </Link>
-        )}
+        <div className='header-content-right'>
+          <img src={user?.avatar} />
+        </div>
       </section>
 
       <nav>
         <ul>
-          <NavLink to='/home'><Home size={16} /> Home</NavLink>
-          <NavLink to='/contribute'><Cafe size={16} /> Contribute</NavLink>
-          <NavLink to='https://github.com/leoosilvp/GitCV' target='_blank'><LogoGithub size={16} /> GitHub</NavLink>
-          <NavLink to='/resume'><IbmKnowledgeCatalogPremium size={16} />My resume</NavLink>
+          <NavLink to='/home'><Home className='icon' size={17} /> Home</NavLink>
+          <NavLink to='/contribute'><Cafe className='icon' size={17} /> Contribute</NavLink>
+          <NavLink to='https://github.com/leoosilvp/GitCV' target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
+          <NavLink to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={17} />My resume</NavLink>
         </ul>
       </nav>
     </header>
