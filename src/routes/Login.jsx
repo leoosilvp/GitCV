@@ -1,9 +1,8 @@
 import '../css/login.css'
-import { Checkmark, LogoGithub } from '@carbon/icons-react'
+import { Checkmark, ChevronLeft, LogoGithub } from '@carbon/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useUser } from '../hooks/useUser'
-import logo from '../assets/svg/logo-dark.svg'
 import gitcvGithub from '../assets/img/gitcv-github.png'
 
 const Login = () => {
@@ -18,7 +17,7 @@ const Login = () => {
     return (
         <main className="login-main">
             <header className='login-header'>
-                <img draggable={false} src={logo} />
+                <Link to=''><ChevronLeft size={16} />Back</Link>
             </header>
             <section className='login-wrapper'>
                 <img draggable={false} src={gitcvGithub} />
