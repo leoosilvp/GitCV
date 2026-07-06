@@ -1,9 +1,10 @@
 import '../css/login.css'
-import logo from '../assets/svg/logo1-dark.svg'
 import { Checkmark, LogoGithub } from '@carbon/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useUser } from '../hooks/useUser'
+import logo from '../assets/svg/logo-dark.svg'
+import gitcvGithub from '../assets/img/gitcv-github.png'
 
 const Login = () => {
 
@@ -16,10 +17,11 @@ const Login = () => {
 
     return (
         <main className="login-main">
+            <header className='login-header'>
+                <img draggable={false} src={logo} />
+            </header>
             <section className='login-wrapper'>
-                <header>
-                    <img src={logo} />
-                </header>
+                <img draggable={false} src={gitcvGithub} />
                 <h1>Build your developer resume</h1>
                 <p>Transform your GitHub profile into a professional resume in minutes.</p>
                 <div>
@@ -29,7 +31,10 @@ const Login = () => {
                     <p><Checkmark size={16} />Secure authentication</p>
                 </div>
                 <span>Powered by GitHub OAuth</span>
-                <button onClick={() => window.location.href = 'https://api-gitcv-app.vercel.app/api/auth/github'}><LogoGithub size={20} />Continue With GitHub</button>
+                <button onClick={() => window.location.href = 'https://api-gitcv-app.vercel.app/api/auth/github'}>
+                    <LogoGithub size={21} />
+                    Continue With GitHub
+                </button>
                 <hr />
                 <footer>
                     <Link>Terms of Service</Link>

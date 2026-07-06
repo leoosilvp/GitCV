@@ -12,6 +12,20 @@
     color: var(--black);
 }
 
+.login-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100vw;
+    padding: 10px 20px;
+}
+
+.login-header img {
+    display: flex;
+    width: 80px;
+}
+
 .login-wrapper {
     display: flex;
     flex-direction: column;
@@ -21,9 +35,10 @@
     background: var(--light-color);
 }
 
-.login-wrapper header img {
+.login-wrapper img {
+    margin: 15px auto 10px;
     display: flex;
-    width: 80px;
+    width: 130px;
 }
 
 .login-wrapper h1 {
@@ -51,7 +66,7 @@
 
 .login-wrapper span {
     margin-top: 25px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 300;
     color: #969696;
 }
@@ -62,8 +77,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 35px;
-    background: #1a7ced;
+    height: 37px;
+    background: #000;
     align-items: center;
     font-size: 0.9rem;
     color: var(--light-color);
@@ -74,7 +89,7 @@
 }
 
 .login-wrapper button:hover {
-    background: #000;
+    background: #969696;
 }
 
 .login-wrapper hr {
@@ -90,8 +105,8 @@
 }
 
 .login-wrapper footer a {
-    font-size: 0.65rem;
-    font-weight: 300;
+    font-size: 0.62rem;
+    font-weight: 400;
     color: #a3a3a3;
     cursor: default;
 }
