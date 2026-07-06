@@ -53,9 +53,7 @@ const Contribute = () => {
 
                     <section className='contribute-pix-content'>
                         <p>PIX key</p>
-                        <code>
-                            00020126580014br.gov.bcb.pix013662634705-bd28-4c02-83d0-538823828c845204000053039865802BR5923Leonardo da Silva Pinto6002NA62070503***6304EC92
-                        </code>
+                        <code>{pixKey}</code>
                         <button onClick={copyPix}>{copied ? ('Copied!') : 'Copy PIX key'}</button>
 
                         <p>After payment, there is no need to send proof of payment. Your contribution is already part of the ongoing support for the project.</p>

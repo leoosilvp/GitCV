@@ -9,33 +9,34 @@
     display: flex;
     flex-direction: column;
     width: 95%;
-    max-width: 1200px;
+    max-width: 1500px;
     padding: 30px 0;
-    min-height: 1000px;
 }
 
 .contribute-content h1 {
-    font-size: 1.8rem;
-    font-weight: 300;
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 .contribute-content h2 {
     margin-top: 30px;
-    font-size: 1.3rem;
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .contribute-content hr {
-    margin: 15px 0 5px;
+    margin: 10px 0 5px;
     border: none;
-    border-bottom: 1px solid var(--dark-color);
+    border-bottom: 1px solid var(--hover-2);
 }
 
 .contribute-content p {
     margin-top: 10px;
-    font-size: 1rem;
-    font-weight: 200;
-    color: var(--gray-color);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    color: #c4c4c4;
 }
 
 .contribute-cards {
@@ -48,23 +49,21 @@
     display: flex;
     flex-direction: column;
     padding: 15px;
-    border: 1px solid var(--dark-color);
-    border-radius: 10px;
+    border: 1px solid var(--hover-2);
     background: #080808;
 }
 
 .contribute-card h3 {
-    font-size: 1rem;
-    font-weight: 200;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .contribute-via-pix {
     margin: 20px 0;
     display: flex;
     align-items: center;
-    padding: 25px;
-    border: 1px solid var(--dark-color);
-    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--hover-2);
     background: #080808;
     gap: 50px;
 }
@@ -72,7 +71,7 @@
 .contribute-via-pix img {
     display: flex;
     width: 300px;
-    border-radius: 7px;
+    filter: invert(1);
 }
 
 .contribute-pix-content {
@@ -83,13 +82,13 @@
 
 .contribute-pix-content code {
     display: flex;
-    width: 350px;
+    width: 370px;
     overflow: auto;
     white-space: nowrap;
     padding: 10px;
-    background: var(--dark-color);
-    border-radius: 7px;
+    background: #101010;
     font-size: 0.9rem;
+    color: var(--gray-color-1);
 }
 
 .contribute-pix-content code::-webkit-scrollbar {
@@ -97,30 +96,34 @@
 }
 
 .contribute-pix-content p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     max-width: 500px;
+    color: #adadad;
+}
+
+.contribute-pix-content p:first-child {
+    color: var(--gray-color-1);
+    font-weight: 500;
 }
 
 .contribute-pix-content span {
     display: flex;
     margin: 10px 0 -7px;
-    color: #c9c9c9;
+    font-size: 0.9rem;
+    color: var(--gray-color-1);
 }
 
 .contribute-pix-content button {
     width: fit-content;
-    font-family: "Pixelify Sans";
     align-items: center;
     justify-content: center;
-    width: 120px;
+    width: 130px;
     padding: 6px;
-    border-radius: 5px;
     background: transparent;
     border: 1px solid #212121;
     color: var(--light-color);
     cursor: pointer;
-    transition: var(--transition-2s);
-    gap: 10px;
+    transition: var(--transition);
 }
 
 .contribute-pix-content button:hover {
@@ -134,7 +137,7 @@
 }
 
 .contribute-footer p {
-    font-size: 0.9rem;
-    font-weight: 200;
-    color: #696969;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gray-color-4);
 }
