@@ -17,10 +17,241 @@
 .home-welcome {
     margin-top: 30px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
 .home-welcome h1 {
-    font-size: 3.5rem;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.home-welcome p {
+    margin-top: 2px;
+    font-size: 1rem;
     font-weight: 300;
+    color: var(--gray-color-1);
+}
+
+
+/* Contribution Panel */
+.contributionPanel-main {
+    font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+    margin-top: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    color: #f4f4f4;
+    gap: 15px;
+}
+
+.contributionPanel-scrollArea {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.contributionPanel-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: fit-content;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
+.contributionPanel-grid[data-loading="true"] {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.contributionPanel-monthRow {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 13.2px;
+    margin-left: 57px;
+    cursor: default;
+}
+
+.contributionPanel-monthLabel {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2px;
+    color: var(--gray-color-3);
+}
+
+.contributionPanel-body {
+    display: flex;
+    gap: 6px;
+}
+
+.contributionPanel-weekdayColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 20px;
+}
+
+.contributionPanel-weekdayLabel {
+    height: 11px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    line-height: 11px;
+    color: var(--gray-color-3);
+    cursor: default;
+}
+
+.contributionPanel-weeksColumn {
+    display: flex;
+    gap: 3px;
+}
+
+.contributionPanel-week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.contributionPanel-day {
+    position: relative;
+    width: 11px;
+    height: 11px;
+    border-radius: 0;
+    background-color: #151515;
+    cursor: pointer;
+    transition: box-shadow 0.1s ease;
+}
+
+.contributionPanel-day:hover {
+    box-shadow: inset 0 0 0 0.5px #f4f4f4;
+    z-index: 20;
+}
+
+.contributionPanel-day[data-level="0"] {
+    background-color: #151515;
+}
+
+.contributionPanel-day[data-level="1"] {
+    background-color: #033a15;
+}
+
+.contributionPanel-day[data-level="2"] {
+    background-color: #196c2e;
+}
+
+.contributionPanel-day[data-level="3"] {
+    background-color: #2da043;
+}
+
+.contributionPanel-day[data-level="4"] {
+    background-color: #56d364;
+}
+
+.contributionPanel-day[data-level="future"] {
+    background-color: transparent;
+    cursor: default;
+}
+
+.contributionPanel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+    width: 100%;
+}
+
+.contributionPanel-legendLabel {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--gray-color-3);
+    cursor: default;
+}
+
+.contributionPanel-legend {
+    display: flex;
+    gap: 3px;
+}
+
+.contributionPanel-legendSwatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 0;
+}
+
+.contributionPanel-legendSwatch[data-level="0"] {
+    background-color: #151515;
+}
+
+.contributionPanel-legendSwatch[data-level="1"] {
+    background-color: #0f3d1f;
+}
+
+.contributionPanel-legendSwatch[data-level="2"] {
+    background-color: #1a6b34;
+}
+
+.contributionPanel-legendSwatch[data-level="3"] {
+    background-color: #27a349;
+}
+
+.contributionPanel-legendSwatch[data-level="4"] {
+    background-color: #42e070;
+}
+
+.contributionPanel-tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 12px;
+    background: #1f1f1f;
+    border: 1px solid #2c2c2c;
+    font-size: 11px;
+    color: #f4f4f4;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    z-index: 30;
+}
+
+.contributionPanel-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1f1f1f;
+}
+
+.contributionPanel-day:hover .contributionPanel-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.contributionPanel-tooltip strong {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+}
+
+.contributionPanel-tooltip span {
+    font-size: 12px;
+    color: #a8a8a8;
+}
+
+.contributionPanel-error {
+    padding: 24px 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: #ff5c5c;
+    text-align: center;
 }
