@@ -17,15 +17,31 @@ const Home = () => {
 
     const { totalCount } = useGithubContributions(username)
 
+    function getTimeOfDay() {
+        const hour = new Date().getHours();
+
+        if (hour >= 5 && hour < 12) {
+            return "Morning";
+        }
+
+        if (hour >= 12 && hour < 18) {
+            return "Afternoon";
+        }
+
+        return "Evening";
+    }
+
     return (
         <main className='home-main'>
             <Header path={'Home'} />
             <div className="home-content">
                 <section className='home-welcome'>
-                    <h1>Good Evening, {FirstName()}!</h1>
+                    <h1>Good {getTimeOfDay()}, {FirstName()}!</h1>
                     <p>You've made {totalCount.toLocaleString("en-US")} contributions this year.</p>
                     <ContributionPanel />
                 </section>
+
+                
             </div>
             <Footer />
         </main>
