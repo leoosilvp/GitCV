@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Cafe, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
 import { useUser } from '../hooks/useUser';
 
-function Header({ path }) {
+function Header({ path, subPath }) {
 
   const { user } = useUser()
 
@@ -27,6 +27,12 @@ function Header({ path }) {
           <div>
             <p>/</p>
             <h2>{path}</h2>
+
+            {subPath &&
+              <>
+                <p>/</p>
+                <h2>{subPath}</h2>
+              </>}
           </div>
         </article>
 
