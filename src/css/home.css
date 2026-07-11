@@ -10,6 +10,7 @@
     margin-top: 100px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 95%;
     max-width: 1500px;
 }
@@ -157,14 +158,33 @@
 .contributionPanel-footer {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
+}
+
+.contributionPanel-footer a {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.2px;
+    color: var(--gray-color-3);
+    gap: 5px;
+    transition: var(--transition);
+}
+
+.contributionPanel-footer a:hover {
+    color: var(--gray-color-1);
+}
+
+.contributionPanel-content {
+    display: flex;
+    align-items: center;
     gap: 8px;
-    width: 100%;
 }
 
 .contributionPanel-legendLabel {
     font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
+    font-size: 0.75rem;
     color: var(--gray-color-3);
     cursor: default;
 }
@@ -212,7 +232,7 @@
     padding: 8px 12px;
     background: #1f1f1f;
     border: 1px solid #2c2c2c;
-    font-size: 11px;
+    font-size: 0.75rem;
     color: #f4f4f4;
     white-space: nowrap;
     pointer-events: none;

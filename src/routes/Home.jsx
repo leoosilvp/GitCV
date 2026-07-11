@@ -41,7 +41,6 @@ const Home = () => {
                     <ContributionPanel />
                 </section>
 
-                
             </div>
             <Footer />
         </main>

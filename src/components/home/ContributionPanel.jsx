@@ -1,6 +1,9 @@
 import { useMemo } from "react"
 import { useUser } from "../../hooks/useUser"
 import { useGithubContributions } from "../../hooks/useGithubContributions"
+import { Link } from 'react-router-dom';
+import { Download } from "@carbon/icons-react";
+
 
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""]
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -144,13 +147,16 @@ const ContributionPanel = () => {
             )}
 
             <div className="contributionPanel-footer">
-                <span className="contributionPanel-legendLabel">Less</span>
-                <div className="contributionPanel-legend">
-                    {[0, 1, 2, 3, 4].map((level) => (
-                        <div key={level} className="contributionPanel-legendSwatch" data-level={level} />
-                    ))}
+                <Link to='/download/contributions'><Download size={14}/> Download my Chart</Link>
+                <div className="contributionPanel-content">
+                    <span className="contributionPanel-legendLabel">Less</span>
+                    <div className="contributionPanel-legend">
+                        {[0, 1, 2, 3, 4].map((level) => (
+                            <div key={level} className="contributionPanel-legendSwatch" data-level={level} />
+                        ))}
+                    </div>
+                    <span className="contributionPanel-legendLabel">More</span>
                 </div>
-                <span className="contributionPanel-legendLabel">More</span>
             </div>
         </div>
     )
