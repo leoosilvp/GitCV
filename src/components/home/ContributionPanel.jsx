@@ -7,19 +7,31 @@ const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "S
 
 const getIntensityLevel = (count) => {
     if (count === 0) return 0
-    if (count <= 2) return 1
-    if (count <= 5) return 2
+    if (count <= 3) return 1
+    if (count <= 6) return 2
     if (count <= 9) return 3
     return 4
+}
+
+const toLocalDateKey = (date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, "0")
+    const day = String(date.getDate()).padStart(2, "0")
+    return `${year}-${month}-${day}`
+}
+
+const startOfDay = (date) => {
+    const copy = new Date(date)
+    copy.setHours(0, 0, 0, 0)
+    return copy
 }
 
 const buildWeeksMatrix = (contributions) => {
     const map = new Map(contributions.map((c) => [c.date, c.count]))
 
-    const today = new Date()
-    const end = new Date(today)
-    const start = new Date(today)
-    start.setDate(start.getDate() - 371)
+    const end = startOfDay(new Date())
+    const start = startOfDay(new Date())
+    start.setDate(start.getDate() - 365)
 
     const firstSunday = new Date(start)
     firstSunday.setDate(firstSunday.getDate() - firstSunday.getDay())
@@ -30,10 +42,10 @@ const buildWeeksMatrix = (contributions) => {
     while (cursor <= end) {
         const week = []
         for (let i = 0; i < 7; i++) {
-            const iso = cursor.toISOString().slice(0, 10)
+            const dateKey = toLocalDateKey(cursor)
             week.push({
-                date: iso,
-                count: map.get(iso) ?? 0,
+                date: dateKey,
+                count: map.get(dateKey) ?? 0,
                 isFuture: cursor > end,
             })
             cursor.setDate(cursor.getDate() + 1)
@@ -48,7 +60,7 @@ const buildMonthSpans = (weeks) => {
     const spans = []
 
     weeks.forEach((week, index) => {
-        const month = new Date(week[3].date).getMonth()
+        const month = Number(week[3].date.slice(5, 7)) - 1
 
         const last = spans[spans.length - 1]
         if (last && last.month === month) {
@@ -61,8 +73,9 @@ const buildMonthSpans = (weeks) => {
     return spans
 }
 
-const formatDate = (iso) => {
-    const date = new Date(iso)
+const formatDate = (dateKey) => {
+    const [year, month, day] = dateKey.split("-").map(Number)
+    const date = new Date(year, month - 1, day)
     return date.toLocaleDateString("en-US", { day: "2-digit", month: "long", year: "numeric" })
 }
 

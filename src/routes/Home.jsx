@@ -37,7 +37,7 @@ const Home = () => {
             <div className="home-content">
                 <section className='home-welcome'>
                     <h1>Good {getTimeOfDay()}, {FirstName()}!</h1>
-                    <p>You've made {totalCount.toLocaleString("en-US")} contributions this year.</p>
+                    <p>You made {totalCount.toLocaleString("en-US")} contributions over the past year.</p>
                     <ContributionPanel />
                 </section>
 
