@@ -3,7 +3,7 @@ import { useUser } from "../../hooks/useUser"
 import { useGithubContributions } from "../../hooks/useGithubContributions"
 import { Link } from 'react-router-dom';
 import { Download } from "@carbon/icons-react";
-
+import { DEFAULT_CONTRIBUTION_THEME, buildContributionThemeStyle } from "../../utils/contributionThemes"
 
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""]
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -56,7 +56,7 @@ const buildWeeksMatrix = (contributions) => {
         weeks.push(week)
     }
 
-    return weeks
+    return weeks.length > 53 ? weeks.slice(weeks.length - 53) : weeks
 }
 
 const buildMonthSpans = (weeks) => {
@@ -82,7 +82,7 @@ const formatDate = (dateKey) => {
     return date.toLocaleDateString("en-US", { day: "2-digit", month: "long", year: "numeric" })
 }
 
-const ContributionPanel = ({ isDownload }) => {
+const ContributionPanel = ({ isDownload, theme = DEFAULT_CONTRIBUTION_THEME }) => {
     const { user } = useUser()
     const username = user?.username
 
@@ -90,9 +90,10 @@ const ContributionPanel = ({ isDownload }) => {
 
     const weeks = useMemo(() => buildWeeksMatrix(contributions), [contributions])
     const monthSpans = useMemo(() => buildMonthSpans(weeks), [weeks])
+    const themeStyle = useMemo(() => buildContributionThemeStyle(theme), [theme])
 
     return (
-        <div className="contributionPanel-main">
+        <div className="contributionPanel-main" data-theme={theme} style={themeStyle}>
             {error ? (
                 <div className="contributionPanel-error">
                     Unable to load contribution data.
@@ -102,11 +103,7 @@ const ContributionPanel = ({ isDownload }) => {
                     <div className="contributionPanel-grid" data-loading={isLoading}>
                         <div className="contributionPanel-monthRow">
                             {monthSpans.map(({ month, span, startIndex }) => (
-                                <span
-                                    key={startIndex}
-                                    className="contributionPanel-monthLabel"
-                                    style={{ gridColumn: `span ${span}` }}
-                                >
+                                <span key={startIndex} className="contributionPanel-monthLabel" style={{ gridColumn: `span ${span}` }}>
                                     {MONTH_LABELS[month]}
                                 </span>
                             ))}
@@ -125,11 +122,7 @@ const ContributionPanel = ({ isDownload }) => {
                                 {weeks.map((week, weekIndex) => (
                                     <div key={weekIndex} className="contributionPanel-week">
                                         {week.map((day) => (
-                                            <div
-                                                key={day.date}
-                                                className="contributionPanel-day"
-                                                data-level={day.isFuture ? "future" : getIntensityLevel(day.count)}
-                                            >
+                                            <div key={day.date} className="contributionPanel-day" data-level={day.isFuture ? "future" : getIntensityLevel(day.count)}>
                                                 {!day.isFuture && (
                                                     <div className="contributionPanel-tooltip">
                                                         <strong>{day.count} contributions</strong>

@@ -131,23 +131,23 @@
 }
 
 .contributionPanel-day[data-level="0"] {
-    background-color: #151515;
+    background-color: var(--contributionPanel-level0);
 }
 
 .contributionPanel-day[data-level="1"] {
-    background-color: #033a15;
+    background-color: var(--contributionPanel-level1);
 }
 
 .contributionPanel-day[data-level="2"] {
-    background-color: #196c2e;
+    background-color: var(--contributionPanel-level2);
 }
 
 .contributionPanel-day[data-level="3"] {
-    background-color: #2da043;
+    background-color: var(--contributionPanel-level3);
 }
 
 .contributionPanel-day[data-level="4"] {
-    background-color: #56d364;
+    background-color: var(--contributionPanel-level4);
 }
 
 .contributionPanel-day[data-level="future"] {
@@ -210,23 +210,23 @@
 }
 
 .contributionPanel-legendSwatch[data-level="0"] {
-    background-color: #151515;
+    background-color: var(--contributionPanel-level0);
 }
 
 .contributionPanel-legendSwatch[data-level="1"] {
-    background-color: #0f3d1f;
+    background-color: var(--contributionPanel-level1);
 }
 
 .contributionPanel-legendSwatch[data-level="2"] {
-    background-color: #1a6b34;
+    background-color: var(--contributionPanel-level2);
 }
 
 .contributionPanel-legendSwatch[data-level="3"] {
-    background-color: #27a349;
+    background-color: var(--contributionPanel-level3);
 }
 
 .contributionPanel-legendSwatch[data-level="4"] {
-    background-color: #42e070;
+    background-color: var(--contributionPanel-level4);
 }
 
 .contributionPanel-tooltip {

@@ -1,13 +1,15 @@
+import { useState } from "react"
 import { Copy, Download, Share } from "@carbon/icons-react"
 import { useGithubContributions } from "../../hooks/useGithubContributions"
 import { useUser } from "../../hooks/useUser"
 import ContributionPanel from "../home/ContributionPanel"
+import { CONTRIBUTION_THEMES, CONTRIBUTION_THEME_ORDER, DEFAULT_CONTRIBUTION_THEME } from "../../utils/contributionThemes"
 
 const Contribution = () => {
-
     const { user } = useUser()
-
     const { totalCount } = useGithubContributions(user?.username)
+
+    const [selectedTheme, setSelectedTheme] = useState(DEFAULT_CONTRIBUTION_THEME)
 
     return (
         <main className="download-contribution-main">
@@ -26,81 +28,30 @@ const Contribution = () => {
                     </div>
                     <h2>over the past year</h2>
                 </header>
-                <ContributionPanel isDownload />
+                <ContributionPanel isDownload theme={selectedTheme} />
             </article>
 
             <section className="download-contribution-themes">
                 <h1>Themes</h1>
                 <div className="download-contribution-themes-grid">
-                    <button>
-                        <div>
-                            <span style={{background: '#033a15'}} />
-                            <span style={{background: '#196c2e'}} />
-                            <span style={{background: '#2da043'}} />
-                            <span style={{background: '#56d364'}} />
-                        </div>
-                        GitHub Dark
-                    </button>
+                    {CONTRIBUTION_THEME_ORDER.map((themeKey) => {
+                        const { label, colors } = CONTRIBUTION_THEMES[themeKey]
 
-                    <button>
-                        <div>
-                            <span style={{background: '#333333'}} />
-                            <span style={{background: '#555555'}} />
-                            <span style={{background: '#777777'}} />
-                            <span style={{background: '#bbbbbb'}} />
-                        </div>
-                        Carbon
-                    </button>
-
-                    <button>
-                        <div>
-                            <span style={{background: '#45475a'}} />
-                            <span style={{background: '#6272a4'}} />
-                            <span style={{background: '#be93f9'}} />
-                            <span style={{background: '#ff79c6'}} />
-                        </div>
-                        Dracula
-                    </button>
-
-                    <button>
-                        <div>
-                            <span style={{background: '#3B0D13'}} />
-                            <span style={{background: '#7F1D1D'}} />
-                            <span style={{background: '#B91C1C'}} />
-                            <span style={{background: '#EF4444'}} />
-                        </div>
-                        Crimson
-                    </button>
-
-                    <button>
-                        <div>
-                            <span style={{background: '#e48bdc'}} />
-                            <span style={{background: '#ca5bcc'}} />
-                            <span style={{background: '#a74aa8'}} />
-                            <span style={{background: '#61185f'}} />
-                        </div>
-                        Pink
-                    </button>
-
-                    <button>
-                        <div>
-                            <span style={{background: '#33353b'}} />
-                            <span style={{background: '#6fc1ff'}} />
-                            <span style={{background: '#1af9d8'}} />
-                            <span style={{background: '#ff4b82'}} />
-                        </div>
-                        Panda
-                    </button>
-
-                    <button>
-                        <div>
-                            <span style={{background: '#263342'}} />
-                            <span style={{background: '#344e6c'}} />
-                            <span style={{background: '#416895'}} />
-                            <span style={{background: '#4f83bf'}} />
-                        </div>
-                        Blue
-                    </button>
+                        return (
+                            <button
+                                key={themeKey}
+                                className={themeKey === selectedTheme ? "active" : ""}
+                                onClick={() => setSelectedTheme(themeKey)}
+                            >
+                                <div>
+                                    {colors.slice(1).map((color, index) => (
+                                        <span key={index} style={{ background: color }} />
+                                    ))}
+                                </div>
+                                {label}
+                            </button>
+                        )
+                    })}
                 </div>
             </section>
         </main>
