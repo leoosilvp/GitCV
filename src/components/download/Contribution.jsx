@@ -107,7 +107,7 @@ const Contribution = () => {
                 const file = new File([blob], fileName, { type: blob.type })
 
                 if (navigator.share && navigator.canShare?.({ files: [file] })) {
-                    await navigator.share({ files: [file], title: "GitHub Contributions", text: `@${user?.username}'s contribution chart` })
+                    await navigator.share({ files: [file], title: "GitHub Contributions", text: 'GitHub - contributions.png' })
                     setStatus("share", "done")
                     return
                 }
