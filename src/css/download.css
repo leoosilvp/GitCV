@@ -8,7 +8,6 @@
     margin-top: 100px;
     display: flex;
     justify-content: center;
-    min-height: 100vh;
 }
 
 .download-contribution-main {
@@ -19,7 +18,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .download-contribution-main-header div {
@@ -42,6 +41,7 @@
 
 .download-contribution-main-header button:hover {
     background: #0e0e0e;
+    border-color: #1e1e1e;
 }
 
 .download-contribution-main-header button.active {
@@ -93,4 +93,60 @@
     font-size: 0.75rem;
     font-weight: 200;
     color: var(--gray-color-2);
+}
+
+.download-contribution-themes {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.download-contribution-themes h1 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gray-color-1);
+}
+
+.download-contribution-themes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.download-contribution-themes-grid button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 7px;
+    font-size: 0.8rem;
+    color: var(--gray-color-2);
+    background: #080808;
+    border: 1px solid var(--hover-2);
+    gap: 7px;
+    cursor: pointer;
+}
+
+.download-contribution-themes-grid button:hover {
+    background: #0e0e0e;
+    border-color: #202020;
+}
+
+.download-contribution-themes-grid button.active {
+    border-color: var(--gray-color-2);
+}
+
+.download-contribution-themes-grid button div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--hover-2);
+}
+
+.download-contribution-themes-grid button div span {
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
