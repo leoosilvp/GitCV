@@ -157,12 +157,16 @@ body::-webkit-scrollbar-thumb {
   width: 25px;
 }
 
-.header-main-scrolled .header-content-left span {
+.header-main-scrolled .header-content-left span, .header-main-scrolled .header-content-left div {
   display: none;
 }
 
 .header-main-scrolled .header-content-right {
   display: none;
+}
+
+.header-main-scrolled nav {
+  margin-left: 5px;
 }
 
 .header-main-scrolled nav ul a {
