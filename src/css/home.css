@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    min-height: 100dvh;
 }
 
 .home-content {
@@ -13,6 +12,7 @@
     align-items: center;
     width: 95%;
     max-width: 1500px;
+    min-height: 100dvh;
 }
 
 .home-welcome {
@@ -170,6 +170,15 @@
     color: var(--gray-color-3);
     gap: 5px;
     transition: var(--transition);
+}
+
+.contributionPanel-footer p {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.2px;
+    color: var(--gray-color-4);
 }
 
 .contributionPanel-footer a:hover {

@@ -1,6 +1,96 @@
-.contribution-main {
+.download-main {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    min-height: 100dvh;
+}
+
+.download-content {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.download-contribution-main {
+    margin-top: 30px;
+}
+
+.download-contribution-main-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.download-contribution-main-header div {
+    display: flex;
+    gap: 10px;
+}
+
+.download-contribution-main-header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    gap: 7px;
+    border: 1px solid var(--hover-2);
+    color: var(--gray-color-1);
+    background: #080808;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.download-contribution-main-header button:hover {
+    background: #0e0e0e;
+}
+
+.download-contribution-main-header button.active {
+    background: var(--light-color);
+    color: var(--black);
+}
+
+.download-contribution-main-header button.active:hover {
+    background: var(--gray-color-1);
+}
+
+.download-contribution-card {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    padding: 20px;
+    background: #0b0b0b;
+    border: 1px solid var(--hover-2);
+}
+
+.download-contribution-card-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--hover-2);
+}
+
+.download-contribution-card-header div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.download-contribution-card-header h1 {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.download-contribution-card-header h2 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray-color-1);
+}
+
+.download-contribution-card-header p {
+    font-size: 0.75rem;
+    font-weight: 200;
+    color: var(--gray-color-2);
 }

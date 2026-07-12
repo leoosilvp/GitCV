@@ -82,7 +82,7 @@ const formatDate = (dateKey) => {
     return date.toLocaleDateString("en-US", { day: "2-digit", month: "long", year: "numeric" })
 }
 
-const ContributionPanel = () => {
+const ContributionPanel = ({ isDownload }) => {
     const { user } = useUser()
     const username = user?.username
 
@@ -147,7 +147,10 @@ const ContributionPanel = () => {
             )}
 
             <div className="contributionPanel-footer">
-                <Link to='/download/contributions'><Download size={14}/> Download my Chart</Link>
+                {!isDownload ?
+                    <Link to='/download/contributions'><Download size={14} /> Download my Chart</Link>
+                    :
+                    <p>Made by @leoosilvp - gitcv-app.vercel.app</p>}
                 <div className="contributionPanel-content">
                     <span className="contributionPanel-legendLabel">Less</span>
                     <div className="contributionPanel-legend">
