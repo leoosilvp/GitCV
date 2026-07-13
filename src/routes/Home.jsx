@@ -2,8 +2,9 @@ import '../css/home.css'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useUser } from '../hooks/useUser';
-import ContributionPanel from '../components/home/ContributionPanel';
+import ContributionPanel from '../components/ContributionPanel';
 import { useGithubContributions } from '../hooks/useGithubContributions';
+import GithubStats from '../components/home/GithubStats';
 
 const Home = () => {
 
@@ -40,6 +41,10 @@ const Home = () => {
                     <p>You made {totalCount.toLocaleString("en-US")} contributions over the past year.</p>
                     <ContributionPanel />
                 </section>
+
+                <div className='hr' />
+                
+                <GithubStats />
 
             </div>
             <Footer />

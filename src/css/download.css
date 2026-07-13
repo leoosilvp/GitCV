@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
+    min-height: 100dvh;
 }
 
 .download-content {
@@ -134,7 +135,7 @@
 }
 
 .download-contribution-themes-grid button.active {
-    border-color: var(--gray-color-2);
+    border-color: #252525;
 }
 
 .download-contribution-themes-grid button div {

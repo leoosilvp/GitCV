@@ -3,7 +3,7 @@ import { Copy, Download, Share, Checkmark } from "@carbon/icons-react"
 import { toPng, toBlob } from "html-to-image"
 import { useGithubContributions } from "../../hooks/useGithubContributions"
 import { useUser } from "../../hooks/useUser"
-import ContributionPanel from "../home/ContributionPanel"
+import ContributionPanel from "../ContributionPanel"
 import { CONTRIBUTION_THEMES, CONTRIBUTION_THEME_ORDER, DEFAULT_CONTRIBUTION_THEME } from "../../utils/contributionThemes"
 
 let fontsReadyPromise = null

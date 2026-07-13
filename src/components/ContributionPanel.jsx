@@ -1,9 +1,9 @@
 import { useMemo } from "react"
-import { useUser } from "../../hooks/useUser"
-import { useGithubContributions } from "../../hooks/useGithubContributions"
+import { useUser } from "../hooks/useUser"
+import { useGithubContributions } from "../hooks/useGithubContributions"
 import { Link } from 'react-router-dom';
 import { Download } from "@carbon/icons-react";
-import { DEFAULT_CONTRIBUTION_THEME, buildContributionThemeStyle } from "../../utils/contributionThemes"
+import { DEFAULT_CONTRIBUTION_THEME, buildContributionThemeStyle } from "../utils/contributionThemes"
 
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""]
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
