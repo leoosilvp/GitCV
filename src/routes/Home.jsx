@@ -5,6 +5,7 @@ import { useUser } from '../hooks/useUser';
 import ContributionPanel from '../components/ContributionPanel';
 import { useGithubContributions } from '../hooks/useGithubContributions';
 import GithubStats from '../components/home/GithubStats';
+import News from '../components/home/News';
 
 const Home = () => {
 
@@ -43,9 +44,12 @@ const Home = () => {
                 </section>
 
                 <div className='hr' />
-                
+
                 <GithubStats />
 
+                <div className='hr' />
+
+                <News />
             </div>
             <Footer />
         </main>

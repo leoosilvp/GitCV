@@ -51,7 +51,7 @@
     width: 800px;
     padding: 20px;
     border: 1px solid var(--hover-2);
-    background: #0b0b0b;
+    background: #080808;
     cursor: default;
 }
 
@@ -70,7 +70,7 @@
 
 .github-stats-header p {
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 300;
     color: var(--gray-color-3);
 }
@@ -104,4 +104,15 @@
 .github-stats-content div section h1 {
     font-size: 1.5rem;
     font-weight: 500;    
+}
+
+/* News */
+.news-main {
+    display: flex;
+    width: 800px;
+}
+
+.news-header h1 {
+    font-size: 1rem;
+    font-weight: 400;
 }
