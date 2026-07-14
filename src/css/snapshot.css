@@ -56,11 +56,11 @@
 }
 
 .snapshot-card.one {
-    background-image: url('../assets/img/bg-login-mobile.png');
+    background-image: url('../assets/img/bg-snapshot/1.png');
 }
 
 .snapshot-card.two {
-    background-image: url('../assets/img/bg-snapshot/2.png');
+    background-image: url('../assets/img/bg-login-mobile.png');
 }
 
 .snapshot-card.three {
@@ -113,6 +113,11 @@
 .snapshot-card-title h1 {
     font-size: 1.2rem;
     font-weight: 300;
+    line-height: 1.4;
+}
+
+.snapshot-card-title h1 span {
+    color: #57bf4f;
 }
 
 .snapshot-card-grid-column {
@@ -142,6 +147,11 @@
     font-size: 1.2rem;
     font-weight: 500;
     color: #57bf4f;
+}
+
+.snapshot-card-grid-column article div h1 span {
+    font-size: 0.7rem;
+    color: var(--gray-color-3);
 }
 
 .snapshot-card-footer {

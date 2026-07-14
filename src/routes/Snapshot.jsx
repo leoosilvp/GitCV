@@ -3,6 +3,7 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import SnapshotCard1 from '../components/snapshot/SnapshotCard1'
 import SnapshotCard2 from '../components/snapshot/SnapshotCard2'
+import SnapshotCard3 from '../components/snapshot/SnapshotCard3'
 
 const Snapshot = () => {
   return (
@@ -17,9 +18,8 @@ const Snapshot = () => {
         <section className='snapshot-grid'>
           <SnapshotCard1 />
           <SnapshotCard2 />
-          <div className='snapshot-card three left' />
+          <SnapshotCard3 />
           <div className='snapshot-card four' />
-          <div className='snapshot-card left' />
         </section>
       </section>
       <Footer />
