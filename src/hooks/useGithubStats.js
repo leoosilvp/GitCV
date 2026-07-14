@@ -135,8 +135,10 @@ function analyzeContributions(contributions) {
 
     let totalCount = 0
     let longestStreak = 0
-    let currentStreak = 0
+    let runningStreak = 0
     let previousDate = null
+    let lastActiveDate = null
+    let streakAsOfLastActiveDate = 0
 
     for (const entry of sorted) {
         const date = new Date(`${entry.date}T00:00:00`)
@@ -149,20 +151,27 @@ function analyzeContributions(contributions) {
         if (count > 0) {
             if (previousDate) {
                 const diffDays = Math.round((date - previousDate) / 86_400_000)
-                currentStreak = diffDays === 1 ? currentStreak + 1 : 1
+                runningStreak = diffDays === 1 ? runningStreak + 1 : 1
             } else {
-                currentStreak = 1
+                runningStreak = 1
             }
-            longestStreak = Math.max(longestStreak, currentStreak)
+            longestStreak = Math.max(longestStreak, runningStreak)
+            lastActiveDate = date
+            streakAsOfLastActiveDate = runningStreak
             previousDate = date
         } else {
-            currentStreak = 0
+            runningStreak = 0
             previousDate = date
         }
     }
 
     const lastEntry = sorted[sorted.length - 1]
-    const activeCurrentStreak = (lastEntry?.count ?? 0) > 0 ? currentStreak : 0
+    const lastTrackedDate = new Date(`${lastEntry.date}T00:00:00`)
+    const daysSinceLastActivity = lastActiveDate
+        ? Math.round((lastTrackedDate - lastActiveDate) / 86_400_000)
+        : Infinity
+
+    const activeCurrentStreak = daysSinceLastActivity <= 1 ? streakAsOfLastActiveDate : 0
 
     const pickBestIndex = (counts) =>
         counts.reduce((bestIndex, value, index, arr) => (value > arr[bestIndex] ? index : bestIndex), 0)
