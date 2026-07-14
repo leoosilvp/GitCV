@@ -33,7 +33,7 @@
     color: var(--gray-color-1);
 }
 
-.snashot-grid {
+.snapshot-grid {
     margin-top: 30px;
     margin-bottom: 50px;
     display: grid;
@@ -41,18 +41,100 @@
     gap: 50px;
 }
 
-.snashot-card {
+.snapshot-card {
+    font-family: "IBM Plex Mono", monospace;
     display: flex;
+    flex-direction: column;
     width: 270px;
     height: 480px;
+    padding: 20px;
     border: 1px solid var(--hover-2);
-    background: #080808;
+    background: #040404;
+    overflow: hidden;
 }
 
-.snashot-card.right {
+.snapshot-card.one {
+    background-image: url('../assets/img/bg-login-mobile.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.snapshot-card.right {
     margin-top: 220px;
 }
 
-.snashot-card.left {
+.snapshot-card.left {
     margin-top: -220px;
+}
+
+.snapshot-card-content {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    gap: 30px;
+    color: var(--gray-color-1);
+}
+
+.snapshot-card-header {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+}
+
+.snapshot-card-header img {
+    display: flex;
+    width: 25px;
+}
+
+.snapshot-card-header p {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--gray-color-3);
+}
+
+.snapshot-card-title h1 {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.snapshot-card-grid-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.snapshot-card-grid-column article {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.snapshot-card-grid-column article div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.snapshot-card-grid-column article div p {
+    font-size: 0.7rem;
+    color: #bebebe;
+}
+
+.snapshot-card-grid-column article div h1 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #57bf4f;
+}
+
+.snapshot-card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.snapshot-card-footer p {
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: var(--gray-color-4);
 }
