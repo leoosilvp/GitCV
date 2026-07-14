@@ -1,7 +1,7 @@
 import { Calendar, Events, GitRepo, Star } from "@carbon/icons-react"
 import { useUser } from "../../hooks/useUser"
 import { useGithubContributions } from "../../hooks/useGithubContributions"
-import { useGithubStats } from "../../hooks/useGithubStats"
+import { useGithubStats } from "../../hooks/useGithubStats.js"
 
 const GithubStats = () => {
 

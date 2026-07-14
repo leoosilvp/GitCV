@@ -1,0 +1,58 @@
+.snapshot-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100dvh;
+}
+
+.snapshot-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+    margin-top: 100px;
+}
+
+.snapshot-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.snapshot-header h1 {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.snapshot-header p {
+    margin-top: 2px;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--gray-color-1);
+}
+
+.snashot-grid {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+}
+
+.snashot-card {
+    display: flex;
+    width: 270px;
+    height: 480px;
+    border: 1px solid var(--hover-2);
+    background: #080808;
+}
+
+.snashot-card.right {
+    margin-top: 220px;
+}
+
+.snashot-card.left {
+    margin-top: -220px;
+}

@@ -6,6 +6,7 @@ import Login from './routes/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Download from './routes/Download';
 import Contribution from './components/download/Contribution';
+import Snapshot from './routes/Snapshot';
 
 function App() {
   return (
@@ -15,11 +16,12 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/contribute' element={<Contribute />} />
+          <Route path="/snapshot" element={<Snapshot />} />
           <Route path="/download" element={<Download />}>
             <Route index element={<Navigate to="/home" />} />
             <Route path="contributions" element={<Contribution />} />
           </Route>
+          <Route path='/contribute' element={<Contribute />} />
         </Route>
       </Routes>
     </BrowserRouter>
