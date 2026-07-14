@@ -15,6 +15,21 @@ const WEEKDAY_LABELS = [
     "Saturday",
 ]
 
+const MONTH_LABELS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]
+
 const cache = new Map()
 const inflightRequests = new Map()
 
@@ -63,6 +78,20 @@ async function fetchAllRepos(username, signal) {
     return repos
 }
 
+async function fetchPullRequestCount(username, signal) {
+    const response = await fetch(
+        `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username}`)}&per_page=1`,
+        { signal, headers: { Accept: "application/vnd.github+json" } }
+    )
+
+    if (!response.ok) {
+        throw new Error(`Failed to load pull request count (${response.status})`)
+    }
+
+    const body = await response.json()
+    return body.total_count ?? 0
+}
+
 function summarizeRepos(repos) {
     let totalStars = 0
     let topRepo = null
@@ -88,15 +117,23 @@ function summarizeRepos(repos) {
 
 function analyzeContributions(contributions) {
     if (!Array.isArray(contributions) || contributions.length === 0) {
-        return { mostActiveWeekday: null, longestStreak: 0 }
+        return {
+            mostActiveWeekday: null,
+            mostActiveMonth: null,
+            averagePerWeek: 0,
+            longestStreak: 0,
+            currentStreak: 0,
+        }
     }
 
     const countsByWeekday = new Array(7).fill(0)
+    const countsByMonth = new Array(12).fill(0)
 
     const sorted = [...contributions].sort(
         (a, b) => new Date(a.date) - new Date(b.date)
     )
 
+    let totalCount = 0
     let longestStreak = 0
     let currentStreak = 0
     let previousDate = null
@@ -105,7 +142,9 @@ function analyzeContributions(contributions) {
         const date = new Date(`${entry.date}T00:00:00`)
         const count = entry.count ?? 0
 
+        totalCount += count
         countsByWeekday[date.getDay()] += count
+        countsByMonth[date.getMonth()] += count
 
         if (count > 0) {
             if (previousDate) {
@@ -122,10 +161,19 @@ function analyzeContributions(contributions) {
         }
     }
 
-    const bestWeekdayIndex = countsByWeekday.reduce(
-        (bestIndex, value, index, arr) => (value > arr[bestIndex] ? index : bestIndex),
-        0
-    )
+    const lastEntry = sorted[sorted.length - 1]
+    const activeCurrentStreak = (lastEntry?.count ?? 0) > 0 ? currentStreak : 0
+
+    const pickBestIndex = (counts) =>
+        counts.reduce((bestIndex, value, index, arr) => (value > arr[bestIndex] ? index : bestIndex), 0)
+
+    const bestWeekdayIndex = pickBestIndex(countsByWeekday)
+    const bestMonthIndex = pickBestIndex(countsByMonth)
+
+    const firstDate = new Date(`${sorted[0].date}T00:00:00`)
+    const lastDate = new Date(`${lastEntry.date}T00:00:00`)
+    const trackedDays = Math.max(1, Math.round((lastDate - firstDate) / 86_400_000) + 1)
+    const trackedWeeks = Math.max(1, trackedDays / 7)
 
     return {
         mostActiveWeekday: {
@@ -133,14 +181,22 @@ function analyzeContributions(contributions) {
             label: WEEKDAY_LABELS[bestWeekdayIndex],
             commitCount: countsByWeekday[bestWeekdayIndex],
         },
+        mostActiveMonth: {
+            index: bestMonthIndex,
+            label: MONTH_LABELS[bestMonthIndex],
+            commitCount: countsByMonth[bestMonthIndex],
+        },
+        averagePerWeek: Math.round(totalCount / trackedWeeks),
         longestStreak,
+        currentStreak: activeCurrentStreak,
     }
 }
 
 async function fetchGithubStats(username, signal) {
-    const [profile, repos] = await Promise.all([
+    const [profile, repos, pullRequestCount] = await Promise.all([
         fetchProfile(username, signal),
         fetchAllRepos(username, signal),
+        fetchPullRequestCount(username, signal),
     ])
 
     const { totalStars, topRepo } = summarizeRepos(repos)
@@ -151,6 +207,7 @@ async function fetchGithubStats(username, signal) {
         publicRepos: profile.public_repos ?? repos.length,
         totalStars,
         topRepo,
+        pullRequestCount,
         profile: {
             login: profile.login,
             name: profile.name,
@@ -189,6 +246,7 @@ function buildStateForUsername(username) {
         publicRepos: entry?.data.publicRepos ?? 0,
         totalStars: entry?.data.totalStars ?? 0,
         topRepo: entry?.data.topRepo ?? null,
+        pullRequestCount: entry?.data.pullRequestCount ?? 0,
         profile: entry?.data.profile ?? null,
         isLoading: Boolean(username) && !entry,
         error: null,
@@ -222,6 +280,7 @@ export const useGithubStats = (username, contributions) => {
                             publicRepos: result.publicRepos,
                             totalStars: result.totalStars,
                             topRepo: result.topRepo,
+                            pullRequestCount: result.pullRequestCount,
                             profile: result.profile,
                             isLoading: false,
                             error: null,
@@ -241,7 +300,8 @@ export const useGithubStats = (username, contributions) => {
         return () => controller.abort()
     }, [username])
 
-    const { mostActiveWeekday, longestStreak } = analyzeContributions(contributions)
+    const { mostActiveWeekday, mostActiveMonth, averagePerWeek, longestStreak, currentStreak } =
+        analyzeContributions(contributions)
 
     return {
         followers: state.followers,
@@ -249,8 +309,12 @@ export const useGithubStats = (username, contributions) => {
         publicRepos: state.publicRepos,
         totalStars: state.totalStars,
         topRepo: state.topRepo,
+        pullRequestCount: state.pullRequestCount,
         mostActiveWeekday,
+        mostActiveMonth,
+        averagePerWeek,
         longestStreak,
+        currentStreak,
         profile: state.profile,
         isLoading: state.isLoading,
         error: state.error,

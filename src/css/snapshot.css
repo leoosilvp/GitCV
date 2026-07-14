@@ -67,14 +67,6 @@
     background-image: url('../assets/img/bg-snapshot/3.png');
 }
 
-.snapshot-card.four {
-    background-image: url('../assets/img/bg-snapshot/4.png');
-}
-
-.snapshot-card.five {
-    background-image: url('../assets/img/bg-snapshot/5.png');
-}
-
 .snapshot-card.right {
     margin-top: 220px;
 }

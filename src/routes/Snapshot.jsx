@@ -19,7 +19,6 @@ const Snapshot = () => {
           <SnapshotCard1 />
           <SnapshotCard2 />
           <SnapshotCard3 />
-          <div className='snapshot-card four' />
         </section>
       </section>
       <Footer />
