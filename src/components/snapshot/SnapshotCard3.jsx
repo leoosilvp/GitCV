@@ -1,7 +1,18 @@
 import { ArrowRight, Fire, HeatMap, PullRequest, Star, Trophy } from '@carbon/icons-react'
 import logo from '../../assets/svg/icon.svg'
+import { useUser } from '../../hooks/useUser'
+import { useGithubContributions } from '../../hooks/useGithubContributions'
+import { useGithubStats } from '../../hooks/useGithubStats'
 
 const SnapshotCard3 = () => {
+    const { user } = useUser()
+
+    const { contributions, totalCount } = useGithubContributions(user?.username)
+    const { currentStreak, longestStreak, pullRequestCount, totalStars, isLoading } = useGithubStats(
+        user?.username,
+        contributions
+    )
+
     return (
         <article className='snapshot-card three left'>
             <header className='snapshot-card-header'>
@@ -14,7 +25,7 @@ const SnapshotCard3 = () => {
                         <Fire size={33} />
                         <div>
                             <p>Current Streak</p>
-                            <h1>18 <span>days</span></h1>
+                            <h1>{isLoading ? '—' : currentStreak} <span>days</span></h1>
                         </div>
                     </article>
 
@@ -22,7 +33,7 @@ const SnapshotCard3 = () => {
                         <Trophy size={33} />
                         <div>
                             <p>Longest Streak</p>
-                            <h1>42 <span>days</span></h1>
+                            <h1>{isLoading ? '—' : longestStreak} <span>days</span></h1>
                         </div>
                     </article>
 
@@ -30,7 +41,7 @@ const SnapshotCard3 = () => {
                         <HeatMap size={33} />
                         <div>
                             <p>Commits</p>
-                            <h1>1.412</h1>
+                            <h1>{isLoading ? '—' : totalCount.toLocaleString('en-US')}</h1>
                         </div>
                     </article>
 
@@ -38,15 +49,15 @@ const SnapshotCard3 = () => {
                         <PullRequest size={33} />
                         <div>
                             <p>Pull Requests</p>
-                            <h1>87</h1>
+                            <h1>{isLoading ? '—' : pullRequestCount}</h1>
                         </div>
                     </article>
 
                     <article>
                         <Star size={33} />
                         <div>
-                            <p>Stars Erned</p>
-                            <h1>31</h1>
+                            <p>Stars Earned</p>
+                            <h1>{isLoading ? '—' : totalStars}</h1>
                         </div>
                     </article>
                 </div>
