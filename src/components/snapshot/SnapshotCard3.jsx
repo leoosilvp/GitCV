@@ -14,10 +14,10 @@ const SnapshotCard3 = () => {
     )
 
     return (
-        <article className='snapshot-card three left'>
+        <article className='snapshot-card three'>
             <header className='snapshot-card-header'>
-                <img draggable={false} src={logo} />
                 <p>over the past year</p>
+                <img draggable={false} src={logo} />
             </header>
             <section className='snapshot-card-content'>
                 <div className='snapshot-card-grid-column'>

@@ -36,8 +36,7 @@
 .snapshot-grid {
     margin-top: 30px;
     margin-bottom: 50px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     gap: 50px;
 }
 
@@ -56,11 +55,11 @@
 }
 
 .snapshot-card.one {
-    background-image: url('../assets/img/bg-snapshot/1.png');
+    background-image: url('../assets/img/bg-login-mobile.png');
 }
 
 .snapshot-card.two {
-    background-image: url('../assets/img/bg-login-mobile.png');
+    background-image: url('../assets/img/bg-snapshot/2.png');
 }
 
 .snapshot-card.three {
