@@ -2,6 +2,7 @@ import '../css/snapshot.css'
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import SnapshotCard1 from '../components/snapshot/SnapshotCard1'
+import SnapshotCard2 from '../components/snapshot/SnapshotCard2'
 
 const Snapshot = () => {
   return (
@@ -15,9 +16,9 @@ const Snapshot = () => {
 
         <section className='snapshot-grid'>
           <SnapshotCard1 />
-          <div className='snapshot-card right' />
-          <div className='snapshot-card left' />
-          <div className='snapshot-card' />
+          <SnapshotCard2 />
+          <div className='snapshot-card three left' />
+          <div className='snapshot-card four' />
           <div className='snapshot-card left' />
         </section>
       </section>

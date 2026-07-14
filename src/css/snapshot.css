@@ -50,13 +50,29 @@
     padding: 20px;
     border: 1px solid var(--hover-2);
     background: #040404;
+    background-size: cover;
+    background-position: center;
     overflow: hidden;
 }
 
 .snapshot-card.one {
     background-image: url('../assets/img/bg-login-mobile.png');
-    background-size: cover;
-    background-position: center;
+}
+
+.snapshot-card.two {
+    background-image: url('../assets/img/bg-snapshot/2.png');
+}
+
+.snapshot-card.three {
+    background-image: url('../assets/img/bg-snapshot/3.png');
+}
+
+.snapshot-card.four {
+    background-image: url('../assets/img/bg-snapshot/4.png');
+}
+
+.snapshot-card.five {
+    background-image: url('../assets/img/bg-snapshot/5.png');
 }
 
 .snapshot-card.right {
@@ -137,4 +153,31 @@
     font-size: 0.6rem;
     font-weight: 300;
     color: var(--gray-color-4);
+}
+
+
+
+.quotes {
+    font-family: "Inter", sans-serif;
+    font-size: 2.5rem;
+    color: var(--gray-color-3);
+}
+
+.quotes.right {
+    display: flex;
+    justify-content: end;
+}
+
+.quotes.right .mirror {
+    transform: rotate(180deg);
+}
+
+.snapshot-card-grid-column .text {
+    margin: -20px 0 -10px;
+    font-size: 1.4rem;
+    line-height: 1.3;
+}
+
+.snapshot-card-grid-column .text span {
+    color: #57bf4f;
 }
