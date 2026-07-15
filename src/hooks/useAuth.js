@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { getMe } from '../services/auth.service'
 
-const ME_URL = 'https://api-gitcv-app.vercel.app/api/auth/me'
 const CACHE_TIME = 2 * 60 * 1000 // 2 min
 
 let authCache = null
@@ -20,10 +20,10 @@ export function useAuth() {
             }
 
             try {
-                const res = await fetch(ME_URL, { credentials: 'include' })
+                const user = await getMe()
 
-                authCache = { isAuthenticated: res.ok, timestamp: now }
-                setIsAuthenticated(res.ok)
+                authCache = { isAuthenticated: Boolean(user), timestamp: now }
+                setIsAuthenticated(Boolean(user))
             } catch {
                 authCache = { isAuthenticated: false, timestamp: now }
                 setIsAuthenticated(false)

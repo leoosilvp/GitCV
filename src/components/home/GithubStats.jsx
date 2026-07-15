@@ -37,7 +37,7 @@ const GithubStats = () => {
                             <p>Stars</p>
                         </header>
                         <section>
-                            <h1>{formatValue(totalStars)}</h1>
+                            <h1>{formatValue(totalStars) || '—'}</h1>
                         </section>
                     </div>
 
@@ -47,7 +47,7 @@ const GithubStats = () => {
                             <p>Average / Week</p>
                         </header>
                         <section>
-                            <h1>{formatValue(averagePerWeek)} <span>Commits</span></h1>
+                            <h1>{formatValue(averagePerWeek) || '—'} {averagePerWeek ? <span>Commits</span> : ''}</h1>
                         </section>
                     </div>
 
@@ -57,7 +57,7 @@ const GithubStats = () => {
                             <p>Current Streak</p>
                         </header>
                         <section>
-                            <h1>{formatValue(currentStreak)}</h1>
+                            <h1>{formatValue(currentStreak) || '—'}</h1>
                         </section>
                     </div>
 
@@ -77,7 +77,7 @@ const GithubStats = () => {
                             <p>Longest Streak</p>
                         </header>
                         <section>
-                            <h1>{formatValue(longestStreak)}</h1>
+                            <h1>{formatValue(longestStreak) || '—'}</h1>
                         </section>
                     </div>
                 </section>

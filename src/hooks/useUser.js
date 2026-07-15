@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
+import { getMe } from '../services/auth.service'
 
-const ME_URL = 'https://api-gitcv-app.vercel.app/api/auth/me'
 const CACHE_TTL = 1000 * 60 * 5 // 5 min
 
 let cachedUser = null
@@ -29,22 +29,8 @@ function setCachedUser(newUser) {
     notifyListeners()
 }
 
-async function requestUser() {
-    const response = await fetch(ME_URL, {
-        method: 'GET',
-        credentials: 'include',
-    })
-
-    if (!response.ok) {
-        if (response.status === 401) {
-            return null
-        }
-        throw new Error(
-            `Erro ao buscar usuário: ${response.status} ${response.statusText}`
-        )
-    }
-
-    const data = await response.json()
+function normalizeUser(data) {
+    if (!data) return null
 
     return {
         id: data.id,
@@ -67,8 +53,9 @@ function fetchUser() {
         return pendingPromise
     }
 
-    pendingPromise = requestUser()
-        .then((normalizedUser) => {
+    pendingPromise = getMe()
+        .then((data) => {
+            const normalizedUser = normalizeUser(data)
             setCachedUser(normalizedUser)
             return normalizedUser
         })
