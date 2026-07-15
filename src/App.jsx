@@ -7,8 +7,17 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import Download from './routes/Download';
 import Contribution from './components/download/Contribution';
 import Snapshot from './routes/Snapshot';
+import { useIsMobile } from './hooks/useIsMobile';
+import { MobileBlock } from './components/MobileBlock';
 
 function App() {
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return <MobileBlock />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
