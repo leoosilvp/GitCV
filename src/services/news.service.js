@@ -1,4 +1,4 @@
-const ENDPOINT = "/api/tech-news"
+const ENDPOINT = "https://api-gitcv-app.vercel.app/api/news"
 
 const CACHE_TTL_MS = 15 * 60 * 1000
 

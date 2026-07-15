@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react"
-import { fetchTechNews } from "../services/techNewsService"
+import { fetchTechNews } from "../services/news.service"
 
 export function useTechNews() {
     const [articles, setArticles] = useState([])
