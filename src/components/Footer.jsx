@@ -15,6 +15,7 @@ const Footer = () => {
                 <nav>
                     <ul>
                         <Link to='/home'>Home</Link>
+                        <Link to='/snapshot'>Snapshot</Link>
                         <Link to='/contribute'>Contribute</Link>
                         <Link to={`https://github.com/${user?.username}`} target='_blank'>Github</Link>
                         <Link to='/resume'>My resume</Link>
@@ -23,7 +24,7 @@ const Footer = () => {
             </section>
 
             <section className='footer-credits'>
-                <p>GitCV&copy; 2026 - All rights reserved. <Link href="https://github.com/leoosilvp">"leoosilvp"</Link></p>
+                <p>GitCV&copy; 2026 - All rights reserved. <Link to="https://github.com/leoosilvp">"leoosilvp"</Link></p>
             </section>
         </footer>
     )

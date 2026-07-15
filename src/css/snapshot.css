@@ -84,7 +84,6 @@
     color: var(--gray-color-1);
     background: transparent;
     border: 1px solid var(--hover-2);
-    border-radius: 3px;
     cursor: pointer;
     transition: var(--transition);
 }

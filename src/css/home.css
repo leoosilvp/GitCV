@@ -97,13 +97,18 @@
 }
 
 .github-stats-content div header p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--gray-color-2);
 }
 
 .github-stats-content div section h1 {
-    font-size: 1.5rem;
-    font-weight: 500;    
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #57bf4f; 
+}
+
+.github-stats-content div section h1 span {
+    font-size: 1rem;
 }
 
 /* News */
