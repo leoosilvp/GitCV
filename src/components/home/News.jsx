@@ -24,8 +24,8 @@ const News = () => {
     const visibleArticles = articles.slice(0, MAX_VISIBLE_ARTICLES)
 
     return (
-        <section className='news-main'>
-            <header className="news-header">
+        <section className='home-news-main'>
+            <header className="home-news-header">
                 <div>
                     <h1>Tech News</h1>
                     <p>What's new in the world?</p>
@@ -34,25 +34,25 @@ const News = () => {
             </header>
 
             {error ? (
-                <p className="news-error">Failed to load news: {error}</p>
+                <p className="home-news-error">Failed to load news: {error}</p>
             ) : (
-                <section className="news-grid">
+                <section className="home-news-grid">
                     {isLoading
                         ? Array.from({ length: 6 }).map((_, index) => (
-                            <article className="news-card" key={index}>
-                                <header className="news-card-header">
+                            <article className="home-news-card" key={index}>
+                                <header className="home-news-card-header">
                                     <h1 style={{ color: '#080808' }}>.</h1>
                                     <p style={{ color: '#080808' }}>.</p>
                                 </header>
 
-                                <section className="news-card-content">
+                                <section className="home-news-card-content">
                                     <h1 style={{ color: '#080808' }}>.</h1>
                                     <p style={{ color: '#080808' }}>.</p>
                                 </section>
 
                                 <hr style={{ border: 'none' }} />
 
-                                <footer className="news-card-footer">
+                                <footer className="home-news-card-footer">
                                     <div>
                                         <h1 style={{ color: '#080808' }}>.</h1>
                                     </div>
@@ -63,20 +63,20 @@ const News = () => {
                             const logoUrl = getCompanyLogo(article.source)
 
                             return (
-                                <article className="news-card" key={article.url}>
-                                    <header className="news-card-header">
+                                <article className="home-news-card" key={article.url}>
+                                    <header className="home-news-card-header">
                                         <h1>{article.source ?? "Tech"}</h1>
                                         <p>{formatRelativeTime(article.publishedAt)}</p>
                                     </header>
 
-                                    <section className="news-card-content">
+                                    <section className="home-news-card-content">
                                         <h1>{article.title}</h1>
                                         <p>{article.description}</p>
                                     </section>
 
                                     <hr />
 
-                                    <footer className="news-card-footer">
+                                    <footer className="home-news-card-footer">
                                         <div>
                                             {logoUrl ? (
                                                 <img draggable={false} src={logoUrl} />

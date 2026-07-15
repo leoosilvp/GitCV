@@ -488,7 +488,7 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background-image: url('../assets/img/bg-login-mobile.png');
   background-size: cover;
   background-position: center;

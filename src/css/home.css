@@ -112,36 +112,36 @@
 }
 
 /* News */
-.news-main {
+.home-news-main {
     display: flex;
     flex-direction: column;
     width: 800px;
 }
 
-.news-header {
+.home-news-header {
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
 
-.news-header div {
+.home-news-header div {
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
 
-.news-header h1 {
+.home-news-header h1 {
     font-size: 1.3rem;
     font-weight: 400;
 }
 
-.news-header p {
+.home-news-header p {
     font-size: 0.9rem;
     font-weight: 300;
     color: var(--gray-color-2);
 }
 
-.news-header a {
+.home-news-header a {
     display: flex;
     align-items: center;
     height: fit-content;
@@ -151,18 +151,18 @@
     transition: var(--transition);
 }
 
-.news-header a:hover {
+.home-news-header a:hover {
     color: #3d8838;
 }
 
-.news-grid {
+.home-news-grid {
     margin: 20px 0 50px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
 
-.news-card {
+.home-news-card {
     font-family: "IBM Plex Mono", monospace;
     display: flex;
     flex-direction: column;
@@ -174,32 +174,32 @@
     cursor: default;
 }
 
-.news-card-header {
+.home-news-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.news-card-header h1 {
+.home-news-card-header h1 {
     font-size: 0.8rem;
     font-weight: 400;
     color: #57bf4f;
 }
 
-.news-card-header p {
+.home-news-card-header p {
     font-size: 0.7rem;
     font-weight: 300;
     color: var(--gray-color-2);
 }
 
-.news-card-content {
+.home-news-card-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.news-card-content h1 {
+.home-news-card-content h1 {
     display: flex;
     height: 43px;
     font-size: 1.1rem;
@@ -207,7 +207,7 @@
     overflow: hidden;
 }
 
-.news-card-content p {
+.home-news-card-content p {
     display: flex;
     height: 33px;
     text-overflow: ellipsis;
@@ -217,36 +217,36 @@
     overflow: hidden;
 }
 
-.news-card hr {
+.home-news-card hr {
     display: flex;
     border: none;
     border-bottom: 1px solid var(--hover-2);
 }
 
-.news-card-footer {
+.home-news-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.news-card-footer div {
+.home-news-card-footer div {
     display: flex;
     align-items: center;
     gap: 7px;
 }
 
-.news-card-footer div img {
+.home-news-card-footer div img {
     display: flex;
     width: 20px;
 }
 
-.news-card-footer div h1 {
+.home-news-card-footer div h1 {
     font-size: 0.75rem;
     font-weight: 300;
     color: var(--gray-color-1);
 }
 
-.news-card-footer a {
+.home-news-card-footer a {
     display: flex;
     align-items: center;
     font-size: 0.75rem;
@@ -256,7 +256,7 @@
     transition: var(--transition);
 }
 
-.news-card-footer a:hover {
+.home-news-card-footer a:hover {
     color: #3d8838;
 }
 

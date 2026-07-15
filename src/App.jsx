@@ -9,6 +9,7 @@ import Contribution from './components/download/Contribution';
 import Snapshot from './routes/Snapshot';
 import { useIsMobile } from './hooks/useIsMobile';
 import { MobileBlock } from './components/MobileBlock';
+import News from './routes/News';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Home />} />
           <Route path="/snapshot" element={<Snapshot />} />
+          <Route path="/news" element={<News />} />
           <Route path="/download" element={<Download />}>
             <Route index element={<Navigate to="/home" />} />
             <Route path="contributions" element={<Contribution />} />
