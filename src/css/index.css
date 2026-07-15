@@ -493,6 +493,7 @@ body::-webkit-scrollbar-thumb {
   background-size: cover;
   background-position: center;
   z-index: 100;
+  overflow: hidden;
 }
 
 .mobile-block-card {
@@ -522,15 +523,15 @@ body::-webkit-scrollbar-thumb {
 
 .mobile-block-card div img {
   display: flex;
-  width: 50px;
+  width: 45px;
 }
 
 .mobile-block-card h1 {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .mobile-block-card p {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #141414;
 }
