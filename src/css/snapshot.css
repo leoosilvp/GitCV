@@ -54,6 +54,46 @@
     overflow: hidden;
 }
 
+.snapshot-card:hover .snapshot-card-download {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.snapshot-card-download {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -20px;
+    margin-left: -20px;
+    width: 269px;
+    height: 479px;
+    padding: 15px;
+    background: linear-gradient(0deg, #00000000, #000);
+    backdrop-filter: blur(0.5px);
+    transition: var(--transition);
+}
+
+.snapshot-card-download button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    padding: 5px;
+    color: var(--gray-color-1);
+    background: transparent;
+    border: 1px solid var(--hover-2);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.snapshot-card-download button:hover {
+    background: #ffffff;
+    color: var(--black);
+}
+
 .snapshot-card.one {
     background-image: url('../assets/img/bg-login-mobile.png');
 }

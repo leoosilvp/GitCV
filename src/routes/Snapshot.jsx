@@ -12,7 +12,7 @@ const Snapshot = () => {
       <section className="snapshot-content">
         <header className='snapshot-header'>
           <h1>Build. Share. Inspire.</h1>
-          <p>Showcase your developer journey through beautifully designed, shareable cards.</p>
+          <p>Transform your GitHub activity into snapshots that tell your story.</p>
         </header>
 
         <section className='snapshot-grid'>
