@@ -1,7 +1,7 @@
 import icon from '../assets/svg/icon.svg'
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Certificate, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
+import { Cafe, Certificate, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
 import { useUser } from '../hooks/useUser';
 
 function Header({ path, subPath }) {
@@ -45,6 +45,7 @@ function Header({ path, subPath }) {
         <ul>
           <NavLink to='/home'><Home className='icon' size={17} /> Home</NavLink>
           <NavLink to='/snapshot'><Certificate className='icon' size={17} /> Snapshot</NavLink>
+          <NavLink to='/news'><Cafe className='icon' size={17} /> News</NavLink>
           <NavLink to={`https://github.com/${user?.username}`} target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
           <NavLink to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={17} />My resume</NavLink>
         </ul>

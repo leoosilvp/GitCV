@@ -58,6 +58,7 @@ body::-webkit-scrollbar-thumb {
   border-bottom: 1.5px solid var(--hover-2);
   gap: 10px;
   transition: var(--transition);
+  z-index: 10;
 }
 
 .header-content {
@@ -150,7 +151,7 @@ body::-webkit-scrollbar-thumb {
   justify-content: flex-start !important;
   align-items: center;
   flex-direction: initial;
-  z-index: 2;
+  z-index: 10;
 }
 
 .header-main-scrolled .header-content-left img {

@@ -16,6 +16,7 @@ const Footer = () => {
                     <ul>
                         <Link to='/home'>Home</Link>
                         <Link to='/snapshot'>Snapshot</Link>
+                        <Link to='/news'>News</Link>
                         <Link to='/contribute'>Contribute</Link>
                         <Link to={`https://github.com/${user?.username}`} target='_blank'>Github</Link>
                         <Link to='/resume'>My resume</Link>

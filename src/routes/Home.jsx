@@ -6,6 +6,7 @@ import ContributionPanel from '../components/ContributionPanel';
 import { useGithubContributions } from '../hooks/useGithubContributions';
 import GithubStats from '../components/home/GithubStats';
 import News from '../components/home/News';
+import iconMono from '../assets/svg/icon-mono.svg'
 
 const Home = () => {
 
@@ -50,6 +51,11 @@ const Home = () => {
                 <div className='hr' />
 
                 <News />
+
+                <footer className='home-footer'>
+                    <img draggable={false} src={iconMono} />
+                    <p>Every contribution tells a story.<br /> Keep building yours.</p>
+                </footer>
             </div>
             <Footer />
         </main>
