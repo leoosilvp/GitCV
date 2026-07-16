@@ -36,23 +36,23 @@ const News = () => {
             {error ? (
                 <p className="home-news-error">Failed to load news: {error}</p>
             ) : (
-                <section className="home-news-grid">
+                <section className="news-grid">
                     {isLoading
                         ? Array.from({ length: 6 }).map((_, index) => (
-                            <article className="home-news-card" key={index}>
-                                <header className="home-news-card-header">
+                            <article className="news-card" key={index}>
+                                <header className="news-card-header">
                                     <h1 style={{ color: '#080808' }}>.</h1>
                                     <p style={{ color: '#080808' }}>.</p>
                                 </header>
 
-                                <section className="home-news-card-content">
+                                <section className="news-card-content">
                                     <h1 style={{ color: '#080808' }}>.</h1>
                                     <p style={{ color: '#080808' }}>.</p>
                                 </section>
 
                                 <hr style={{ border: 'none' }} />
 
-                                <footer className="home-news-card-footer">
+                                <footer className="news-card-footer">
                                     <div>
                                         <h1 style={{ color: '#080808' }}>.</h1>
                                     </div>
@@ -63,20 +63,20 @@ const News = () => {
                             const logoUrl = getCompanyLogo(article.source)
 
                             return (
-                                <article className="home-news-card" key={article.url}>
-                                    <header className="home-news-card-header">
+                                <article className="news-card" key={article.url}>
+                                    <header className="news-card-header">
                                         <h1>{article.source ?? "Tech"}</h1>
                                         <p>{formatRelativeTime(article.publishedAt)}</p>
                                     </header>
 
-                                    <section className="home-news-card-content">
+                                    <section className="news-card-content">
                                         <h1>{article.title}</h1>
                                         <p>{article.description}</p>
                                     </section>
 
                                     <hr />
 
-                                    <footer className="home-news-card-footer">
+                                    <footer className="news-card-footer">
                                         <div>
                                             {logoUrl ? (
                                                 <img draggable={false} src={logoUrl} />

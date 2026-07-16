@@ -1,45 +1,90 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { fetchTechNews } from "../services/news.service"
 
-export function useTechNews() {
+export function useTechNews({ initialPage = 1 } = {}) {
+    const [page, setPage] = useState(initialPage)
+    const [resolvedPage, setResolvedPage] = useState(null) // last page whose data is currently applied
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
     const [articles, setArticles] = useState([])
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalArticles, setTotalArticles] = useState(0)
     const [fetchedAt, setFetchedAt] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const isMounted = useRef(true)
 
-    const applyResult = useCallback((data) => {
+    // Derived, not stored: true whenever the page we want isn't the page
+    // we've actually applied data for yet, or a manual refresh is running.
+    // This avoids ever calling setIsLoading(true) synchronously inside an effect.
+    const isLoading = isRefreshing || page !== resolvedPage
+
+    const applyResult = useCallback((targetPage, data) => {
         if (!isMounted.current) return
         setArticles(data.articles ?? [])
+        setTotalPages(data.totalPages ?? 1)
+        setTotalArticles(data.totalArticles ?? 0)
         setFetchedAt(data.fetchedAt ?? null)
+        setError(null)
+        setResolvedPage(targetPage)
     }, [])
 
-    const applyError = useCallback((err) => {
+    const applyError = useCallback((targetPage, err) => {
         if (!isMounted.current) return
         setError(err.message ?? "Failed to load tech news")
+        setResolvedPage(targetPage) // stop showing loading state even though it failed
     }, [])
 
-    const settle = useCallback(() => {
-        if (isMounted.current) setIsLoading(false)
-    }, [])
-
-    const refresh = useCallback(() => {
-        setIsLoading(true)
-        setError(null)
-
-        return fetchTechNews({ force: true }).then(applyResult).catch(applyError).finally(settle)
-    }, [applyResult, applyError, settle])
+    const load = useCallback(
+        (targetPage, { force = false } = {}) =>
+            fetchTechNews({ page: targetPage, force })
+                .then((data) => applyResult(targetPage, data))
+                .catch((err) => applyError(targetPage, err)),
+        [applyResult, applyError]
+    )
 
     useEffect(() => {
         isMounted.current = true
-
-        fetchTechNews().then(applyResult).catch(applyError).finally(settle)
+        load(page)
 
         return () => {
             isMounted.current = false
         }
-    }, [applyResult, applyError, settle])
+    }, [page, load])
 
-    return { articles, fetchedAt, isLoading, error, refresh }
+    // Triggered from a user event (button click), never from an effect body,
+    // so setting isRefreshing synchronously here is safe.
+    const refresh = useCallback(() => {
+        setIsRefreshing(true)
+        return load(page, { force: true }).finally(() => {
+            if (isMounted.current) setIsRefreshing(false)
+        })
+    }, [load, page])
+
+    const goToPage = useCallback(
+        (targetPage) => {
+            setPage((current) => {
+                const next = Math.max(1, Math.min(targetPage, totalPages))
+                return next === current ? current : next
+            })
+        },
+        [totalPages]
+    )
+
+    const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page])
+    const previousPage = useCallback(() => goToPage(page - 1), [goToPage, page])
+
+    return {
+        articles,
+        page,
+        totalPages,
+        totalArticles,
+        fetchedAt,
+        isLoading,
+        error,
+        goToPage,
+        nextPage,
+        previousPage,
+        refresh,
+    }
 }

@@ -10,7 +10,217 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 95%;
-    max-width: 1500px;
+    width: 800px;
     min-height: 100dvh;
+}
+
+.news-header {
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.news-header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    height: 30px;
+    gap: 7px;
+    border: 1px solid var(--hover-2);
+    color: var(--gray-color-1);
+    background: #080808;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.news-header button:hover {
+    background: #0e0e0e;
+    border-color: #1e1e1e;
+}
+
+.news-header-right {
+    display: flex;
+    gap: 20px;
+}
+
+.news-header-right section {
+    display: flex;
+    gap: 10px;
+}
+
+.news-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0px 10px;
+    height: 30px;
+    border: 1px solid var(--hover-2);
+    background: #080808;
+}
+
+.news-search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    color: var(--gray-color-1);
+}
+
+.news-header .icon {
+    color: var(--gray-color-3);
+}
+
+.news-filter-dropdown {
+    position: absolute;
+    margin-top: -30px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    padding: 10px;
+    gap: 7px;
+    border: 1px solid var(--hover-2);
+    background: #080808;
+    box-shadow: 0 25px 50px #000;
+}
+
+
+.news-grid {
+    margin: 20px 0 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.news-card {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    width: 395px;
+    gap: 20px;
+    padding: 15px;
+    border: 1px solid var(--hover-2);
+    background: #080808;
+    cursor: default;
+}
+
+.news-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.news-card-header h1 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #57bf4f;
+}
+
+.news-card-header p {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--gray-color-2);
+}
+
+.news-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.news-card-content h1 {
+    display: flex;
+    height: 43px;
+    font-size: 1.1rem;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.news-card-content p {
+    display: flex;
+    height: 33px;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gray-color-3);
+    overflow: hidden;
+}
+
+.news-card hr {
+    display: flex;
+    border: none;
+    border-bottom: 1px solid var(--hover-2);
+}
+
+.news-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.news-card-footer div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.news-card-footer div img {
+    display: flex;
+    width: 20px;
+}
+
+.news-card-footer div h1 {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--gray-color-1);
+}
+
+.news-card-footer a {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 300;
+    gap: 5px;
+    color: #57bf4f;
+    transition: var(--transition);
+}
+
+.news-card-footer a:hover {
+    color: #3d8838;
+}
+
+.news-btn-next-page {
+    margin-top: -20px;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.news-btn-next-page p {
+    font-size: 0.8rem;
+    color: var(--gray-color-2);
+    cursor: default;
+}
+
+.news-btn-next-page button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    height: 30px;
+    gap: 7px;
+    border: 1px solid var(--hover-2);
+    color: var(--gray-color-1);
+    background: #080808;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.news-btn-next-page button:hover {
+    background: #0e0e0e;
+    border-color: #1e1e1e;
 }

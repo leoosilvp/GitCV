@@ -111,6 +111,7 @@
     font-size: 1rem;
 }
 
+
 /* News */
 .home-news-main {
     display: flex;
@@ -155,110 +156,6 @@
     color: #3d8838;
 }
 
-.home-news-grid {
-    margin: 20px 0 50px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.home-news-card {
-    font-family: "IBM Plex Mono", monospace;
-    display: flex;
-    flex-direction: column;
-    width: 395px;
-    gap: 20px;
-    padding: 15px;
-    border: 1px solid var(--hover-2);
-    background: #080808;
-    cursor: default;
-}
-
-.home-news-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.home-news-card-header h1 {
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #57bf4f;
-}
-
-.home-news-card-header p {
-    font-size: 0.7rem;
-    font-weight: 300;
-    color: var(--gray-color-2);
-}
-
-.home-news-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.home-news-card-content h1 {
-    display: flex;
-    height: 43px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    overflow: hidden;
-}
-
-.home-news-card-content p {
-    display: flex;
-    height: 33px;
-    text-overflow: ellipsis;
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: var(--gray-color-3);
-    overflow: hidden;
-}
-
-.home-news-card hr {
-    display: flex;
-    border: none;
-    border-bottom: 1px solid var(--hover-2);
-}
-
-.home-news-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.home-news-card-footer div {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.home-news-card-footer div img {
-    display: flex;
-    width: 20px;
-}
-
-.home-news-card-footer div h1 {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--gray-color-1);
-}
-
-.home-news-card-footer a {
-    display: flex;
-    align-items: center;
-    font-size: 0.75rem;
-    font-weight: 300;
-    gap: 5px;
-    color: #57bf4f;
-    transition: var(--transition);
-}
-
-.home-news-card-footer a:hover {
-    color: #3d8838;
-}
 
 .home-footer {
     margin-bottom: 50px;
