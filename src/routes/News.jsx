@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUpRight, Filter, Search, Link as LinkIcon, ChevronLeft, ChevronRight } from '@carbon/icons-react'
+import { ArrowUpRight, Filter, Search, Link as LinkIcon, ChevronLeft, ChevronRight, Close } from '@carbon/icons-react'
 import { Link } from "react-router-dom"
 import Footer from '../components/Footer'
 import Header from '../components/Header'
@@ -25,9 +25,19 @@ function buildPageList(page, totalPages) {
 }
 
 const News = () => {
-    const { articles, page, totalPages, isLoading, error, goToPage, nextPage, previousPage } = useTechNews()
+    const {
+        articles,
+        page,
+        totalPages,
+        isLoading,
+        error,
+        goToPage,
+        nextPage,
+        previousPage,
+        searchTerm,
+        setSearchTerm,
+    } = useTechNews()
 
-    const [searchTerm, setSearchTerm] = useState('')
     const [selectedSource, setSelectedSource] = useState(null)
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const filterRef = useRef(null)
@@ -50,19 +60,10 @@ const News = () => {
         return Array.from(sources).sort()
     }, [articles])
 
-    const filteredArticles = useMemo(() => {
-        const normalizedSearch = searchTerm.trim().toLowerCase()
-
-        return articles.filter((article) => {
-            const matchesSource = !selectedSource || article.source === selectedSource
-            if (!matchesSource) return false
-
-            if (!normalizedSearch) return true
-
-            const haystack = `${article.title ?? ''} ${article.description ?? ''}`.toLowerCase()
-            return haystack.includes(normalizedSearch)
-        })
-    }, [articles, searchTerm, selectedSource])
+    const visibleArticles = useMemo(() => {
+        if (!selectedSource) return articles
+        return articles.filter((article) => article.source === selectedSource)
+    }, [articles, selectedSource])
 
     const handleSelectSource = (source) => {
         setSelectedSource((current) => (current === source ? null : source))
@@ -87,15 +88,19 @@ const News = () => {
                                 {availableSources.length === 0 ? (
                                     <p>No sources available</p>
                                 ) : (
-                                    availableSources.map((source) => (
-                                        <button
-                                            key={source}
-                                            className={source === selectedSource ? 'active' : ''}
-                                            onClick={() => handleSelectSource(source)}
-                                        >
-                                            {source}
-                                        </button>
-                                    ))
+                                    <>
+                                        <button onClick={() => handleSelectSource()} className='remove'><Close size={16} /> Clear Filter</button>
+                                        {
+                                            availableSources.map((source) => (
+                                                <button
+                                                    key={source}
+                                                    className={source === selectedSource ? 'active' : ''}
+                                                    onClick={() => handleSelectSource(source)}
+                                                >
+                                                    {source}
+                                                </button>
+                                            ))
+                                        }</>
                                 )}
                             </div>
                         )}
@@ -146,7 +151,7 @@ const News = () => {
                                         </footer>
                                     </article>
                                 ))
-                                : filteredArticles.map((article) => {
+                                : visibleArticles.map((article) => {
                                     const logoUrl = getCompanyLogo(article.source)
 
                                     return (
@@ -182,12 +187,12 @@ const News = () => {
                                 })}
                         </section>
 
-                        {!isLoading && filteredArticles.length === 0 && (
+                        {!isLoading && visibleArticles.length === 0 && (
                             <p className="news-empty">No articles match your search or filter.</p>
                         )}
 
-                        {totalPages > 1 && (
-                            <footer className='news-pagination'>
+                        {visibleArticles.length > 0 & totalPages > 1 && (
+                            <footer className='news-btn-next-page'>
                                 <button onClick={previousPage} disabled={page <= 1 || isLoading}>
                                     <ChevronLeft size={16} />
                                 </button>
@@ -210,11 +215,6 @@ const News = () => {
                         )}
                     </>
                 )}
-                <div className='news-btn-next-page'>
-                    <button onClick={previousPage} disabled={page <= 1 || isLoading}><ChevronLeft size={16} /></button>
-                    <p>{page}</p>
-                    <button onClick={nextPage} disabled={page >= totalPages || isLoading}><ChevronRight size={16} /></button>
-                </div>
             </section>
             <Footer />
         </main>

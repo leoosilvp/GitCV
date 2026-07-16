@@ -2,19 +2,23 @@ const ENDPOINT = "https://api-gitcv-app.vercel.app/api/news"
 
 const CACHE_TTL_MS = 15 * 60 * 1000
 
-// One cache entry per page — the previous version cached a single global
-// entry and never forwarded `page` to the request, so every call silently
-// returned page 1 regardless of what was requested.
-const cacheByPage = new Map()
-const inFlightByPage = new Map()
+// Cache key combines page + search, since each distinct combination is a
+// distinct server-side result set.
+const cacheByKey = new Map()
+const inFlightByKey = new Map()
+
+function buildCacheKey(page, search) {
+    return `${page}::${search}`
+}
 
 function isCacheValid(entry) {
     return entry && entry.expiresAt > Date.now()
 }
 
-async function requestNews(page) {
+async function requestNews(page, search) {
     const url = new URL(ENDPOINT)
     url.searchParams.set("page", String(page))
+    if (search) url.searchParams.set("search", search)
 
     const response = await fetch(url, {
         method: "GET",
@@ -30,30 +34,32 @@ async function requestNews(page) {
     return response.json()
 }
 
-export async function fetchTechNews({ page = 1, force = false } = {}) {
-    const cached = cacheByPage.get(page)
+export async function fetchTechNews({ page = 1, search = "", force = false } = {}) {
+    const normalizedSearch = search.trim().toLowerCase()
+    const key = buildCacheKey(page, normalizedSearch)
 
+    const cached = cacheByKey.get(key)
     if (!force && isCacheValid(cached)) {
         return cached.data
     }
 
-    if (inFlightByPage.has(page)) {
-        return inFlightByPage.get(page)
+    if (inFlightByKey.has(key)) {
+        return inFlightByKey.get(key)
     }
 
-    const request = requestNews(page)
+    const request = requestNews(page, normalizedSearch)
         .then((data) => {
-            cacheByPage.set(page, { data, expiresAt: Date.now() + CACHE_TTL_MS })
+            cacheByKey.set(key, { data, expiresAt: Date.now() + CACHE_TTL_MS })
             return data
         })
         .finally(() => {
-            inFlightByPage.delete(page)
+            inFlightByKey.delete(key)
         })
 
-    inFlightByPage.set(page, request)
+    inFlightByKey.set(key, request)
     return request
 }
 
 export function clearTechNewsCache() {
-    cacheByPage.clear()
+    cacheByKey.clear()
 }

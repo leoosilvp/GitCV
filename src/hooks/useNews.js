@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { fetchTechNews } from "../services/news.service"
 
+const SEARCH_DEBOUNCE_MS = 400
+
 export function useTechNews({ initialPage = 1 } = {}) {
     const [page, setPage] = useState(initialPage)
-    const [resolvedPage, setResolvedPage] = useState(null) // last page whose data is currently applied
+    const [searchInput, setSearchInput] = useState("") // raw value, updates every keystroke
+    const [debouncedSearch, setDebouncedSearch] = useState("") // value actually sent to the backend
+
+    const [resolvedKey, setResolvedKey] = useState(null) // last "page::search" whose data is applied
     const [isRefreshing, setIsRefreshing] = useState(false)
 
     const [articles, setArticles] = useState([])
@@ -14,52 +19,72 @@ export function useTechNews({ initialPage = 1 } = {}) {
 
     const isMounted = useRef(true)
 
-    // Derived, not stored: true whenever the page we want isn't the page
-    // we've actually applied data for yet, or a manual refresh is running.
-    // This avoids ever calling setIsLoading(true) synchronously inside an effect.
-    const isLoading = isRefreshing || page !== resolvedPage
+    const previousSearchRef = useRef("")
 
-    const applyResult = useCallback((targetPage, data) => {
+    // Debounce: only update `debouncedSearch` (and therefore trigger a fetch)
+    // after the user stops typing for SEARCH_DEBOUNCE_MS. The page reset lives
+    // in the same timeout callback — not a separate effect reacting to
+    // `debouncedSearch` — so these setState calls happen inside an async timer
+    // callback rather than synchronously in the effect body.
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            const trimmed = searchInput.trim()
+            if (previousSearchRef.current !== trimmed) {
+                previousSearchRef.current = trimmed
+                setDebouncedSearch(trimmed)
+                setPage(1)
+            }
+        }, SEARCH_DEBOUNCE_MS)
+
+        return () => clearTimeout(timeoutId)
+    }, [searchInput])
+
+    const currentKey = `${page}::${debouncedSearch}`
+    const isLoading = isRefreshing || currentKey !== resolvedKey
+
+    const applyResult = useCallback((key, data) => {
         if (!isMounted.current) return
         setArticles(data.articles ?? [])
         setTotalPages(data.totalPages ?? 1)
         setTotalArticles(data.totalArticles ?? 0)
         setFetchedAt(data.fetchedAt ?? null)
         setError(null)
-        setResolvedPage(targetPage)
+        setResolvedKey(key)
     }, [])
 
-    const applyError = useCallback((targetPage, err) => {
+    const applyError = useCallback((key, err) => {
         if (!isMounted.current) return
         setError(err.message ?? "Failed to load tech news")
-        setResolvedPage(targetPage) // stop showing loading state even though it failed
+        setResolvedKey(key)
     }, [])
 
     const load = useCallback(
-        (targetPage, { force = false } = {}) =>
-            fetchTechNews({ page: targetPage, force })
-                .then((data) => applyResult(targetPage, data))
-                .catch((err) => applyError(targetPage, err)),
+        (targetPage, targetSearch, { force = false } = {}) => {
+            const key = `${targetPage}::${targetSearch}`
+            return fetchTechNews({ page: targetPage, search: targetSearch, force })
+                .then((data) => applyResult(key, data))
+                .catch((err) => applyError(key, err))
+        },
         [applyResult, applyError]
     )
 
     useEffect(() => {
         isMounted.current = true
-        load(page)
+        load(page, debouncedSearch)
 
         return () => {
             isMounted.current = false
         }
-    }, [page, load])
+    }, [page, debouncedSearch, load])
 
     // Triggered from a user event (button click), never from an effect body,
     // so setting isRefreshing synchronously here is safe.
     const refresh = useCallback(() => {
         setIsRefreshing(true)
-        return load(page, { force: true }).finally(() => {
+        return load(page, debouncedSearch, { force: true }).finally(() => {
             if (isMounted.current) setIsRefreshing(false)
         })
-    }, [load, page])
+    }, [load, page, debouncedSearch])
 
     const goToPage = useCallback(
         (targetPage) => {
@@ -74,6 +99,8 @@ export function useTechNews({ initialPage = 1 } = {}) {
     const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page])
     const previousPage = useCallback(() => goToPage(page - 1), [goToPage, page])
 
+    const clearSearch = useCallback(() => setSearchInput(""), [])
+
     return {
         articles,
         page,
@@ -86,5 +113,8 @@ export function useTechNews({ initialPage = 1 } = {}) {
         nextPage,
         previousPage,
         refresh,
+        searchTerm: searchInput,
+        setSearchTerm: setSearchInput,
+        clearSearch,
     }
 }
