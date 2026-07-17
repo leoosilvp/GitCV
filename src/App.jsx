@@ -10,6 +10,7 @@ import Snapshot from './routes/Snapshot';
 import { useIsMobile } from './hooks/useIsMobile';
 import { MobileBlock } from './components/MobileBlock';
 import News from './routes/News';
+import Resume from './routes/Resume';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path="/snapshot" element={<Snapshot />} />
           <Route path="/news" element={<News />} />
+          <Route path="/resume" element={<Resume />} />
           <Route path="/download" element={<Download />}>
             <Route index element={<Navigate to="/home" />} />
             <Route path="contributions" element={<Contribution />} />

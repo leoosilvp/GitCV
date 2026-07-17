@@ -100,7 +100,7 @@ body::-webkit-scrollbar-thumb {
   gap: 10px;
 }
 
-.header-content-right img {
+.header-content-right button {
   display: flex;
   width: 33px;
   height: 33px;
@@ -108,9 +108,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 50%;
   transition: var(--transition);
   cursor: pointer;
+  overflow: hidden;
 }
 
-.header-content-right img:hover {
+.header-content-right button:hover {
   border-color: var(--gray-color-3);
 }
 
@@ -175,6 +176,47 @@ body::-webkit-scrollbar-thumb {
   padding: 12px;
 }
 
+/* modal profile */
+.modalProfile-main {
+  margin-top: 45px;
+  position: absolute;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: fit-content;
+  padding: 10px;
+  border: 1px solid var(--hover-2);
+  background: #080808;
+  box-shadow: 0 0 10px #000000d4;
+}
+
+.modalProfile-main p {
+  text-overflow: ellipsis;
+  font-size: 0.8rem;
+  font-weight: 300;
+  width: 180px;
+  color: var(--gray-color-3);
+  overflow: hidden;
+}
+
+.modalProfile-main hr {
+  margin: 7px 0;
+  border: none;
+  border-bottom: 1px solid var(--hover-2);
+}
+
+.modalProfile-main a {
+  padding: 7px !important;
+}
+
+.modalProfile-main a:hover {
+  background: var(--hover-2);
+}
+
+.modalProfile-main a:last-child {
+  color: #ff5151;
+}
 
 /* Contribution Panel */
 .contributionPanel-main {
