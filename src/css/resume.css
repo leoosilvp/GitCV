@@ -13,4 +13,105 @@
     width: 95%;
     max-width: 1500px;
     min-height: 100dvh;
+    padding: 50px 0 70px;
+}
+
+.resume-view {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    width: 825px;
+    height: 1168px;
+    border: 1px solid var(--hover-2);
+    padding: 50px;
+}
+
+.resume-header {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.resume-header img {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.resume-header-info {
+    display: flex;
+    gap: 30px;
+}
+
+.resume-header-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.resume-header-info div h1 {
+    font-size: 2.2rem;
+}
+
+.resume-header-info div h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #57bf4f;
+}
+
+.resume-header-info div p {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--gray-color-1);
+}
+
+.resume-header-links {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resume-header-links a {
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #c4c4c4;
+}
+
+.resume-header-links p {
+    font-size: 0.9rem;
+    color: var(--gray-color-3);
+}
+
+.resume-divider {
+    margin: 35px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resume-divider h1 {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gray-color-1);
+}
+
+.resume-divider hr {
+    display: flex;
+    width: 100%;
+    height: 0px;
+    border: none;
+    border-bottom: 1px solid var(--gray-color-3);
+}
+
+.resume-contributionPanel {
+    margin-top: -30px;
+    display: flex;
+    justify-content: center;
+    transform: scale(0.95);
 }

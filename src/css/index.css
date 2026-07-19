@@ -211,7 +211,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .modalProfile-main a:hover {
-  background: var(--hover-2);
+  background: #101010;
 }
 
 .modalProfile-main a:last-child {
