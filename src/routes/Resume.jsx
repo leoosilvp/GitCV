@@ -1,4 +1,4 @@
-import { Location, LogoGithub, LogoLinkedin } from '@carbon/icons-react'
+import { Location, LogoGithub, LogoLinkedin, Wikis } from '@carbon/icons-react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../css/resume.css'
@@ -45,7 +45,7 @@ const Resume = () => {
                             <p>|</p>
                             <Link><LogoLinkedin size={17} />{`linkedin.com/in/leonardo-silva`}</Link>
                             <p>|</p>
-                            <Link><Location size={16} />leonardo.dev</Link>
+                            <Link><Wikis size={16} />leonardo.dev</Link>
                             <p>|</p>
                             <Link><Location size={16} />São Paulo, SP, Brasil</Link>
                         </div>

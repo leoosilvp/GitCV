@@ -8,6 +8,17 @@ function truncateDescription(description) {
     return `${description.slice(0, 135).trimEnd()}...`
 }
 
+const LANGUAGE_COLORS = {
+    JavaScript: "#f1e05a",
+    TypeScript: "#3178c6",
+    Python: "#3572A5",
+    HTML: "#e34c26",
+    CSS: "#563d7c",
+    Java: "#b07219",
+    Shell: "#89e051",
+    Go: "#00ADD8",
+}
+
 const TopProjects = ({ username }) => {
     const { topRepos, isLoading } = useGithubStats(username)
 
@@ -45,7 +56,7 @@ const TopProjects = ({ username }) => {
                                 <h1>{repo.name}</h1>
                                 {repo.language && (
                                     <p>
-                                        <span style={{ background: '#ffd230' }} />
+                                        <span style={{ background: LANGUAGE_COLORS[repo.language] }} />
                                         {repo.language}
                                     </p>
                                 )}
