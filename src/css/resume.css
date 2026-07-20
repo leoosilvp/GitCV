@@ -56,7 +56,7 @@
 .resume-header-info div h2 {
     font-size: 1rem;
     font-weight: 500;
-    color: #57bf4f;
+    color: var(--gray-color-2);
 }
 
 .resume-header-info div p {
@@ -110,8 +110,60 @@
 }
 
 .resume-contributionPanel {
-    margin-top: -30px;
+    margin: -30px 0 -10px;
     display: flex;
     justify-content: center;
     transform: scale(0.95);
+}
+
+.resume-performance {
+    display: flex;
+    justify-content: center;
+}
+
+.performance-grid {
+    display: flex;
+    gap: 10px;
+}
+
+.performance-card {
+    display: flex;
+    flex-direction: column;
+    width: 172px;
+    max-width: 172px;
+    min-width: 172px;
+    padding: 10px;
+    border: 1px solid var(--hover-2);
+    gap: 5px;
+}
+
+.performance-card.error {
+    color: var(--gray-color-3);
+}
+
+.performance-card .icon {
+    color: var(--gray-color-1);
+}
+
+.performance-card h1 {
+    margin-top: 2px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.performance-card h2 {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.performance-card div {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.performance-card p {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    color: var(--gray-color-2);
 }

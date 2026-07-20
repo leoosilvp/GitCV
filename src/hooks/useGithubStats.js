@@ -92,6 +92,20 @@ async function fetchPullRequestCount(username, signal) {
     return body.total_count ?? 0
 }
 
+async function fetchMergedPullRequestCount(username, signal) {
+    const response = await fetch(
+        `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username} is:merged`)}&per_page=1`,
+        { signal, headers: { Accept: "application/vnd.github+json" } }
+    )
+
+    if (!response.ok) {
+        throw new Error(`Failed to load merged pull request count (${response.status})`)
+    }
+
+    const body = await response.json()
+    return body.total_count ?? 0
+}
+
 function summarizeRepos(repos) {
     let totalStars = 0
     let topRepo = null
@@ -202,10 +216,11 @@ function analyzeContributions(contributions) {
 }
 
 async function fetchGithubStats(username, signal) {
-    const [profile, repos, pullRequestCount] = await Promise.all([
+    const [profile, repos, pullRequestCount, mergedPullRequestCount] = await Promise.all([
         fetchProfile(username, signal),
         fetchAllRepos(username, signal),
         fetchPullRequestCount(username, signal),
+        fetchMergedPullRequestCount(username, signal),
     ])
 
     const { totalStars, topRepo } = summarizeRepos(repos)
@@ -217,6 +232,7 @@ async function fetchGithubStats(username, signal) {
         totalStars,
         topRepo,
         pullRequestCount,
+        mergedPullRequestCount,
         profile: {
             login: profile.login,
             name: profile.name,
@@ -256,6 +272,7 @@ function buildStateForUsername(username) {
         totalStars: entry?.data.totalStars ?? 0,
         topRepo: entry?.data.topRepo ?? null,
         pullRequestCount: entry?.data.pullRequestCount ?? 0,
+        mergedPullRequestCount: entry?.data.mergedPullRequestCount ?? 0,
         profile: entry?.data.profile ?? null,
         isLoading: Boolean(username) && !entry,
         error: null,
@@ -290,6 +307,7 @@ export const useGithubStats = (username, contributions) => {
                             totalStars: result.totalStars,
                             topRepo: result.topRepo,
                             pullRequestCount: result.pullRequestCount,
+                            mergedPullRequestCount: result.mergedPullRequestCount,
                             profile: result.profile,
                             isLoading: false,
                             error: null,
@@ -319,6 +337,7 @@ export const useGithubStats = (username, contributions) => {
         totalStars: state.totalStars,
         topRepo: state.topRepo,
         pullRequestCount: state.pullRequestCount,
+        mergedPullRequestCount: state.mergedPullRequestCount,
         mostActiveWeekday,
         mostActiveMonth,
         averagePerWeek,

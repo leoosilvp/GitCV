@@ -5,10 +5,16 @@ import '../css/resume.css'
 import { useUser } from '../hooks/useUser'
 import { Link } from 'react-router-dom'
 import ContributionPanel from '../components/ContributionPanel'
+import Performance from '../components/resume/Performance'
+import { useGithubContributions } from '../hooks/useGithubContributions'
 
 const Resume = () => {
 
     const { user } = useUser()
+
+    const username = user?.username || ''
+
+    const { contributions } = useGithubContributions(user?.username)
 
     return (
         <main className='resume-main'>
@@ -43,6 +49,15 @@ const Resume = () => {
 
                     <section className='resume-contributionPanel'>
                         <ContributionPanel isDownload />
+                    </section>
+
+                    <div className='resume-divider'>
+                        <h1>GitHub Performance (Last 12 months)</h1>
+                        <hr />
+                    </div>
+
+                    <section className='resume-performance'>
+                        <Performance username={username} contributions={contributions} />
                     </section>
                 </article>
             </section>
