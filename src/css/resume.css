@@ -95,6 +95,7 @@
 }
 
 .resume-divider h1 {
+    text-transform: uppercase;
     white-space: nowrap;
     font-size: 0.75rem;
     font-weight: 500;
@@ -142,7 +143,7 @@
 }
 
 .performance-card .icon {
-    color: var(--gray-color-1);
+    color: #b3b3b3;
 }
 
 .performance-card h1 {

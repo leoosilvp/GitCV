@@ -1,7 +1,7 @@
 import icon from '../assets/svg/icon.svg'
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { Cafe, Certificate, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
+import { Cafe, Certificate, HeatMap_03, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
 import { useUser } from '../hooks/useUser';
 import ModalProfile from './ModalProfile';
 
@@ -70,10 +70,11 @@ function Header({ path, subPath }) {
       <nav>
         <ul>
           <NavLink to='/home'><Home className='icon' size={17} /> Home</NavLink>
-          <NavLink to='/snapshot'><Certificate className='icon' size={17} /> Snapshot</NavLink>
+          <NavLink to='/download/snapshot'><Certificate className='icon' size={17} /> Snapshot</NavLink>
           <NavLink to='/news'><Cafe className='icon' size={17} /> News</NavLink>
-          <NavLink to={`https://github.com/${user?.username}`} target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
+          <NavLink to='/download/contributions'><HeatMap_03 className='icon' size={17} />Contributions</NavLink>
           <NavLink to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={17} />My resume</NavLink>
+          <NavLink to={`https://github.com/${user?.username}`} target='_blank'><LogoGithub className='icon' size={17} /> GitHub</NavLink>
         </ul>
       </nav>
 

@@ -253,8 +253,8 @@ body::-webkit-scrollbar-thumb {
 .contributionPanel-monthRow {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 13.2px;
-  margin-left: 57px;
+  grid-auto-columns: 14.2px;
+  margin-left: 25px;
   cursor: default;
 }
 

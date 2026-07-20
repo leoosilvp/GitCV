@@ -6,7 +6,7 @@ import Login from './routes/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Download from './routes/Download';
 import Contribution from './components/download/Contribution';
-import Snapshot from './routes/Snapshot';
+import Snapshot from './components/download/Snapshot';
 import { useIsMobile } from './hooks/useIsMobile';
 import { MobileBlock } from './components/MobileBlock';
 import News from './routes/News';
@@ -27,12 +27,12 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Home />} />
-          <Route path="/snapshot" element={<Snapshot />} />
           <Route path="/news" element={<News />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/download" element={<Download />}>
             <Route index element={<Navigate to="/home" />} />
             <Route path="contributions" element={<Contribution />} />
+            <Route path="snapshot" element={<Snapshot />} />
           </Route>
           <Route path='/contribute' element={<Contribute />} />
         </Route>

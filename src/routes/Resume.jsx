@@ -59,6 +59,11 @@ const Resume = () => {
                     <section className='resume-performance'>
                         <Performance username={username} contributions={contributions} />
                     </section>
+
+                    <div className='resume-divider'>
+                        <h1>Top Languages</h1>
+                        <hr />
+                    </div>
                 </article>
             </section>
             <Footer />
