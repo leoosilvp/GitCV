@@ -168,3 +168,53 @@
     white-space: nowrap;
     color: var(--gray-color-2);
 }
+
+
+/* Top Languages */
+.resume-toplanguages {
+    display: flex;
+    justify-content: center;
+}
+
+.toplanguage-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.toplanguage-language {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.toplanguage-language h1 {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray-color-1);
+}
+
+.toplanguage-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.toplanguage-line {
+    display: flex;
+    width: 500px;
+}
+
+.toplanguage-filled-line {
+    display: flex;
+    height: 4px;
+    background: #196c2e;
+}
+
+.toplanguage-blank-line {
+    height: 4px;
+    width: 100%;
+    background: var(--hover-2);
+}

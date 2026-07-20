@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import ContributionPanel from '../components/ContributionPanel'
 import Performance from '../components/resume/Performance'
 import { useGithubContributions } from '../hooks/useGithubContributions'
+import TopLanguages from '../components/resume/TopLanguages'
 
 const Resume = () => {
 
@@ -64,6 +65,10 @@ const Resume = () => {
                         <h1>Top Languages</h1>
                         <hr />
                     </div>
+
+                    <section className='resume-toplanguages'>
+                        <TopLanguages username={username} />
+                    </section>
                 </article>
             </section>
             <Footer />

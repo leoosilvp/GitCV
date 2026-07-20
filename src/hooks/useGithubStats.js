@@ -4,6 +4,7 @@ const GITHUB_API_BASE = "https://api.github.com"
 const CACHE_TTL_MS = 5 * 60 * 1000
 const MAX_REPO_PAGES = 10
 const REPOS_PER_PAGE = 100
+const TOP_LANGUAGES_LIMIT = 5
 
 const WEEKDAY_LABELS = [
     "Sunday",
@@ -104,6 +105,45 @@ async function fetchMergedPullRequestCount(username, signal) {
 
     const body = await response.json()
     return body.total_count ?? 0
+}
+
+async function fetchRepoLanguages(repo, signal) {
+    const response = await fetch(`${GITHUB_API_BASE}/repos/${repo.full_name}/languages`, {
+        signal,
+        headers: { Accept: "application/vnd.github+json" },
+    })
+
+    if (!response.ok) return {}
+
+    return response.json()
+}
+
+async function fetchLanguageBreakdown(repos, signal) {
+    const sourceRepos = repos.filter((repo) => !repo.fork)
+
+    const perRepoLanguages = await Promise.all(
+        sourceRepos.map((repo) => fetchRepoLanguages(repo, signal))
+    )
+
+    const bytesByLanguage = new Map()
+
+    for (const languages of perRepoLanguages) {
+        for (const [language, bytes] of Object.entries(languages)) {
+            bytesByLanguage.set(language, (bytesByLanguage.get(language) ?? 0) + bytes)
+        }
+    }
+
+    const totalBytes = [...bytesByLanguage.values()].reduce((sum, bytes) => sum + bytes, 0)
+
+    if (totalBytes === 0) return []
+
+    return [...bytesByLanguage.entries()]
+        .sort(([, bytesA], [, bytesB]) => bytesB - bytesA)
+        .slice(0, TOP_LANGUAGES_LIMIT)
+        .map(([language, bytes]) => ({
+            language,
+            percentage: Math.round((bytes / totalBytes) * 1000) / 10,
+        }))
 }
 
 function summarizeRepos(repos) {
@@ -224,6 +264,7 @@ async function fetchGithubStats(username, signal) {
     ])
 
     const { totalStars, topRepo } = summarizeRepos(repos)
+    const topLanguages = await fetchLanguageBreakdown(repos, signal)
 
     return {
         followers: profile.followers ?? 0,
@@ -233,6 +274,7 @@ async function fetchGithubStats(username, signal) {
         topRepo,
         pullRequestCount,
         mergedPullRequestCount,
+        topLanguages,
         profile: {
             login: profile.login,
             name: profile.name,
@@ -273,6 +315,7 @@ function buildStateForUsername(username) {
         topRepo: entry?.data.topRepo ?? null,
         pullRequestCount: entry?.data.pullRequestCount ?? 0,
         mergedPullRequestCount: entry?.data.mergedPullRequestCount ?? 0,
+        topLanguages: entry?.data.topLanguages ?? [],
         profile: entry?.data.profile ?? null,
         isLoading: Boolean(username) && !entry,
         error: null,
@@ -308,6 +351,7 @@ export const useGithubStats = (username, contributions) => {
                             topRepo: result.topRepo,
                             pullRequestCount: result.pullRequestCount,
                             mergedPullRequestCount: result.mergedPullRequestCount,
+                            topLanguages: result.topLanguages,
                             profile: result.profile,
                             isLoading: false,
                             error: null,
@@ -338,6 +382,7 @@ export const useGithubStats = (username, contributions) => {
         topRepo: state.topRepo,
         pullRequestCount: state.pullRequestCount,
         mergedPullRequestCount: state.mergedPullRequestCount,
+        topLanguages: state.topLanguages,
         mostActiveWeekday,
         mostActiveMonth,
         averagePerWeek,
