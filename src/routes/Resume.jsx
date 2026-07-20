@@ -1,4 +1,4 @@
-import { Location, LogoGithub, LogoLinkedin, Wikis } from '@carbon/icons-react'
+import { Location, LogoGithub, LogoInstagram, LogoLinkedin, Wikis } from '@carbon/icons-react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../css/resume.css'
@@ -9,6 +9,7 @@ import Performance from '../components/resume/Performance'
 import { useGithubContributions } from '../hooks/useGithubContributions'
 import TopLanguages from '../components/resume/TopLanguages'
 import TopProjects from '../components/resume/TopProjects'
+import { useGithubStats } from '../hooks/useGithubStats'
 
 const Resume = () => {
 
@@ -16,7 +17,13 @@ const Resume = () => {
 
     const username = user?.username || ''
 
+    function getFirstName(fullName) {
+        return fullName.trim().split(/\s+/)[0] || "";
+    }
+
     const { contributions } = useGithubContributions(user?.username)
+
+    const { profile } = useGithubStats(username)
 
     const formattedDate = new Intl.DateTimeFormat("pt-BR", {
         timeZone: "America/Sao_Paulo",
@@ -32,22 +39,40 @@ const Resume = () => {
                 <article className='resume-view'>
                     <header className='resume-header'>
                         <div className='resume-header-info'>
-                            <img src={user?.avatar} />
+                            <img src={profile?.avatarUrl} />
                             <div>
-                                <h1>{user?.name}</h1>
-                                <h2>Software Engieneer</h2>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis aperiam in nemo facere, blanditiis reprehenderit fugiat distinctio odit error corporis sunt aliquid earum corrupti. Dolor obcaecati totam eaque labore velit.</p>
+                                <h1>{profile?.name}</h1>
+                                <h2>{profile?.company}</h2>
+                                <p>{profile?.bio}</p>
                             </div>
                         </div>
 
                         <div className='resume-header-links'>
-                            <Link to={`https://github.com/${user?.username}`}><LogoGithub size={17} />{`github.com/${user?.username}`}</Link>
-                            <p>|</p>
-                            <Link><LogoLinkedin size={17} />{`linkedin.com/in/leonardo-silva`}</Link>
-                            <p>|</p>
-                            <Link><Wikis size={16} />leonardo.dev</Link>
-                            <p>|</p>
-                            <Link><Location size={16} />São Paulo, SP, Brasil</Link>
+                            <Link to={`https://github.com/${user?.username}`}><LogoGithub size={17} />github/{getFirstName(user?.name)}</Link>
+                            {profile?.linkedinUrl &&
+                                <>
+                                    <p>|</p>
+                                    <Link to={profile?.linkedinUrl}><LogoLinkedin size={17} />linkedin/{getFirstName(user?.name)}</Link>
+                                </>
+                            }
+                            {profile?.instagramUrl &&
+                                <>
+                                    <p>|</p>
+                                    <Link to={profile?.instagramUrl}><LogoInstagram size={16} />instagram/{getFirstName(user?.name)}</Link>
+                                </>
+                            }
+                            {profile?.websiteUrl &&
+                                <>
+                                    <p>|</p>
+                                    <Link to={profile?.websiteUrl}><Wikis size={16} />site/{getFirstName(user?.name)}</Link>
+                                </>
+                            }
+                            {profile?.location &&
+                                <>
+                                    <p>|</p>
+                                    <Link><Location size={16} />{profile?.location}</Link>
+                                </>
+                            }
                         </div>
                     </header>
 

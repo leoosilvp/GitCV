@@ -45,6 +45,34 @@ function setCached(username, data) {
     cache.set(username, { data, expiresAt: Date.now() + CACHE_TTL_MS })
 }
 
+function normalizeUrl(url) {
+    if (!url) return null
+    const trimmed = url.trim()
+    if (!trimmed) return null
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`
+}
+
+function extractSocialLinks(profile, socialAccounts) {
+    const accountsByProvider = new Map(
+        socialAccounts.map((account) => [account.provider.toLowerCase(), account.url])
+    )
+
+    const linkedinUrl = normalizeUrl(accountsByProvider.get("linkedin"))
+    const instagramUrl = normalizeUrl(accountsByProvider.get("instagram"))
+
+    const twitterUrl =
+        normalizeUrl(accountsByProvider.get("twitter")) ??
+        normalizeUrl(accountsByProvider.get("x")) ??
+        (profile.twitter_username ? `https://twitter.com/${profile.twitter_username}` : null)
+
+    const genericAccountUrl = normalizeUrl(
+        accountsByProvider.get("generic") ?? accountsByProvider.get("website")
+    )
+    const websiteUrl = genericAccountUrl ?? normalizeUrl(profile.blog)
+
+    return { linkedinUrl, instagramUrl, twitterUrl, websiteUrl }
+}
+
 async function fetchProfile(username, signal) {
     const response = await fetch(`${GITHUB_API_BASE}/users/${encodeURIComponent(username)}`, {
         signal,
@@ -54,6 +82,17 @@ async function fetchProfile(username, signal) {
     if (!response.ok) {
         throw new Error(`Failed to load GitHub profile (${response.status})`)
     }
+
+    return response.json()
+}
+
+async function fetchSocialAccounts(username, signal) {
+    const response = await fetch(
+        `${GITHUB_API_BASE}/users/${encodeURIComponent(username)}/social_accounts`,
+        { signal, headers: { Accept: "application/vnd.github+json" } }
+    )
+
+    if (!response.ok) return []
 
     return response.json()
 }
@@ -269,15 +308,17 @@ function analyzeContributions(contributions) {
 }
 
 async function fetchGithubStats(username, signal) {
-    const [profile, repos, pullRequestCount, mergedPullRequestCount] = await Promise.all([
+    const [profile, repos, pullRequestCount, mergedPullRequestCount, socialAccounts] = await Promise.all([
         fetchProfile(username, signal),
         fetchAllRepos(username, signal),
         fetchPullRequestCount(username, signal),
         fetchMergedPullRequestCount(username, signal),
+        fetchSocialAccounts(username, signal),
     ])
 
     const { totalStars, topRepo, topRepos } = summarizeRepos(repos)
     const topLanguages = await fetchLanguageBreakdown(repos, signal)
+    const { linkedinUrl, instagramUrl, twitterUrl, websiteUrl } = extractSocialLinks(profile, socialAccounts)
 
     return {
         followers: profile.followers ?? 0,
@@ -295,6 +336,12 @@ async function fetchGithubStats(username, signal) {
             avatarUrl: profile.avatar_url,
             bio: profile.bio,
             url: profile.html_url,
+            company: profile.company ?? null,
+            location: profile.location ?? null,
+            linkedinUrl,
+            instagramUrl,
+            websiteUrl,
+            twitterUrl,
         },
     }
 }
