@@ -218,3 +218,21 @@
     width: 100%;
     background: var(--hover-2);
 }
+
+
+.resume-footer {
+    margin-top: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.resume-footer p {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--gray-color-2);
+}
+
+.resume-footer p a {
+    color: #27a547;
+}
