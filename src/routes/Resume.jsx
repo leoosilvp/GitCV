@@ -17,8 +17,8 @@ const Resume = () => {
 
     const username = user?.username || ''
 
-    function getFirstName(fullName) {
-        return fullName.trim().split(/\s+/)[0] || "";
+    function getFirstName() {
+        return user?.name.trim().split(/\s+/)[0] || "";
     }
 
     const { contributions } = useGithubContributions(user?.username)
@@ -48,23 +48,23 @@ const Resume = () => {
                         </div>
 
                         <div className='resume-header-links'>
-                            <Link to={`https://github.com/${user?.username}`}><LogoGithub size={17} />github/{getFirstName(user?.name)}</Link>
+                            <Link to={`https://github.com/${user?.username}`}><LogoGithub size={17} />github/{getFirstName()}</Link>
                             {profile?.linkedinUrl &&
                                 <>
                                     <p>|</p>
-                                    <Link to={profile?.linkedinUrl}><LogoLinkedin size={17} />linkedin/{getFirstName(user?.name)}</Link>
+                                    <Link to={profile?.linkedinUrl}><LogoLinkedin size={17} />linkedin/{getFirstName()}</Link>
                                 </>
                             }
                             {profile?.instagramUrl &&
                                 <>
                                     <p>|</p>
-                                    <Link to={profile?.instagramUrl}><LogoInstagram size={16} />instagram/{getFirstName(user?.name)}</Link>
+                                    <Link to={profile?.instagramUrl}><LogoInstagram size={16} />instagram/{getFirstName()}</Link>
                                 </>
                             }
                             {profile?.websiteUrl &&
                                 <>
                                     <p>|</p>
-                                    <Link to={profile?.websiteUrl}><Wikis size={16} />site/{getFirstName(user?.name)}</Link>
+                                    <Link to={profile?.websiteUrl}><Wikis size={16} />site/{getFirstName()}</Link>
                                 </>
                             }
                             {profile?.location &&

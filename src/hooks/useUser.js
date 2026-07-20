@@ -38,6 +38,7 @@ function normalizeUser(data) {
         username: data.username,
         avatar: data.avatar,
         name: data.name,
+        github_access_token: data.github_access_token,
         createdAt: data.created_at,
     }
 }

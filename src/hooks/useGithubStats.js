@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useUser } from "./useUser"
 
 const GITHUB_API_BASE = "https://api.github.com"
 const CACHE_TTL_MS = 5 * 60 * 1000
@@ -73,10 +74,20 @@ function extractSocialLinks(profile, socialAccounts) {
     return { linkedinUrl, instagramUrl, twitterUrl, websiteUrl }
 }
 
-async function fetchProfile(username, signal) {
+function buildGithubHeaders(accessToken) {
+    const headers = { Accept: "application/vnd.github+json" }
+
+    if (accessToken) {
+        headers.Authorization = `Bearer ${accessToken}`
+    }
+
+    return headers
+}
+
+async function fetchProfile(username, accessToken, signal) {
     const response = await fetch(`${GITHUB_API_BASE}/users/${encodeURIComponent(username)}`, {
         signal,
-        headers: { Accept: "application/vnd.github+json" },
+        headers: buildGithubHeaders(accessToken),
     })
 
     if (!response.ok) {
@@ -86,10 +97,10 @@ async function fetchProfile(username, signal) {
     return response.json()
 }
 
-async function fetchSocialAccounts(username, signal) {
+async function fetchSocialAccounts(username, accessToken, signal) {
     const response = await fetch(
         `${GITHUB_API_BASE}/users/${encodeURIComponent(username)}/social_accounts`,
-        { signal, headers: { Accept: "application/vnd.github+json" } }
+        { signal, headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) return []
@@ -97,13 +108,13 @@ async function fetchSocialAccounts(username, signal) {
     return response.json()
 }
 
-async function fetchAllRepos(username, signal) {
+async function fetchAllRepos(username, accessToken, signal) {
     const repos = []
 
     for (let page = 1; page <= MAX_REPO_PAGES; page += 1) {
         const response = await fetch(
             `${GITHUB_API_BASE}/users/${encodeURIComponent(username)}/repos?per_page=${REPOS_PER_PAGE}&page=${page}&sort=updated`,
-            { signal, headers: { Accept: "application/vnd.github+json" } }
+            { signal, headers: buildGithubHeaders(accessToken) }
         )
 
         if (!response.ok) {
@@ -119,10 +130,10 @@ async function fetchAllRepos(username, signal) {
     return repos
 }
 
-async function fetchPullRequestCount(username, signal) {
+async function fetchPullRequestCount(username, accessToken, signal) {
     const response = await fetch(
         `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username}`)}&per_page=1`,
-        { signal, headers: { Accept: "application/vnd.github+json" } }
+        { signal, headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) {
@@ -133,10 +144,10 @@ async function fetchPullRequestCount(username, signal) {
     return body.total_count ?? 0
 }
 
-async function fetchMergedPullRequestCount(username, signal) {
+async function fetchMergedPullRequestCount(username, accessToken, signal) {
     const response = await fetch(
         `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username} is:merged`)}&per_page=1`,
-        { signal, headers: { Accept: "application/vnd.github+json" } }
+        { signal, headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) {
@@ -147,10 +158,10 @@ async function fetchMergedPullRequestCount(username, signal) {
     return body.total_count ?? 0
 }
 
-async function fetchRepoLanguages(repo, signal) {
+async function fetchRepoLanguages(repo, accessToken, signal) {
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repo.full_name}/languages`, {
         signal,
-        headers: { Accept: "application/vnd.github+json" },
+        headers: buildGithubHeaders(accessToken),
     })
 
     if (!response.ok) return {}
@@ -158,11 +169,11 @@ async function fetchRepoLanguages(repo, signal) {
     return response.json()
 }
 
-async function fetchLanguageBreakdown(repos, signal) {
+async function fetchLanguageBreakdown(repos, accessToken, signal) {
     const sourceRepos = repos.filter((repo) => !repo.fork)
 
     const perRepoLanguages = await Promise.all(
-        sourceRepos.map((repo) => fetchRepoLanguages(repo, signal))
+        sourceRepos.map((repo) => fetchRepoLanguages(repo, accessToken, signal))
     )
 
     const bytesByLanguage = new Map()
@@ -307,17 +318,17 @@ function analyzeContributions(contributions) {
     }
 }
 
-async function fetchGithubStats(username, signal) {
+async function fetchGithubStats(username, accessToken, signal) {
     const [profile, repos, pullRequestCount, mergedPullRequestCount, socialAccounts] = await Promise.all([
-        fetchProfile(username, signal),
-        fetchAllRepos(username, signal),
-        fetchPullRequestCount(username, signal),
-        fetchMergedPullRequestCount(username, signal),
-        fetchSocialAccounts(username, signal),
+        fetchProfile(username, accessToken, signal),
+        fetchAllRepos(username, accessToken, signal),
+        fetchPullRequestCount(username, accessToken, signal),
+        fetchMergedPullRequestCount(username, accessToken, signal),
+        fetchSocialAccounts(username, accessToken, signal),
     ])
 
     const { totalStars, topRepo, topRepos } = summarizeRepos(repos)
-    const topLanguages = await fetchLanguageBreakdown(repos, signal)
+    const topLanguages = await fetchLanguageBreakdown(repos, accessToken, signal)
     const { linkedinUrl, instagramUrl, twitterUrl, websiteUrl } = extractSocialLinks(profile, socialAccounts)
 
     return {
@@ -346,12 +357,12 @@ async function fetchGithubStats(username, signal) {
     }
 }
 
-function loadGithubStats(username, signal) {
+function loadGithubStats(username, accessToken, signal) {
     if (inflightRequests.has(username)) {
         return inflightRequests.get(username)
     }
 
-    const promise = fetchGithubStats(username, signal)
+    const promise = fetchGithubStats(username, accessToken, signal)
         .then((result) => {
             setCached(username, result)
             return result
@@ -385,6 +396,9 @@ function buildStateForUsername(username) {
 }
 
 export const useGithubStats = (username, contributions) => {
+    const { user } = useUser()
+    const accessToken = user?.github_access_token
+
     const [state, setState] = useState(() => buildStateForUsername(username))
 
     if (username !== state.username) {
@@ -400,7 +414,7 @@ export const useGithubStats = (username, contributions) => {
 
         const controller = new AbortController()
 
-        loadGithubStats(username, controller.signal)
+        loadGithubStats(username, accessToken, controller.signal)
             .then((result) => {
                 setState((prev) =>
                     prev.username === username
@@ -432,7 +446,7 @@ export const useGithubStats = (username, contributions) => {
             })
 
         return () => controller.abort()
-    }, [username])
+    }, [username, accessToken])
 
     const { mostActiveWeekday, mostActiveMonth, averagePerWeek, longestStreak, currentStreak } =
         analyzeContributions(contributions)
