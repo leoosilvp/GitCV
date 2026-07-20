@@ -8,6 +8,7 @@ import ContributionPanel from '../components/ContributionPanel'
 import Performance from '../components/resume/Performance'
 import { useGithubContributions } from '../hooks/useGithubContributions'
 import TopLanguages from '../components/resume/TopLanguages'
+import TopProjects from '../components/resume/TopProjects'
 
 const Resume = () => {
 
@@ -77,8 +78,14 @@ const Resume = () => {
                         <TopLanguages username={username} />
                     </section>
 
+                    <div className='resume-divider'>
+                        <h1>Top Projects</h1>
+                        <hr />
+                    </div>
 
-
+                    <section className='resume-top-projects'>
+                        <TopProjects username={username} />
+                    </section>
 
                     <footer className='resume-footer'>
                         <p>{formattedDate}</p>

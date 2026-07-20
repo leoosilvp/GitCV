@@ -5,6 +5,7 @@ const CACHE_TTL_MS = 5 * 60 * 1000
 const MAX_REPO_PAGES = 10
 const REPOS_PER_PAGE = 100
 const TOP_LANGUAGES_LIMIT = 5
+const TOP_REPOS_LIMIT = 3
 
 const WEEKDAY_LABELS = [
     "Sunday",
@@ -166,7 +167,19 @@ function summarizeRepos(repos) {
         }
     }
 
-    return { totalStars, topRepo }
+    const topRepos = [...repos]
+        .sort((a, b) => (b.stargazers_count ?? 0) - (a.stargazers_count ?? 0))
+        .slice(0, TOP_REPOS_LIMIT)
+        .map((repo) => ({
+            name: repo.name,
+            language: repo.language,
+            description: repo.description,
+            stars: repo.stargazers_count ?? 0,
+            forks: repo.forks_count ?? 0,
+            url: repo.html_url,
+        }))
+
+    return { totalStars, topRepo, topRepos }
 }
 
 function analyzeContributions(contributions) {
@@ -263,7 +276,7 @@ async function fetchGithubStats(username, signal) {
         fetchMergedPullRequestCount(username, signal),
     ])
 
-    const { totalStars, topRepo } = summarizeRepos(repos)
+    const { totalStars, topRepo, topRepos } = summarizeRepos(repos)
     const topLanguages = await fetchLanguageBreakdown(repos, signal)
 
     return {
@@ -272,6 +285,7 @@ async function fetchGithubStats(username, signal) {
         publicRepos: profile.public_repos ?? repos.length,
         totalStars,
         topRepo,
+        topRepos,
         pullRequestCount,
         mergedPullRequestCount,
         topLanguages,
@@ -313,6 +327,7 @@ function buildStateForUsername(username) {
         publicRepos: entry?.data.publicRepos ?? 0,
         totalStars: entry?.data.totalStars ?? 0,
         topRepo: entry?.data.topRepo ?? null,
+        topRepos: entry?.data.topRepos ?? [],
         pullRequestCount: entry?.data.pullRequestCount ?? 0,
         mergedPullRequestCount: entry?.data.mergedPullRequestCount ?? 0,
         topLanguages: entry?.data.topLanguages ?? [],
@@ -349,6 +364,7 @@ export const useGithubStats = (username, contributions) => {
                             publicRepos: result.publicRepos,
                             totalStars: result.totalStars,
                             topRepo: result.topRepo,
+                            topRepos: result.topRepos,
                             pullRequestCount: result.pullRequestCount,
                             mergedPullRequestCount: result.mergedPullRequestCount,
                             topLanguages: result.topLanguages,
@@ -380,6 +396,7 @@ export const useGithubStats = (username, contributions) => {
         publicRepos: state.publicRepos,
         totalStars: state.totalStars,
         topRepo: state.topRepo,
+        topRepos: state.topRepos,
         pullRequestCount: state.pullRequestCount,
         mergedPullRequestCount: state.mergedPullRequestCount,
         topLanguages: state.topLanguages,
