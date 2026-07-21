@@ -1,4 +1,5 @@
-import { Location, LogoGithub, LogoInstagram, LogoLinkedin, Wikis } from '@carbon/icons-react'
+import { Download, Location, LogoGithub, LogoInstagram, LogoLinkedin, Wikis } from '@carbon/icons-react'
+import { useEffect, useRef } from 'react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../css/resume.css'
@@ -17,6 +18,8 @@ const Resume = () => {
 
     const username = user?.username || ''
 
+    const resumeRef = useRef(null)
+
     function getFirstName() {
         return user?.name.trim().split(/\s+/)[0] || "";
     }
@@ -32,11 +35,32 @@ const Resume = () => {
         year: "numeric",
     }).format(new Date());
 
+    function handleDownloadPDF() {
+        document.body.classList.add('printing-resume')
+        window.print()
+    }
+
+    useEffect(() => {
+        function handleAfterPrint() {
+            document.body.classList.remove('printing-resume')
+        }
+
+        window.addEventListener('afterprint', handleAfterPrint)
+
+        return () => {
+            window.removeEventListener('afterprint', handleAfterPrint)
+        }
+    }, [])
+
     return (
         <main className='resume-main'>
             <Header path='Resume' />
             <section className='resume-content'>
-                <article className='resume-view'>
+                <header className='resume-content-header'>
+                    <p>Download your resume as a PDF</p>
+                    <button onClick={handleDownloadPDF}><Download size={16} />Download PDF</button>
+                </header>
+                <article className='resume-view' ref={resumeRef}>
                     <header className='resume-header'>
                         <div className='resume-header-info'>
                             <img src={profile?.avatarUrl} />
