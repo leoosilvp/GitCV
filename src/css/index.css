@@ -123,6 +123,15 @@ body::-webkit-scrollbar-thumb {
   border: 1px solid #1f1f1f;
   gap: 7px;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.header-btn-search:hover {
+  border-color: #252525;
+}
+
+.header-btn-search:hover p {
+  color: #c5c5c5;
 }
 
 .header-btn-search.icon {
@@ -136,6 +145,7 @@ body::-webkit-scrollbar-thumb {
   font-weight: 300;
   color: #b3b3b3;
   gap: 7px;
+  transition: var(--transition);
 }
 
 .header-btn-search span {

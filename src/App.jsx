@@ -11,6 +11,7 @@ import { useIsMobile } from './hooks/useIsMobile';
 import { MobileBlock } from './components/MobileBlock';
 import News from './routes/News';
 import Resume from './routes/Resume';
+import Search from './routes/Search';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="snapshot" element={<Snapshot />} />
           </Route>
           <Route path='/contribute' element={<Contribute />} />
+          <Route path='/search' element={<Search />} />
         </Route>
       </Routes>
     </BrowserRouter>
