@@ -97,7 +97,7 @@ body::-webkit-scrollbar-thumb {
 .header-content-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .header-content-right button {
@@ -114,6 +114,42 @@ body::-webkit-scrollbar-thumb {
 .header-content-right button:hover {
   border-color: var(--gray-color-3);
 }
+
+.header-btn-search {
+  display: flex;
+  align-items: center;
+  width: 170px;
+  padding: 5px 10px;
+  border: 1px solid #1f1f1f;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.header-btn-search.icon {
+  color: #c1c1c1;
+}
+
+.header-btn-search p {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #b3b3b3;
+  gap: 7px;
+}
+
+.header-btn-search span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  border: 1px solid #1e1e1e;
+}
+
+
+
 
 .header-main nav ul {
   display: flex;

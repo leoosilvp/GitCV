@@ -1,7 +1,7 @@
 import icon from '../assets/svg/icon.svg'
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { Cafe, Certificate, HeatMap_03, Home, IbmKnowledgeCatalogPremium, LogoGithub } from '@carbon/icons-react';
+import { Cafe, Certificate, HeatMap_03, Home, IbmKnowledgeCatalogPremium, LogoGithub, Search } from '@carbon/icons-react';
 import { useUser } from '../hooks/useUser';
 import ModalProfile from './ModalProfile';
 
@@ -61,6 +61,10 @@ function Header({ path, subPath }) {
         </article>
 
         <div className='header-content-right'>
+          <div className='header-btn-search'>
+            <Search className='icon' size={16} />
+            <p>Type <span>/</span> to search</p>
+          </div>
           <button ref={profileBtnRef} onClick={() => setIsProfileOpen(prev => !prev)}>
             <img src={user?.avatar} />
           </button>
