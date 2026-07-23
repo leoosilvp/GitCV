@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { getUserByUsername, UsersApiError } from "../services/users.service"
 
 const EMPTY_STATS = {
-    isRegistered: false,
     followers: 0,
     following: 0,
     publicRepos: 0,
@@ -39,7 +38,7 @@ export const useUserProfile = (username) => {
 
         getUserByUsername(username, { signal: controller.signal })
             .then((response) => {
-                if (requestId !== requestIdRef.current) return
+                if (requestId !== requestIdRef.current) return // superseded by a newer request
 
                 setResult({
                     username,

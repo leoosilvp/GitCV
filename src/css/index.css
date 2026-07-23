@@ -41,6 +41,18 @@ body::-webkit-scrollbar-thumb {
   cursor: pointer;
 }
 
+.loading {
+  animation: loop 1s linear infinite;
+}
+
+@keyframes loop {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(365deg);
+  }
+}
 
 /* HEADER */
 .header-main {
@@ -221,6 +233,142 @@ body::-webkit-scrollbar-thumb {
 .header-main-scrolled nav ul a {
   padding: 12px;
 }
+
+
+/* modal search */
+.modalSearch-main {
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  background: #00000069;
+  z-index: 10;
+}
+
+.modalSearch-modal {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  height: fit-content;
+  background: #0b0b0b;
+  border: 1px solid var(--hover-2);
+  padding: 15px;
+  gap: 20px;
+  box-shadow: 0 0 20px 1px #000;
+  overflow: hidden;
+}
+
+.modalSearch-search {
+  display: flex;
+  align-items: center;
+  padding: 2px 12px;
+  width: 100%;
+  height: 35px;
+  border: 1px solid #fff;
+  gap: 10px;
+}
+
+.modalSearch-search .icon {
+  color: var(--gray-color-1);
+}
+
+.modalSearch-search input {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--light-color);
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.modalSearch-content-title {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--gray-color-2);
+}
+
+.modalSearch-grid {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  height: 250px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.modalSearch-grid::-webkit-scrollbar {
+  display: flex;
+  width: 5px;
+}
+
+.modalSearch-grid::-webkit-scrollbar-thumb {
+  background: var(--hover-2);
+  border-radius: 10px;
+  transition: var(--transition);
+}
+
+.modalSearch-grid::-webkit-scrollbar-thumb:hover {
+  background: #202020;
+  cursor: pointer;
+}
+
+.modalSearch-content-status {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--gray-color-2);
+}
+
+.modalSearch-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  transition: var(--transition);
+}
+
+.modalSearch-card:hover {
+  background: var(--hover-2);
+}
+
+.modalSearch-card div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modalSearch-card div .icon {
+  color: var(--gray-color-2);
+}
+
+.modalSearch-card div h1 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--gray-color-1);
+}
+
+.modalSearch-card p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--gray-color-2);
+}
+
+
+
 
 /* modal profile */
 .modalProfile-main {

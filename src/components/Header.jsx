@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Cafe, Certificate, HeatMap_03, Home, IbmKnowledgeCatalogPremium, LogoGithub, Search } from '@carbon/icons-react';
 import { useUser } from '../hooks/useUser';
 import ModalProfile from './ModalProfile';
+import ModalSearch from './ModalSearch';
 
 function Header({ path, subPath }) {
 
@@ -11,9 +12,11 @@ function Header({ path, subPath }) {
 
   const [isScrolled, setIsScrolled] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const profileBtnRef = useRef(null)
   const profileModalRef = useRef(null)
+  const searchBtnRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -61,7 +64,7 @@ function Header({ path, subPath }) {
         </article>
 
         <div className='header-content-right'>
-          <div className='header-btn-search'>
+          <div className='header-btn-search' ref={searchBtnRef} onClick={() => setIsSearchOpen(true)}>
             <Search className='icon' size={16} />
             <p>Type <span>/</span> to search</p>
           </div>
@@ -85,7 +88,13 @@ function Header({ path, subPath }) {
       {isProfileOpen &&
         <div className='modalProfile-main' ref={profileModalRef}>
           <ModalProfile onClose={() => setIsProfileOpen(false)} />
-        </div>}
+        </div>
+      }
+      <ModalSearch
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        triggerRef={searchBtnRef}
+      />
     </header>
   )
 }

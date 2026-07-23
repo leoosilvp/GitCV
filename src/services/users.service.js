@@ -1,6 +1,6 @@
-const API_BASE_URL = 'https://api-gitcv-app.vercel.app/api/auth'
+const API_BASE_URL = 'https://api-gitcv-app.vercel.app'
 
-const DEFAULT_PAGE_SIZE = 20
+const DEFAULT_PER_PAGE = 10
 
 export class UsersApiError extends Error {
     constructor(message, status) {
@@ -34,7 +34,7 @@ async function request(path, { signal } = {}) {
         })
     } catch (err) {
         if (err.name === "AbortError") throw err
-        throw new UsersApiError("Network error while reaching the users API.", 0)
+        throw new UsersApiError("Network error while reaching the API.", 0)
     }
 
     const isJson = response.headers.get("content-type")?.includes("application/json")
@@ -47,9 +47,9 @@ async function request(path, { signal } = {}) {
     return body
 }
 
-export function listUsers({ search, page = 1, pageSize = DEFAULT_PAGE_SIZE, signal } = {}) {
-    const query = buildQueryString({ search, page, pageSize })
-    return request(`/api/users${query}`, { signal })
+export function searchGithubUsers(query, { page = 1, perPage = DEFAULT_PER_PAGE, signal } = {}) {
+    const q = buildQueryString({ q: query, page, perPage })
+    return request(`/api/github/search-users${q}`, { signal })
 }
 
 export function getUserByUsername(username, { signal } = {}) {
