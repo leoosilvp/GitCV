@@ -80,7 +80,7 @@ const News = () => {
                     <div className='news-filter' ref={filterRef}>
                         <button onClick={() => setIsFilterOpen((open) => !open)} className={selectedSource ? 'active' : ''}>
                             <Filter className='icon' size={16} />
-                            {selectedSource ?? 'Filter'}
+                            {selectedSource ? selectedSource.match(/^([^;\s]+(?:\s+[^;\s]+){0,2})/)?.[1] : 'Filter'}
                         </button>
 
                         {isFilterOpen && (
@@ -97,7 +97,7 @@ const News = () => {
                                                     className={source === selectedSource ? 'active' : ''}
                                                     onClick={() => handleSelectSource(source)}
                                                 >
-                                                    {source}
+                                                    {source.match(/^([^;\s]+(?:\s+[^;\s]+){0,2})/)?.[1] ?? source}
                                                 </button>
                                             ))
                                         }</>
@@ -179,7 +179,7 @@ const News = () => {
                                                 </div>
 
                                                 <Link to={article.url} target="_blank" rel="noopener noreferrer">
-                                                    Read Article <ArrowUpRight size={15} />
+                                                    Read News <ArrowUpRight size={15} />
                                                 </Link>
                                             </footer>
                                         </article>

@@ -49,6 +49,7 @@ body::-webkit-scrollbar-thumb {
   from {
     transform: rotateZ(0deg);
   }
+
   to {
     transform: rotateZ(365deg);
   }
@@ -327,6 +328,7 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100px;
   gap: 10px;
   font-size: 0.85rem;
   font-weight: 400;

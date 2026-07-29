@@ -91,6 +91,7 @@ const ModalSearch = ({ isOpen, onClose, triggerRef }) => {
                             !error &&
                             usernames.map((username) => (
                                 <Link
+                                    onClick={() => onClose?.()}
                                     key={username}
                                     to={`/user/${username}`}
                                     className="modalSearch-card"

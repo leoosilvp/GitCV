@@ -125,6 +125,10 @@
 }
 
 .news-card-header h1 {
+    width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.8rem;
     font-weight: 400;
     color: #57bf4f;
@@ -184,6 +188,10 @@
 }
 
 .news-card-footer div h1 {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.75rem;
     font-weight: 300;
     color: var(--gray-color-1);

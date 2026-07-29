@@ -87,7 +87,7 @@ const News = () => {
                                         </div>
 
                                         <Link to={article.url} target="_blank" rel="noopener noreferrer">
-                                            Read Article <ArrowUpRight size={15} />
+                                            Read News <ArrowUpRight size={15} />
                                         </Link>
                                     </footer>
                                 </article>
