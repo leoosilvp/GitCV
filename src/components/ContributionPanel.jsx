@@ -63,17 +63,38 @@ const buildMonthSpans = (weeks) => {
     const spans = []
 
     weeks.forEach((week, index) => {
-        const month = Number(week[3].date.slice(5, 7)) - 1
+
+        const monthStartDay = week.find((day) => Number(day.date.slice(8, 10)) === 1)
+
+        if (monthStartDay) {
+            const month = Number(monthStartDay.date.slice(5, 7)) - 1
+            spans.push({ month, span: 1, startIndex: index })
+            return
+        }
 
         const last = spans[spans.length - 1]
-        if (last && last.month === month) {
+        if (last) {
             last.span += 1
         } else {
+            const month = Number(week[0].date.slice(5, 7)) - 1
             spans.push({ month, span: 1, startIndex: index })
         }
     })
 
     return spans
+}
+
+const dropEdgeMonths = (spans) => {
+    if (spans.length === 0) return spans
+
+    const withoutTrailing = spans.slice(0, -1)
+    const [first, ...rest] = withoutTrailing
+
+    if (first && first.startIndex === 0 && first.span < 2) {
+        return rest
+    }
+
+    return withoutTrailing
 }
 
 const formatDate = (dateKey) => {
@@ -89,7 +110,7 @@ const ContributionPanel = ({ isDownload, theme = DEFAULT_CONTRIBUTION_THEME }) =
     const { contributions, isLoading, error } = useGithubContributions(username)
 
     const weeks = useMemo(() => buildWeeksMatrix(contributions), [contributions])
-    const monthSpans = useMemo(() => buildMonthSpans(weeks), [weeks])
+    const monthSpans = useMemo(() => dropEdgeMonths(buildMonthSpans(weeks)), [weeks])
     const themeStyle = useMemo(() => buildContributionThemeStyle(theme), [theme])
 
     return (
