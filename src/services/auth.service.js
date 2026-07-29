@@ -7,6 +7,7 @@ export function loginWithGithub() {
 export async function getMe() {
     const res = await fetch(`${BASE_URL}/me`, {
         credentials: 'include',
+        cache: 'no-store',
     })
 
     if (!res.ok) return null
@@ -18,5 +19,8 @@ export async function logout() {
     await fetch(`${BASE_URL}/logout`, {
         method: 'POST',
         credentials: 'include',
+        cache: 'no-store',
     })
+
+    window.location.href = '/'
 }

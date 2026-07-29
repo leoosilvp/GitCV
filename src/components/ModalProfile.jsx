@@ -21,7 +21,7 @@ const ModalProfile = () => {
                 <Link to='/settings'><Settings className='icon' size={16} />Settings</Link>
                 <Link to={`https://github.com/${user?.username}`} target="_blank"><LogoGithub className='icon' size={16} />GitHub</Link>
                 <hr />
-                <Link onClick={()=>logout()}><Logout size={16} />LogOut</Link>
+                <Link onClick={() => logout()}><Logout size={16} />LogOut</Link>
             </nav>
         </article>
     )
