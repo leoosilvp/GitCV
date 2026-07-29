@@ -369,7 +369,6 @@ body::-webkit-scrollbar-thumb {
 
 
 
-
 /* modal profile */
 .modalProfile-main {
   margin-top: 45px;
@@ -377,7 +376,7 @@ body::-webkit-scrollbar-thumb {
   right: 20px;
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 218px;
   height: fit-content;
   padding: 10px;
   border: 1px solid var(--hover-2);

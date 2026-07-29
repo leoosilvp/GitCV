@@ -11,7 +11,7 @@ function formatRelativeTime(isoDate) {
     const diffMs = Date.now() - new Date(isoDate).getTime()
     const diffHours = Math.round(diffMs / (1000 * 60 * 60))
 
-    if (diffHours < 1) return "just now"
+    if (diffHours < 1) return "last hour"
     if (diffHours < 24) return `${diffHours}h ago`
 
     const diffDays = Math.round(diffHours / 24)
