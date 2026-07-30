@@ -48,6 +48,7 @@
 }
 
 .resume-view {
+    position: relative;
     font-family: "IBM Plex Mono", monospace;
     display: flex;
     flex-direction: column;
@@ -55,6 +56,39 @@
     height: 1168px;
     border: 1px solid var(--hover-2);
     padding: 50px;
+}
+
+.resume-view .skeleton {
+    position: absolute;
+    display: flex;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.resume-view .skeleton::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #9696961f,
+        transparent
+    );
+    transform: rotate(45deg) translateX(-200%);
+    animation: skeleton-shimmer 2s linear infinite;
+}
+
+@keyframes skeleton-shimmer {
+    to {
+        transform: rotate(45deg) translateX(400%);
+    }
 }
 
 .resume-header {

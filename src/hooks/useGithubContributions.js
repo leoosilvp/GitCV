@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useSyncExternalStore } from "react"
+import { createResourceCache } from "../utils/createResourceCache"
 
 const CONTRIBUTIONS_ENDPOINT = "https://api-gitcv-app.vercel.app/api/github/contributions"
+const NO_USERNAME_SNAPSHOT = { data: null, isLoading: false, error: null, isStale: false }
 
-const CACHE_TTL_MS = 5 * 60 * 1000
-
-const cache = new Map()
-const inflightRequests = new Map()
-
-function getCached(username) {
-    const entry = cache.get(username)
-    if (!entry) return null
-    return { ...entry, isStale: Date.now() > entry.expiresAt }
-}
-
-function setCached(username, data) {
-    cache.set(username, { data, expiresAt: Date.now() + CACHE_TTL_MS })
-}
-
-async function fetchContributions(username, signal) {
+async function fetchContributions(username) {
     const response = await fetch(
         `${CONTRIBUTIONS_ENDPOINT}?username=${encodeURIComponent(username)}`,
-        { signal, credentials: "include" }
+        { credentials: "include" }
     )
 
     if (!response.ok) {
@@ -34,76 +21,23 @@ async function fetchContributions(username, signal) {
     }
 }
 
-function loadContributions(username, signal) {
-    if (inflightRequests.has(username)) {
-        return inflightRequests.get(username)
-    }
-
-    const promise = fetchContributions(username, signal)
-        .then((result) => {
-            setCached(username, result)
-            return result
-        })
-        .finally(() => {
-            inflightRequests.delete(username)
-        })
-
-    inflightRequests.set(username, promise)
-    return promise
-}
-
-function buildStateForUsername(username) {
-    const entry = username ? getCached(username) : null
-
-    return {
-        username,
-        contributions: entry?.data.contributions ?? [],
-        totalCount: entry?.data.totalCount ?? 0,
-        isLoading: Boolean(username) && !entry,
-        error: null,
-    }
-}
+const cache = createResourceCache(fetchContributions)
 
 export const useGithubContributions = (username) => {
-    const [state, setState] = useState(() => buildStateForUsername(username))
-
-    if (username !== state.username) {
-        setState(buildStateForUsername(username))
-    }
+    const snapshot = useSyncExternalStore(
+        (listener) => (username ? cache.subscribe(username, listener) : () => { }),
+        () => (username ? cache.getSnapshot(username) : NO_USERNAME_SNAPSHOT)
+    )
 
     useEffect(() => {
         if (!username) return
-
-        const entry = getCached(username)
-
-        if (entry && !entry.isStale) return
-
-        const controller = new AbortController()
-
-        loadContributions(username, controller.signal)
-            .then((result) => {
-                setState((prev) =>
-                    prev.username === username
-                        ? { ...prev, contributions: result.contributions, totalCount: result.totalCount, isLoading: false, error: null }
-                        : prev
-                )
-            })
-            .catch((err) => {
-                if (err.name === "AbortError") return
-                setState((prev) =>
-                    prev.username === username
-                        ? { ...prev, isLoading: false, error: err.message }
-                        : prev
-                )
-            })
-
-        return () => controller.abort()
+        cache.ensureFresh(username)
     }, [username])
 
     return {
-        contributions: state.contributions,
-        totalCount: state.totalCount,
-        isLoading: state.isLoading,
-        error: state.error,
+        contributions: snapshot.data?.contributions ?? [],
+        totalCount: snapshot.data?.totalCount ?? 0,
+        isLoading: Boolean(username) && snapshot.isLoading,
+        error: snapshot.error?.message ?? null,
     }
 }

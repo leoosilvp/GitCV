@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useSyncExternalStore } from "react"
 import { useUser } from "./useUser"
+import { createResourceCache } from "../utils/createResourceCache"
 
 const GITHUB_API_BASE = "https://api.github.com"
-const CACHE_TTL_MS = 5 * 60 * 1000
 const MAX_REPO_PAGES = 10
 const REPOS_PER_PAGE = 100
-const TOP_LANGUAGES_LIMIT = 5
+const TOP_LANGUAGES_LIMIT = 4
 const TOP_REPOS_LIMIT = 3
+const NO_USERNAME_SNAPSHOT = { data: null, isLoading: false, error: null, isStale: false }
 
 const WEEKDAY_LABELS = [
     "Sunday",
@@ -33,18 +34,8 @@ const MONTH_LABELS = [
     "December",
 ]
 
-const cache = new Map()
-const inflightRequests = new Map()
-
-function getCached(username) {
-    const entry = cache.get(username)
-    if (!entry) return null
-    return { ...entry, isStale: Date.now() > entry.expiresAt }
-}
-
-function setCached(username, data) {
-    cache.set(username, { data, expiresAt: Date.now() + CACHE_TTL_MS })
-}
+const EMPTY_LANGUAGES = []
+const EMPTY_REPOS = []
 
 function normalizeUrl(url) {
     if (!url) return null
@@ -84,9 +75,8 @@ function buildGithubHeaders(accessToken) {
     return headers
 }
 
-async function fetchProfile(username, accessToken, signal) {
+async function fetchProfile(username, accessToken) {
     const response = await fetch(`${GITHUB_API_BASE}/users/${encodeURIComponent(username)}`, {
-        signal,
         headers: buildGithubHeaders(accessToken),
     })
 
@@ -97,10 +87,10 @@ async function fetchProfile(username, accessToken, signal) {
     return response.json()
 }
 
-async function fetchSocialAccounts(username, accessToken, signal) {
+async function fetchSocialAccounts(username, accessToken) {
     const response = await fetch(
         `${GITHUB_API_BASE}/users/${encodeURIComponent(username)}/social_accounts`,
-        { signal, headers: buildGithubHeaders(accessToken) }
+        { headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) return []
@@ -108,13 +98,13 @@ async function fetchSocialAccounts(username, accessToken, signal) {
     return response.json()
 }
 
-async function fetchAllRepos(username, accessToken, signal) {
+async function fetchAllRepos(username, accessToken) {
     const repos = []
 
     for (let page = 1; page <= MAX_REPO_PAGES; page += 1) {
         const response = await fetch(
             `${GITHUB_API_BASE}/users/${encodeURIComponent(username)}/repos?per_page=${REPOS_PER_PAGE}&page=${page}&sort=updated`,
-            { signal, headers: buildGithubHeaders(accessToken) }
+            { headers: buildGithubHeaders(accessToken) }
         )
 
         if (!response.ok) {
@@ -130,10 +120,10 @@ async function fetchAllRepos(username, accessToken, signal) {
     return repos
 }
 
-async function fetchPullRequestCount(username, accessToken, signal) {
+async function fetchPullRequestCount(username, accessToken) {
     const response = await fetch(
         `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username}`)}&per_page=1`,
-        { signal, headers: buildGithubHeaders(accessToken) }
+        { headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) {
@@ -144,10 +134,10 @@ async function fetchPullRequestCount(username, accessToken, signal) {
     return body.total_count ?? 0
 }
 
-async function fetchMergedPullRequestCount(username, accessToken, signal) {
+async function fetchMergedPullRequestCount(username, accessToken) {
     const response = await fetch(
         `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(`type:pr author:${username} is:merged`)}&per_page=1`,
-        { signal, headers: buildGithubHeaders(accessToken) }
+        { headers: buildGithubHeaders(accessToken) }
     )
 
     if (!response.ok) {
@@ -158,9 +148,8 @@ async function fetchMergedPullRequestCount(username, accessToken, signal) {
     return body.total_count ?? 0
 }
 
-async function fetchRepoLanguages(repo, accessToken, signal) {
+async function fetchRepoLanguages(repo, accessToken) {
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repo.full_name}/languages`, {
-        signal,
         headers: buildGithubHeaders(accessToken),
     })
 
@@ -169,11 +158,11 @@ async function fetchRepoLanguages(repo, accessToken, signal) {
     return response.json()
 }
 
-async function fetchLanguageBreakdown(repos, accessToken, signal) {
+async function fetchLanguageBreakdown(repos, accessToken) {
     const sourceRepos = repos.filter((repo) => !repo.fork)
 
     const perRepoLanguages = await Promise.all(
-        sourceRepos.map((repo) => fetchRepoLanguages(repo, accessToken, signal))
+        sourceRepos.map((repo) => fetchRepoLanguages(repo, accessToken))
     )
 
     const bytesByLanguage = new Map()
@@ -318,17 +307,17 @@ function analyzeContributions(contributions) {
     }
 }
 
-async function fetchGithubStats(username, accessToken, signal) {
+async function fetchGithubStats(username, accessToken) {
     const [profile, repos, pullRequestCount, mergedPullRequestCount, socialAccounts] = await Promise.all([
-        fetchProfile(username, accessToken, signal),
-        fetchAllRepos(username, accessToken, signal),
-        fetchPullRequestCount(username, accessToken, signal),
-        fetchMergedPullRequestCount(username, accessToken, signal),
-        fetchSocialAccounts(username, accessToken, signal),
+        fetchProfile(username, accessToken),
+        fetchAllRepos(username, accessToken),
+        fetchPullRequestCount(username, accessToken),
+        fetchMergedPullRequestCount(username, accessToken),
+        fetchSocialAccounts(username, accessToken),
     ])
 
     const { totalStars, topRepo, topRepos } = summarizeRepos(repos)
-    const topLanguages = await fetchLanguageBreakdown(repos, accessToken, signal)
+    const topLanguages = await fetchLanguageBreakdown(repos, accessToken)
     const { linkedinUrl, instagramUrl, twitterUrl, websiteUrl } = extractSocialLinks(profile, socialAccounts)
 
     return {
@@ -357,117 +346,43 @@ async function fetchGithubStats(username, accessToken, signal) {
     }
 }
 
-function loadGithubStats(username, accessToken, signal) {
-    if (inflightRequests.has(username)) {
-        return inflightRequests.get(username)
-    }
-
-    const promise = fetchGithubStats(username, accessToken, signal)
-        .then((result) => {
-            setCached(username, result)
-            return result
-        })
-        .finally(() => {
-            inflightRequests.delete(username)
-        })
-
-    inflightRequests.set(username, promise)
-    return promise
-}
-
-function buildStateForUsername(username) {
-    const entry = username ? getCached(username) : null
-
-    return {
-        username,
-        followers: entry?.data.followers ?? 0,
-        following: entry?.data.following ?? 0,
-        publicRepos: entry?.data.publicRepos ?? 0,
-        totalStars: entry?.data.totalStars ?? 0,
-        topRepo: entry?.data.topRepo ?? null,
-        topRepos: entry?.data.topRepos ?? [],
-        pullRequestCount: entry?.data.pullRequestCount ?? 0,
-        mergedPullRequestCount: entry?.data.mergedPullRequestCount ?? 0,
-        topLanguages: entry?.data.topLanguages ?? [],
-        profile: entry?.data.profile ?? null,
-        isLoading: Boolean(username) && !entry,
-        error: null,
-    }
-}
+const cache = createResourceCache(fetchGithubStats)
 
 export const useGithubStats = (username, contributions) => {
     const { user } = useUser()
     const accessToken = user?.github_access_token
 
-    const [state, setState] = useState(() => buildStateForUsername(username))
-
-    if (username !== state.username) {
-        setState(buildStateForUsername(username))
-    }
+    const snapshot = useSyncExternalStore(
+        (listener) => (username ? cache.subscribe(username, listener) : () => { }),
+        () => (username ? cache.getSnapshot(username) : NO_USERNAME_SNAPSHOT)
+    )
 
     useEffect(() => {
         if (!username) return
-
-        const entry = getCached(username)
-
-        if (entry && !entry.isStale) return
-
-        const controller = new AbortController()
-
-        loadGithubStats(username, accessToken, controller.signal)
-            .then((result) => {
-                setState((prev) =>
-                    prev.username === username
-                        ? {
-                            ...prev,
-                            followers: result.followers,
-                            following: result.following,
-                            publicRepos: result.publicRepos,
-                            totalStars: result.totalStars,
-                            topRepo: result.topRepo,
-                            topRepos: result.topRepos,
-                            pullRequestCount: result.pullRequestCount,
-                            mergedPullRequestCount: result.mergedPullRequestCount,
-                            topLanguages: result.topLanguages,
-                            profile: result.profile,
-                            isLoading: false,
-                            error: null,
-                        }
-                        : prev
-                )
-            })
-            .catch((err) => {
-                if (err.name === "AbortError") return
-                setState((prev) =>
-                    prev.username === username
-                        ? { ...prev, isLoading: false, error: err.message }
-                        : prev
-                )
-            })
-
-        return () => controller.abort()
+        cache.ensureFresh(username, accessToken)
     }, [username, accessToken])
 
+    const data = snapshot.data
     const { mostActiveWeekday, mostActiveMonth, averagePerWeek, longestStreak, currentStreak } =
         analyzeContributions(contributions)
 
     return {
-        followers: state.followers,
-        following: state.following,
-        publicRepos: state.publicRepos,
-        totalStars: state.totalStars,
-        topRepo: state.topRepo,
-        topRepos: state.topRepos,
-        pullRequestCount: state.pullRequestCount,
-        mergedPullRequestCount: state.mergedPullRequestCount,
-        topLanguages: state.topLanguages,
+        followers: data?.followers ?? 0,
+        following: data?.following ?? 0,
+        publicRepos: data?.publicRepos ?? 0,
+        totalStars: data?.totalStars ?? 0,
+        topRepo: data?.topRepo ?? null,
+        topRepos: data?.topRepos ?? EMPTY_REPOS,
+        pullRequestCount: data?.pullRequestCount ?? 0,
+        mergedPullRequestCount: data?.mergedPullRequestCount ?? 0,
+        topLanguages: data?.topLanguages ?? EMPTY_LANGUAGES,
         mostActiveWeekday,
         mostActiveMonth,
         averagePerWeek,
         longestStreak,
         currentStreak,
-        profile: state.profile,
-        isLoading: state.isLoading,
-        error: state.error,
+        profile: data?.profile ?? null,
+        isLoading: Boolean(username) && snapshot.isLoading,
+        error: snapshot.error?.message ?? null,
     }
 }

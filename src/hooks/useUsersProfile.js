@@ -1,78 +1,33 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useSyncExternalStore } from "react"
 import { getUserByUsername, UsersApiError } from "../services/users.service"
+import { createResourceCache } from "../utils/createResourceCache"
 
-const EMPTY_STATS = {
-    followers: 0,
-    following: 0,
-    publicRepos: 0,
-    totalStars: 0,
-    topRepo: null,
-    topRepos: [],
-    pullRequestCount: 0,
-    mergedPullRequestCount: 0,
-    topLanguages: [],
-    mostActiveWeekday: null,
-    mostActiveMonth: null,
-    averagePerWeek: 0,
-    longestStreak: 0,
-    currentStreak: 0,
-    profile: null,
+const NO_USERNAME_SNAPSHOT = { data: null, isLoading: false, error: null, isStale: false }
+
+async function fetchUser(username) {
+    return getUserByUsername(username)
 }
 
-const INITIAL_RESULT = {
-    username: null,
-    stats: EMPTY_STATS,
-    isNotFound: false,
-    error: null,
-}
+const cache = createResourceCache(fetchUser, { ttlMs: 2 * 60 * 1000 })
 
 export const useUserProfile = (username) => {
-    const [result, setResult] = useState(INITIAL_RESULT)
-    const requestIdRef = useRef(0)
+    const snapshot = useSyncExternalStore(
+        (listener) => (username ? cache.subscribe(username, listener) : () => { }),
+        () => (username ? cache.getSnapshot(username) : NO_USERNAME_SNAPSHOT)
+    )
 
     useEffect(() => {
         if (!username) return
-
-        const controller = new AbortController()
-        const requestId = ++requestIdRef.current
-
-        getUserByUsername(username, { signal: controller.signal })
-            .then((response) => {
-                if (requestId !== requestIdRef.current) return // superseded by a newer request
-
-                setResult({
-                    username,
-                    stats: response,
-                    isNotFound: false,
-                    error: null,
-                })
-            })
-            .catch((err) => {
-                if (err.name === "AbortError") return
-                if (requestId !== requestIdRef.current) return
-
-                setResult({
-                    username,
-                    stats: EMPTY_STATS,
-                    isNotFound: err instanceof UsersApiError && err.status === 404,
-                    error: err instanceof UsersApiError ? err.message : "Failed to load user.",
-                })
-            })
-
-        return () => controller.abort()
+        cache.ensureFresh(username)
     }, [username])
 
-    const isLoading = Boolean(username) && result.username !== username
-    const isCurrent = result.username === username
+    const is404 = snapshot.error instanceof UsersApiError && snapshot.error.status === 404
 
-    return useMemo(
-        () => ({
-            username,
-            ...(isCurrent ? result.stats : EMPTY_STATS),
-            isLoading,
-            isNotFound: isCurrent ? result.isNotFound : false,
-            error: isCurrent ? result.error : null,
-        }),
-        [username, result, isCurrent, isLoading]
-    )
+    return {
+        username,
+        ...(snapshot.data ?? {}),
+        isLoading: Boolean(username) && snapshot.isLoading,
+        isNotFound: is404,
+        error: snapshot.error && !is404 ? (snapshot.error.message ?? "Failed to load user.") : null,
+    }
 }

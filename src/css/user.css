@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 100vw;
-}
+} 
 
 .user-content {
     margin-top: 100px;
@@ -13,4 +13,24 @@
     width: 95%;
     max-width: 1500px;
     min-height: 100dvh;
+    padding: 45px 0 70px;
+}
+
+.user-content-status {
+    display: flex;
+    height: 350px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--gray-color-2);
+    cursor: default;
+}
+
+.user-content-status p {
+    font-size: 0.85rem;
+}
+
+.user-content-status p strong {
+    color: var(--gray-color-1);
 }

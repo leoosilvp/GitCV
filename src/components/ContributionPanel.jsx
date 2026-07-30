@@ -103,9 +103,9 @@ const formatDate = (dateKey) => {
     return date.toLocaleDateString("en-US", { day: "2-digit", month: "long", year: "numeric" })
 }
 
-const ContributionPanel = ({ isDownload, theme = DEFAULT_CONTRIBUTION_THEME }) => {
+const ContributionPanel = ({ isDownload, username: usernameProp, theme = DEFAULT_CONTRIBUTION_THEME }) => {
     const { user } = useUser()
-    const username = user?.username
+    const username = usernameProp ?? user?.username
 
     const { contributions, isLoading, error } = useGithubContributions(username)
 
