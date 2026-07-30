@@ -13,7 +13,7 @@ const ModalProfile = () => {
             <hr />
             <nav>
                 <Link to='/home'><Home className='icon' size={16} />Home</Link>
-                <Link to='/snapshot'><Certificate className='icon' size={16} />Snapshot</Link>
+                <Link to='/download/snapshots'><Certificate className='icon' size={16} />Snapshot</Link>
                 <Link to='/news'><Cafe className='icon' size={16} />News</Link>
                 <Link to='/download/contributions'><HeatMap_03 className='icon' size={16} />Contributions</Link>
                 <Link to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={16} />Resume</Link>

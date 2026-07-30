@@ -77,7 +77,7 @@ function Header({ path, subPath }) {
       <nav>
         <ul>
           <NavLink to='/home'><Home className='icon' size={17} /> Home</NavLink>
-          <NavLink to='/download/snapshot'><Certificate className='icon' size={17} />Snapshots</NavLink>
+          <NavLink to='/download/snapshots'><Certificate className='icon' size={17} />Snapshots</NavLink>
           <NavLink to='/news'><Cafe className='icon' size={17} /> News</NavLink>
           <NavLink to='/download/contributions'><HeatMap_03 className='icon' size={17} />Contributions</NavLink>
           <NavLink to='/resume'><IbmKnowledgeCatalogPremium className='icon' size={17} />Resume</NavLink>
