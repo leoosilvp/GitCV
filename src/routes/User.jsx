@@ -10,6 +10,8 @@ import TopProjects from '../components/resume/TopProjects';
 import Performance from '../components/resume/Performance';
 import { useGithubContributions } from '../hooks/useGithubContributions';
 import { useUserProfile } from '../hooks/useUsersProfile';
+import { useEffect } from 'react';
+import { recordRecentSearch } from '../hooks/useRecentSearches';
 
 const User = () => {
 
@@ -25,7 +27,14 @@ const UserProfile = ({ username }) => {
     const { contributions, isLoading: isContributionsLoading } = useGithubContributions(username)
     const { profile, isLoading: isUserLoading, isNotFound, error } = useUserProfile(username)
 
-    const loading = isUserLoading || isContributionsLoading
+    const isLoading = isUserLoading || isContributionsLoading
+
+    useEffect(() => {
+        if (!isLoading && !isNotFound && !error) {
+            recordRecentSearch(username)
+        }
+    }, [username, isLoading, isNotFound, error])
+
 
     const formattedDate = new Intl.DateTimeFormat("pt-BR", {
         timeZone: "America/Sao_Paulo",
@@ -53,7 +62,7 @@ const UserProfile = ({ username }) => {
         )
     }
 
-    if (loading) {
+    if (isLoading) {
         return (
             <main className='user-main'>
                 <Header path={username} />

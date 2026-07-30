@@ -247,6 +247,7 @@ body::-webkit-scrollbar-thumb {
   width: 100vw;
   height: 100dvh;
   background: #00000069;
+  backdrop-filter: blur(0.5px);
   z-index: 10;
 }
 
@@ -367,6 +368,24 @@ body::-webkit-scrollbar-thumb {
   font-size: 0.8rem;
   font-weight: 300;
   color: var(--gray-color-2);
+}
+
+.modalSearch-card button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--gray-color-2);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modalSearch-card button:hover {
+  color: var(--gray-color-1);
+  transform: scale(1.07);
 }
 
 

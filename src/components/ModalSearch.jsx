@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react"
-import { Events, ProgressBarRound, Search, UserAvatar, Warning } from "@carbon/icons-react"
+import { Close, Events, ProgressBarRound, Search, UserAvatar, Warning } from "@carbon/icons-react"
 import { Link } from "react-router-dom"
 import { useUsersSearch } from "../hooks/useUsersSearch"
+import { useRecentSearches } from "../hooks/useRecentSearches"
 
 const ModalSearch = ({ isOpen, onClose, triggerRef }) => {
 
     const { search, setSearch, usernames, isLoading, error, isQueryTooShort } = useUsersSearch({ perPage: 20 })
+    const { usernames: recentUsernames, removeRecentSearch } = useRecentSearches()
 
     const modalRef = useRef(null)
 
@@ -40,6 +42,7 @@ const ModalSearch = ({ isOpen, onClose, triggerRef }) => {
 
     const hasQuery = search.trim().length > 0
     const hasResults = usernames.length > 0
+    const hasRecent = recentUsernames.length > 0
 
     return (
         <section className="modalSearch-main">
@@ -55,14 +58,35 @@ const ModalSearch = ({ isOpen, onClose, triggerRef }) => {
                     />
                 </div>
                 <section className="modalSearch-content">
-                    <p className="modalSearch-content-title">Results</p>
+                    <p className="modalSearch-content-title">
+                        {hasQuery ? "Results" : "Recent searches"}
+                    </p>
                     <section className="modalSearch-grid">
-                        {!hasQuery && (
+                        {!hasQuery && !hasRecent && (
                             <p className="modalSearch-content-status">
                                 <Events size={25} />
                                 Enter a username to search for.
                             </p>
                         )}
+
+                        {!hasQuery && hasRecent &&
+                            recentUsernames.map((username) => (
+                                <Link to={`/user/${username}`} key={username} className="modalSearch-card" onClick={() => onClose?.()} >
+                                    <div>
+                                        <UserAvatar className="icon" size={18} />
+                                        <h1>{username}</h1>
+                                    </div>
+                                    <button
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            event.stopPropagation()
+                                            removeRecentSearch(username)
+                                        }}
+                                    >
+                                        <Close size={16} />
+                                    </button>
+                                </Link>
+                            ))}
 
                         {hasQuery && isQueryTooShort && (
                             <p className="modalSearch-content-status">
