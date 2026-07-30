@@ -7,6 +7,7 @@ import { useGithubContributions } from '../hooks/useGithubContributions';
 import GithubStats from '../components/home/GithubStats';
 import News from '../components/home/News';
 import iconMono from '../assets/svg/icon-mono.svg'
+import TopLanguages from '../components/resume/TopLanguages';
 
 const Home = () => {
 
@@ -47,6 +48,10 @@ const Home = () => {
                 <div className='hr' />
 
                 <GithubStats />
+
+                <section className='home-topLanguages'>
+                    <TopLanguages username={username} />
+                </section>
 
                 <div className='hr' />
 

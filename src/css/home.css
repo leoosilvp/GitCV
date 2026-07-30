@@ -16,7 +16,7 @@
 }
 
 .hr {
-    margin: 30px 0;
+    margin: 35px 0;
     display: flex;
     width: 850px;
     height: fit-content;
@@ -109,6 +109,18 @@
 
 .github-stats-content div section h1 span {
     font-size: 1rem;
+}
+
+/* Top Languages */
+.home-topLanguages {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    padding: 20px;
+    border: 1px solid var(--hover-2);
+    border-top: none;
+    background: #080808;
+    cursor: default;
 }
 
 

@@ -33,7 +33,7 @@ function App() {
           <Route path="/download" element={<Download />}>
             <Route index element={<Navigate to="/home" />} />
             <Route path="contributions" element={<Contribution />} />
-            <Route path="snapshot" element={<Snapshot />} />
+            <Route path="snapshots" element={<Snapshot />} />
           </Route>
           <Route path='/contribute' element={<Contribute />} />
           <Route path='/user/:username' element={<User />} />
