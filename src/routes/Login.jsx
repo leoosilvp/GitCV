@@ -17,7 +17,7 @@ const Login = () => {
     return (
         <main className="login-main">
             <header className='login-header'>
-                <Link to=''><ChevronLeft size={16} />Back</Link>
+                <Link to='/welcome'><ChevronLeft size={16} />Welcome</Link>
             </header>
             <section className='login-wrapper'>
                 <img draggable={false} src={gitcvGithub} />
