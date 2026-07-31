@@ -12,6 +12,7 @@ import { MobileBlock } from './components/MobileBlock';
 import News from './routes/News';
 import Resume from './routes/Resume';
 import User from './routes/User';
+import Welcome from './routes/Welcome';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/welcome' element={<Welcome />} />
         <Route path='/login' element={<Login />} />
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Navigate to='/home' />} />
