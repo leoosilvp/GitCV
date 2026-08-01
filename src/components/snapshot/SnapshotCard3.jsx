@@ -164,7 +164,7 @@ const SnapshotCard3 = () => {
                 </div>
             </section>
             <footer className='snapshot-card-footer'>
-                <p>gitcv.app/snapshot</p>
+                <p>gitcv-app.vercel.app</p>
                 <ArrowRight size={15} />
             </footer>
         </article>
