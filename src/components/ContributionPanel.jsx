@@ -164,7 +164,7 @@ const ContributionPanel = ({ isDownload, username: usernameProp, theme = DEFAULT
                 {!isDownload ?
                     <Link to='/download/contributions'><Download size={14} /> Download my Chart</Link>
                     :
-                    <p>Made by @leoosilvp - gitcv-app.vercel.app</p>}
+                    <p>Made by GitCV - gitcv-app.vercel.app</p>}
                 <div className="contributionPanel-content">
                     <span className="contributionPanel-legendLabel">Less</span>
                     <div className="contributionPanel-legend">
