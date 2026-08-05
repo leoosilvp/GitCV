@@ -12,12 +12,12 @@ const Snapshot = () => {
       </header>
 
       <section className='snapshot-grid-main'>
+        <SnapshotCard4 />
         <div className='snapshot-grid'>
           <SnapshotCard1 />
           <SnapshotCard2 />
           <SnapshotCard3 />
         </div>
-        <SnapshotCard4 />
       </section>
     </main>
   )
