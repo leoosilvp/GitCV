@@ -1,22 +1,12 @@
 import { Fork, Star } from "@carbon/icons-react"
 import { Link } from "react-router-dom"
 import { useGithubStats } from "../../hooks/useGithubStats"
+import { languageColors } from "../../utils/languageColors"
 
 function truncateDescription(description) {
     if (!description) return "No description provided."
     if (description.length <= 135) return description
     return `${description.slice(0, 135).trimEnd()}...`
-}
-
-const LANGUAGE_COLORS = {
-    JavaScript: "#f1e05a",
-    TypeScript: "#3178c6",
-    Python: "#3572A5",
-    HTML: "#e34c26",
-    CSS: "#563d7c",
-    Java: "#b07219",
-    Shell: "#89e051",
-    Go: "#00ADD8",
 }
 
 const TopProjects = ({ username }) => {
@@ -56,7 +46,7 @@ const TopProjects = ({ username }) => {
                                 <h1>{repo.name}</h1>
                                 {repo.language && (
                                     <p>
-                                        <span style={{ background: LANGUAGE_COLORS[repo.language] }} />
+                                        <span style={{ background: languageColors[repo.language] }} />
                                         {repo.language}
                                     </p>
                                 )}
