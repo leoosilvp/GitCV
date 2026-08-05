@@ -181,9 +181,15 @@
     color: var(--gray-color-1);
 }
 
-.snapshot-grid {
+.snapshot-grid-main {
+    display: flex;
+    flex-direction: column;
     margin-top: 30px;
     margin-bottom: 50px;
+    gap: 50px;
+}
+
+.snapshot-grid {
     display: flex;
     gap: 50px;
 }
@@ -368,4 +374,84 @@
 
 .snapshot-card-grid-column .text span {
     color: #57bf4f;
+}
+
+
+
+
+.snapshot-card-horizontal {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 910px;
+    height: 450px;
+    padding: 50px;
+    border: 1px solid var(--hover-2);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.snapshot-card-horizontal-header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.snapshot-card-horizontal-header-content {
+    display: flex;
+    gap: 30px;
+}
+
+.snapshot-card-horizontal-header-content img {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.snapshot-card-horizontal-header-content h1 {
+    font-size: 2.2rem;
+}
+
+.snapshot-card-horizontal-header-content div h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--gray-color-2);
+}
+
+.snapshot-card-horizontal-header-content div p {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--gray-color-1);
+}
+
+.snapshot-card-horizontal-header-links {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.snapshot-card-horizontal-header a {
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #c4c4c4;
+}
+
+.snapshot-card-horizontal-header p {
+    font-size: 0.9rem;
+    color: var(--gray-color-3);
+}
+
+.snapshot-card-horizontal-footer p {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--gray-color-4);
 }
