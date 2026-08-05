@@ -390,7 +390,9 @@
     height: 450px;
     padding: 50px;
     border: 1px solid var(--hover-2);
-    background: #000;
+    background-image: url('../assets/img/bg-login.png');
+    background-position: bottom;
+    background-size: cover;
     overflow: hidden;
 }
 
@@ -408,9 +410,9 @@
     margin-top: -50px;
     margin-left: 0px;
     width: 909px;
-    height: 479px;
+    height: 449px;
     padding: 15px;
-    background: linear-gradient(0deg, #00000000, #00000000, #000);
+    background: linear-gradient(0deg, #00000000, #000);
     backdrop-filter: blur(0.5px);
     transition: var(--transition);
     z-index: 10;
