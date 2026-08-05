@@ -380,6 +380,7 @@
 
 
 .snapshot-card-horizontal {
+    position: relative;
     font-family: "IBM Plex Mono", monospace;
     display: flex;
     flex-direction: column;
@@ -389,9 +390,48 @@
     height: 450px;
     padding: 50px;
     border: 1px solid var(--hover-2);
-    background-size: cover;
-    background-position: center;
+    background: #000;
     overflow: hidden;
+}
+
+.snapshot-card-horizontal:hover .snapshot-card-horizontal-download {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.snapshot-card-horizontal-download {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -50px;
+    margin-left: 0px;
+    width: 909px;
+    height: 479px;
+    padding: 15px;
+    background: linear-gradient(0deg, #00000000, #00000000, #000);
+    backdrop-filter: blur(0.5px);
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.snapshot-card-horizontal-download button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    padding: 5px;
+    color: var(--gray-color-1);
+    background: transparent;
+    border: 1px solid var(--hover-2);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.snapshot-card-horizontal-download button:hover {
+    background: #ffffff;
+    color: var(--black);
 }
 
 .snapshot-card-horizontal-header {
