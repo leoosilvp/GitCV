@@ -515,49 +515,29 @@
     justify-content: space-between;
     align-items: end;
     width: 910px;
-    height: 154px;
+    height: 227px;
     padding: 50px;
     border: 1px solid var(--hover-2);
-    background-image: url('../assets/img/bg-login.png');
+    background-image: url('../assets/img/bg-snapshot/banner.png');
     background-position: center;
     background-size: cover;
     overflow: hidden;
 }
 
 .snapshot-card-banner section {
-    width: 50%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: start;
-}
-
-.snapshot-card-banner section div {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 5px;
 }
 
-.snapshot-card-banner section div h1 {
-    font-size: 1.85rem;
-    font-weight: 400;
-}
-
-.snapshot-card-banner section div hr {
-    display: flex;
-    width: 110%;
-    height: 1px;
-    border: none;
-    border-bottom: 1px solid var(--gray-color-1);
-}
-
-.snapshot-card-banner section div p {
-    display: flex;
-    align-items: center;
-    font-size: 0.85rem;
-    font-weight: 200;
-    color: #ababab;
-    gap: 7px;
+.snapshot-card-banner section h1 {
+    margin-top: 50px;
+    margin-left: 65px;
+    font-size: 1.15rem;
+    font-weight: 600;
 }
 
 .snapshot-card-banner:hover .snapshot-card-banner-download {
@@ -574,7 +554,7 @@
     left: 0;
     top: 0;
     width: 910px;
-    height: 154px;
+    height: 227px;
     padding: 15px;
     background: linear-gradient(0deg, #00000000, #000);
     backdrop-filter: blur(0.5px);

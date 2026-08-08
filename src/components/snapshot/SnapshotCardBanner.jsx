@@ -1,4 +1,4 @@
-import { Checkmark, Download, LogoGithub, Share } from "@carbon/icons-react"
+import { Checkmark, Download, Share } from "@carbon/icons-react"
 import { useUser } from "../../hooks/useUser"
 import { useRef, useState } from "react"
 import { toPng, toBlob } from 'html-to-image'
@@ -38,7 +38,9 @@ const SnapshotCardBanner = () => {
 
     const { user } = useUser()
 
-    const username = user?.username || ''
+    function getFirstName() {
+        return user?.name.trim().split(/\s+/)[0] || "";
+    }
 
     const [actionStatus, setActionStatus] = useState({})
     const cardRef = useRef(null)
@@ -112,10 +114,7 @@ const SnapshotCardBanner = () => {
                 </button>
             </div>
             <section>
-                <div>
-                    <h1>{user?.name}</h1>
-                    <p><LogoGithub size={15} />{username}</p>
-                </div>
+                <h1>Olá, me chamo {getFirstName()}.<br />Muito prazer.</h1>
             </section>
         </article>
     )
