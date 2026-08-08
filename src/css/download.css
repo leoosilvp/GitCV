@@ -506,7 +506,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
     width: 910px;
     height: 154px;
     padding: 50px;
@@ -515,4 +515,41 @@
     background-position: center;
     background-size: cover;
     overflow: hidden;
+}
+
+.snapshot-card-banner section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.snapshot-card-banner section div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.snapshot-card-banner section div h1 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.snapshot-card-banner section div hr {
+    display: flex;
+    width: 110%;
+    height: 1px;
+    border: none;
+    border-bottom: 1px solid var(--gray-color-1);
+}
+
+.snapshot-card-banner section div p {
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 200;
+    color: #bfbfbf;
+    gap: 7px;
 }
