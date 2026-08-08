@@ -114,7 +114,6 @@ const SnapshotCardBanner = () => {
             <section>
                 <div>
                     <h1>{user?.name}</h1>
-                    <hr />
                     <p><LogoGithub size={15} />{username}</p>
                 </div>
             </section>

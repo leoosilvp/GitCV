@@ -518,7 +518,7 @@
     height: 154px;
     padding: 50px;
     border: 1px solid var(--hover-2);
-    background-image: url('');
+    background-image: url('../assets/img/bg-login.png');
     background-position: center;
     background-size: cover;
     overflow: hidden;
@@ -552,7 +552,6 @@
 }
 
 .snapshot-card-banner section div p {
-    margin-top: 2px;
     display: flex;
     align-items: center;
     font-size: 0.85rem;
