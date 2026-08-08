@@ -497,3 +497,22 @@
     font-weight: 300;
     color: var(--gray-color-4);
 }
+
+
+/* snapshot card banner */
+.snapshot-card-banner {
+    position: relative;
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 910px;
+    height: 154px;
+    padding: 50px;
+    border: 1px solid var(--hover-2);
+    background-image: url('../assets/img/bg-login.png');
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
