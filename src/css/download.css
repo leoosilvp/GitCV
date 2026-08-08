@@ -189,6 +189,13 @@
     gap: 50px;
 }
 
+.snapshot-grid-main .title {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-bottom: -40px;
+    color: var(--gray-color-3);
+}
+
 .snapshot-grid {
     display: flex;
     gap: 50px;

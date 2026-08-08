@@ -13,8 +13,11 @@ const Snapshot = () => {
       </header>
 
       <section className='snapshot-grid-main'>
+        <h1 className='title'>Banner Linkedin</h1>
         <SnapshotCardBanner />
+        <h1 className='title'>DevCard</h1>
         <SnapshotCard4 />
+        <h1 className='title'>GitStory</h1>
         <div className='snapshot-grid'>
           <SnapshotCard1 />
           <SnapshotCard2 />
