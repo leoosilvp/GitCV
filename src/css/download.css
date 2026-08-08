@@ -532,7 +532,7 @@
 }
 
 .snapshot-card-banner section div h1 {
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 400;
 }
 
@@ -550,6 +550,45 @@
     align-items: center;
     font-size: 0.85rem;
     font-weight: 200;
-    color: #bfbfbf;
+    color: #ababab;
     gap: 7px;
+}
+
+.snapshot-card-banner:hover .snapshot-card-banner-download {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.snapshot-card-banner-download {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    top: 0;
+    width: 910px;
+    height: 154px;
+    padding: 15px;
+    background: linear-gradient(0deg, #00000000, #000);
+    backdrop-filter: blur(0.5px);
+    transition: var(--transition);
+}
+
+.snapshot-card-banner-download button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    padding: 5px;
+    color: var(--gray-color-1);
+    background: transparent;
+    border: 1px solid var(--hover-2);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.snapshot-card-banner-download button:hover {
+    background: #ffffff;
+    color: var(--black);
 }
