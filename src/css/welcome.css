@@ -1,6 +1,7 @@
 .welcome-main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100vw;
     min-height: 100dvh;
     background-image: url('');
@@ -88,16 +89,25 @@
     background: #0e0e0e;
 }
 
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1300px;
+}
+
 .welcome-presentation {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     height: 100dvh;
+    max-height: 800px;
 }
 
 .welcome-presentation-left {
-    padding-left: 30px;
+    padding-left: 40px;
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -149,6 +159,12 @@
 
 .welcome-presentation-left section a.active:hover {
     background: var(--gray-color-1);
+}
+
+.welcome-presentation-left section:has(a:not(.active):hover) a.active {
+    background: transparent;
+    border-color: var(--light-color);
+    color: #fff;
 }
 
 .welcome-presentation-right {
