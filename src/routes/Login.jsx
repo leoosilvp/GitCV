@@ -14,6 +14,8 @@ const Login = () => {
         if (user) navigate('/home', { replace: true })
     }, [user, navigate])
 
+    window.localStorage.setItem('firstLogin', 'false')
+
     return (
         <main className="login-main">
             <header className='login-header'>

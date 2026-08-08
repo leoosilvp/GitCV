@@ -22,13 +22,15 @@ function App() {
     return <MobileBlock />;
   }
 
+  const isFirstLogin = Boolean(window.localStorage.getItem('firstLogin'))
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/welcome' element={<Welcome />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Navigate to={isFirstLogin ? '/home' : '/welcome'} />} />
         <Route element={<ProtectedRoute />}>
-          <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Home />} />
           <Route path="/news" element={<News />} />
           <Route path="/resume" element={<Resume />} />
