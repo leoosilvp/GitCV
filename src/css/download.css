@@ -518,7 +518,7 @@
     height: 154px;
     padding: 50px;
     border: 1px solid var(--hover-2);
-    background-image: url('../assets/img/bg-login.png');
+    background-image: url('');
     background-position: center;
     background-size: cover;
     overflow: hidden;
