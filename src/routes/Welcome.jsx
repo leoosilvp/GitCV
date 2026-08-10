@@ -1,7 +1,8 @@
+import '../css/welcome.css'
 import { ArrowRight, ChevronDown } from '@carbon/icons-react'
 import Header from '../components/welcome/Header'
-import '../css/welcome.css'
 import { Link } from 'react-router-dom'
+import print1 from '../assets/img/interface-home.png'
 
 const Welcome = () => {
     return (
@@ -20,6 +21,12 @@ const Welcome = () => {
                     <div className='welcome-presentation-right'>
                         <img draggable={false} src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" />
                     </div>
+                </section>
+
+                <section className='welcome-print'>
+                    <h1>More than a resume. It's your developer identity.</h1>
+                    <p>GitCV connects your code, projects, and career journey into a single professional profile. Your GitHub data gains context, structure, and a presentation designed to be shared.</p>
+                    <img src={print1} />
                 </section>
 
             </section>
