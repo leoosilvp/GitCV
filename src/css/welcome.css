@@ -214,6 +214,63 @@
 }
 
 .welcome-features-grid {
-
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 40px;
+    max-width: 1300px;
 }
 
+.welcome-features-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    height: 220px;
+    border: 1px solid #c3c3c3;
+    padding: 20px;
+    transition: var(--transition);
+}
+
+.welcome-features-card:hover {
+    background: var(--light-color);
+    border-color: var(--light-color);
+}
+
+.welcome-features-card:hover h1 {
+    opacity: 0;
+}
+
+.welcome-features-card:hover h2 {
+    opacity: 1;
+}
+
+.welcome-features-card:hover footer .icon {
+    color: #525252;
+}
+
+.welcome-features-card h1 {
+    font-size: 1.2rem;
+    color: var(--gray-color-1);
+    transition: all 0.2s ease-in;
+}
+
+.welcome-features-card h2 {
+    opacity: 0;
+    position: absolute;
+    width: 360px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.4;
+    color: #000;
+    transition: all 0.4s ease-in;
+}
+
+.welcome-features-card footer {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    color: var(--gray-color-1);
+}
