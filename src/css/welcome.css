@@ -4,7 +4,8 @@
     align-items: center;
     width: 100vw;
     min-height: 100dvh;
-    background-image: linear-gradient(0deg, #000, #00000055, #00000000), url('../assets/img/bg-snapshot/4.png');
+    background: #000;
+    background-image: linear-gradient(0deg, #080808 45%, #00000000, #000), url('../assets/img/bg-snapshot/4.png');
     background-size: 100%;
     background-position: center top;
     background-repeat: no-repeat;
@@ -19,7 +20,7 @@
     width: 100vw;
     height: fit-content;
     justify-content: space-between;
-    background: #000;
+    background: #080808;
     border-bottom: 1.5px solid var(--hover-2);
     color: #101010;
     z-index: 10;
@@ -180,6 +181,8 @@
     filter: invert(1);
 }
 
+
+
 /* welcome features */
 .welcome-features {
     width: 100vw;
@@ -266,7 +269,7 @@
     font-weight: 300;
     line-height: 1.4;
     color: #000;
-    transition: all 0.3s ease-in;
+    transition: all 0.35s ease-in;
 }
 
 .welcome-features-card footer {
@@ -274,4 +277,8 @@
     align-items: end;
     justify-content: space-between;
     color: var(--gray-color-1);
+}
+
+.welcome-features-card footer .icon {
+    transition: all 0.35s ease;
 }
