@@ -179,8 +179,8 @@
     filter: invert(1);
 }
 
-/* welcome print */
-.welcome-print {
+/* welcome features */
+.welcome-features {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -189,19 +189,19 @@
     background: #080808;
 }
 
-.welcome-print div {
+.welcome-features div {
     display: flex;
     justify-content: space-between;
     max-width: 1300px;
     padding: 0 40px;
 }
 
-.welcome-print h1 {
+.welcome-features h1 {
     font-size: 2.5rem;
     font-weight: 400;
 }
 
-.welcome-print p {
+.welcome-features p {
     width: 50%;
     font-size: 0.95rem;
     font-weight: 300;
@@ -209,11 +209,11 @@
     color: #c3c3c3;
 }
 
-.welcome-print p span {
+.welcome-features p span {
     color: #57bf4f;
 }
 
-.welcome-print-grid {
-    
+.welcome-features-grid {
+
 }
 

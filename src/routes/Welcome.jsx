@@ -22,13 +22,13 @@ const Welcome = () => {
                     </div>
                 </section>
 
-                <section className='welcome-print'>
+                <section className='welcome-features'>
                     <div>
                         <h1>More than a resume. It's your<br />developer identity.</h1>
                         <p>Your career doesn't live inside a <span>PDF</span>. It lives in what you <span>build</span>, the problems you <span>solve</span>, and the technologies you <span>master</span>. GitCV brings it all together into a <span>dynamic professional identity</span> powered by your GitHub, transforming your activity into a profile that <span>tells your story</span>, showcases your <span>impact</span>, and evolves with you.</p>
                     </div>
-                    <section className='welcome-print-grid'>
-                        <Link className='welcome-print-card'>
+                    <section className='welcome-features-grid'>
+                        <Link className='welcome-features-card'>
                             <h1>Snapshots</h1>
                             <h2>Download snapshots from your GitHub, share them on social media, and compare your progress with your friends.</h2>
 
