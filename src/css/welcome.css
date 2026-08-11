@@ -3,12 +3,12 @@
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    min-height: 100dvh;
+    height: 100dvh;
     background: #000;
     background-image: linear-gradient(0deg, #080808 45%, #00000000, #000), url('../assets/img/bg-snapshot/4.png');
     background-size: 100%;
-    background-position: center top;
     background-repeat: no-repeat;
+    background-position: center top;
 }
 
 .welcome-header {
@@ -281,4 +281,13 @@
 
 .welcome-features-card footer .icon {
     transition: all 0.35s ease;
+}
+
+
+/* welcome contributionPanel */
+
+.welcome-contributionPanel {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
 }

@@ -155,7 +155,7 @@ const Contribution = () => {
                     </div>
                     <h2>over the past year</h2>
                 </header>
-                <ContributionPanel isDownload theme={selectedTheme} />
+                <ContributionPanel theme={selectedTheme} />
             </article>
 
             <section className="download-contribution-themes">

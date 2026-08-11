@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useUser } from "../hooks/useUser"
 import { useGithubContributions } from "../hooks/useGithubContributions"
 import { Link } from 'react-router-dom';
-import { Download } from "@carbon/icons-react";
+import { Download, Launch } from "@carbon/icons-react";
 import { DEFAULT_CONTRIBUTION_THEME, buildContributionThemeStyle } from "../utils/contributionThemes"
 
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""]
@@ -103,7 +103,7 @@ const formatDate = (dateKey) => {
     return date.toLocaleDateString("en-US", { day: "2-digit", month: "long", year: "numeric" })
 }
 
-const ContributionPanel = ({ isDownload, username: usernameProp, theme = DEFAULT_CONTRIBUTION_THEME }) => {
+const ContributionPanel = ({ isDownload, isWelcome, username: usernameProp, theme = DEFAULT_CONTRIBUTION_THEME }) => {
     const { user } = useUser()
     const username = usernameProp ?? user?.username
 
@@ -161,10 +161,11 @@ const ContributionPanel = ({ isDownload, username: usernameProp, theme = DEFAULT
             )}
 
             <div className="contributionPanel-footer">
-                {!isDownload ?
+                {isDownload ?
                     <Link to='/download/contributions'><Download size={14} /> Download my Chart</Link>
                     :
-                    <p>Made by GitCV - gitcv-app.vercel.app</p>}
+                    isWelcome ? <Link to='/download/contributions'>Generate my chart <Launch size={14} /></Link> : <p>Made by GitCV - gitcv-app.vercel.app</p>
+                }
                 <div className="contributionPanel-content">
                     <span className="contributionPanel-legendLabel">Less</span>
                     <div className="contributionPanel-legend">

@@ -42,7 +42,7 @@ const Home = () => {
                 <section className='home-welcome'>
                     <h1>Good {getTimeOfDay()}, {FirstName()}!</h1>
                     <p>You made {totalCount.toLocaleString("en-US")} contributions over the past year.</p>
-                    <ContributionPanel />
+                    <ContributionPanel isDownload />
                 </section>
 
                 <div className='hr' />

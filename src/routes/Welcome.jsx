@@ -2,8 +2,18 @@ import '../css/welcome.css'
 import { ArrowRight, Certificate, ChevronDown, HeatMap_03, IbmKnowledgeCatalogPremium, Launch } from '@carbon/icons-react'
 import Header from '../components/welcome/Header'
 import { Link } from 'react-router-dom'
+import ContributionPanel from '../components/ContributionPanel'
+import { useGithubContributions } from '../hooks/useGithubContributions'
 
 const Welcome = () => {
+
+    const { contributions } = useGithubContributions('leoosilvp')
+
+    const totalContributions = contributions?.reduce(
+        (sum, entry) => sum + (entry.count ?? 0),
+        0
+    ) ?? 0
+
     return (
         <main className='welcome-main'>
             <Header />
@@ -58,6 +68,19 @@ const Welcome = () => {
                             </footer>
                         </Link>
                     </section>
+                </section>
+
+                <section className='welcome-contributionPanel'>
+                    <article className='download-contribution-card'>
+                        <header className="download-contribution-card-header">
+                            <div>
+                                <h1>@leoosilvp on GitHub</h1>
+                                <p>Total Contributions: {totalContributions}</p>
+                            </div>
+                            <h2>over the past year</h2>
+                        </header>
+                        <ContributionPanel username='leoosilvp' isWelcome />
+                    </article>
                 </section>
 
             </section>
