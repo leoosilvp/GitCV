@@ -4,8 +4,9 @@
     align-items: center;
     width: 100vw;
     min-height: 100dvh;
-    background-image: url('');
-    background-size: cover;
+    background-image: linear-gradient(0deg, #000, #00000055, #00000000), url('../assets/img/bg-snapshot/4.png');
+    background-size: 100%;
+    background-position: center top;
     background-repeat: no-repeat;
 }
 
@@ -254,7 +255,7 @@
 .welcome-features-card h1 {
     font-size: 1.2rem;
     color: var(--gray-color-1);
-    transition: all 0.2s ease-in;
+    transition: all 0.15s ease-in;
 }
 
 .welcome-features-card h2 {
@@ -265,7 +266,7 @@
     font-weight: 300;
     line-height: 1.4;
     color: #000;
-    transition: all 0.4s ease-in;
+    transition: all 0.3s ease-in;
 }
 
 .welcome-features-card footer {
