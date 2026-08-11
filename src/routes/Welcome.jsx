@@ -1,8 +1,7 @@
 import '../css/welcome.css'
-import { ArrowRight, ChevronDown } from '@carbon/icons-react'
+import { ArrowRight, Certificate, ChevronDown, Launch } from '@carbon/icons-react'
 import Header from '../components/welcome/Header'
 import { Link } from 'react-router-dom'
-import print1 from '../assets/img/interface-home.png'
 
 const Welcome = () => {
     return (
@@ -24,9 +23,21 @@ const Welcome = () => {
                 </section>
 
                 <section className='welcome-print'>
-                    <h1>More than a resume. It's your developer identity.</h1>
-                    <p>GitCV connects your code, projects, and career journey into a single professional profile. Your GitHub data gains context, structure, and a presentation designed to be shared.</p>
-                    <img draggable={false} src={print1} />
+                    <div>
+                        <h1>More than a resume. It's your<br />developer identity.</h1>
+                        <p>Your career doesn't live inside a <span>PDF</span>. It lives in what you <span>build</span>, the problems you <span>solve</span>, and the technologies you <span>master</span>. GitCV brings it all together into a <span>dynamic professional identity</span> powered by your GitHub, transforming your activity into a profile that <span>tells your story</span>, showcases your <span>impact</span>, and evolves with you.</p>
+                    </div>
+                    <section className='welcome-print-grid'>
+                        <Link className='welcome-print-card'>
+                            <h1>Snapshots</h1>
+                            <h2>Download snapshots from your GitHub, share them on social media, and compare your progress with your friends.</h2>
+
+                            <footer>
+                                <Certificate size={40} />
+                                <Launch size={20} />
+                            </footer>
+                        </Link>
+                    </section>
                 </section>
 
             </section>
