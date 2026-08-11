@@ -11,10 +11,10 @@ const Header = () => {
                 </Link>
                 <div />
                 <nav>
-                    <Link to='#home'>Home</Link>
-                    <Link to='#about'>About</Link>
-                    <Link to='#features'>Features <ChevronDown size={20} /></Link>
-                    <Link to='#support'>Support</Link>
+                    <Link to=''>Home</Link>
+                    <a href='#about'>About</a>
+                    <a href='#features'>Features <ChevronDown size={20} /></a>
+                    <a href='#support'>Support</a>
                     <Link to='https://github.com/' target='_blank' >GitHub <Launch size={20} /></Link>
                 </nav>
             </section>

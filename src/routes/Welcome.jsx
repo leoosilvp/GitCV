@@ -32,7 +32,7 @@ const Welcome = () => {
                     </div>
                 </section>
 
-                <section className='welcome-features'>
+                <section id='features' className='welcome-features'>
                     <div>
                         <h1>More than a resume. It's your<br />developer identity.</h1>
                         <p>Your career doesn't live inside a <span>PDF</span>. It lives in what you <span>build</span>, the problems you <span>solve</span>, and the technologies you <span>master</span>. GitCV brings it all together into a <span>dynamic professional identity</span> powered by your GitHub, transforming your activity into a profile that <span>tells your story</span>, showcases your <span>impact</span>, and evolves with you.</p>
