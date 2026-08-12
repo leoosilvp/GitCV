@@ -16,51 +16,57 @@
     top: 0;
     left: 0;
     display: flex;
-    align-items: center;
+    justify-content: center;
     width: 100vw;
-    height: fit-content;
-    justify-content: space-between;
     background: #080808;
     border-bottom: 1.5px solid var(--hover-2);
-    color: #101010;
     z-index: 10;
 }
 
-.welcome-header section {
+.welcome-header-content {
+    display: flex;
+    width: 100%;
+    max-width: 1280px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcome-header-content section {
     display: flex;
     align-items: center;
 }
 
-.welcome-header section a {
+.welcome-header-content section a {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
 }
 
-.welcome-header section a:hover {
+.welcome-header-content section a:hover {
     background: #0e0e0e;
 }
 
-.welcome-header section img {
+.welcome-header-content section img {
     margin: 0 30px;
     display: flex;
     height: 20px;
+    opacity: 0.9;
 }
 
-.welcome-header section div {
+.welcome-header-content section div {
     display: flex;
     width: 1.5px;
     height: 30px;
     background: var(--hover-2);
 }
 
-.welcome-header section nav {
+.welcome-header-content section nav {
     margin-left: 10px;
     display: flex;
 }
 
-.welcome-header nav a {
+.welcome-header-content nav a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,11 +78,11 @@
     gap: 10px;
 }
 
-.welcome-header div {
+.welcome-header-content div {
     display: flex;
 }
 
-.welcome-header div a {
+.welcome-header-content div a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,7 +93,7 @@
     transition: var(--transition);
 }
 
-.welcome-header div a:hover {
+.welcome-header-content div a:hover {
     background: #0e0e0e;
 }
 
@@ -285,9 +291,76 @@
 
 
 /* welcome contributionPanel */
-
 .welcome-contributionPanel {
     display: flex;
     flex-direction: column;
     padding: 50px 0;
+}
+
+
+
+
+
+
+
+/* welcome footer */
+.welcome-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 300px;
+    background: #080808;
+}
+
+.welcome-footer-content {
+    display: flex;
+    width: 100%;
+    padding: 50px 40px;
+    max-width: 1300px;
+}
+
+.welcome-footer-left img {
+    display: flex;
+    width: 160px;
+}
+
+.welcome-footer-left p {
+    margin-top: 5px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    white-space: nowrap;
+    color: var(--gray-color-3);
+}
+
+.welcome-footer-right {
+    margin-left: 50px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.welcome-footer-right nav h1 {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.welcome-footer-right nav ul {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.welcome-footer-right nav ul a {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--gray-color-2);
+    transition: var(--transition);
+}
+
+.welcome-footer-right nav ul a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: var(--gray-color-1);
 }

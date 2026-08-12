@@ -4,6 +4,7 @@ import Header from '../components/welcome/Header'
 import { Link } from 'react-router-dom'
 import ContributionPanel from '../components/ContributionPanel'
 import { useGithubContributions } from '../hooks/useGithubContributions'
+import Footer from '../components/welcome/Footer'
 
 const Welcome = () => {
 
@@ -84,6 +85,7 @@ const Welcome = () => {
                 </section>
 
             </section>
+            <Footer />
         </main>
     )
 }
