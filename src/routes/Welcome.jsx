@@ -1,5 +1,5 @@
 import '../css/welcome.css'
-import { ArrowRight, Certificate, ChevronDown, HeatMap_03, IbmKnowledgeCatalogPremium, Launch } from '@carbon/icons-react'
+import { ArrowRight, Certificate, ChevronDown, HeatMap_03, IbmKnowledgeCatalogPremium, Launch, LogoGithub } from '@carbon/icons-react'
 import Header from '../components/welcome/Header'
 import { Link } from 'react-router-dom'
 import ContributionPanel from '../components/ContributionPanel'
@@ -8,7 +8,7 @@ import Footer from '../components/welcome/Footer'
 
 const Welcome = () => {
 
-    const { contributions } = useGithubContributions('leoosilvp')
+    const { contributions } = useGithubContributions('torvalds')
 
     const totalContributions = contributions?.reduce(
         (sum, entry) => sum + (entry.count ?? 0),
@@ -114,6 +114,20 @@ const Welcome = () => {
                             <p>Access structured professional information.</p>
                         </article>
                     </section>
+                </section>
+
+                <section className='welcome-cta'>
+                    <article className='welcome-cta-wrapper'>
+                        <h1>Build your developer identity.</h1>
+                        <p>Your code already tells a story. GitCV helps you present it.</p>
+                        <div>
+                            <section>
+                                <Link className='active' to='/login'>Log in</Link>
+                                <Link to='/login'>Create an account</Link>
+                            </section>
+                            <LogoGithub size={30} />
+                        </div>
+                    </article>
                 </section>
 
             </section>

@@ -351,7 +351,7 @@
     width: 100%;
     padding: 15px;
     gap: 15px;
-    border: 1px solid var(--hover-2);
+    border: 1px solid #202020;
     transition: var(--transition);
     cursor: default;
 }
@@ -364,12 +364,70 @@
     font-size: 1.3rem;
 }
 
-
 .welcome-recruiters-card p {
     width: 100%;
     font-size: 0.85rem;
 }
 
+
+
+/* welcome cta */
+.welcome-cta {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0 120px;
+}
+
+.welcome-cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 200px;
+    padding: 20px;
+    border: 1px solid var(--gray-color-2);
+}
+
+.welcome-cta-wrapper h1 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.welcome-cta-wrapper p {
+    margin-top: 3px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--gray-color-2);
+}
+
+.welcome-cta-wrapper div {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcome-cta-wrapper div section {
+    display: flex;
+    gap: 15px;
+}
+
+.welcome-cta-wrapper div a {
+    display: flex;
+    padding: 7px 14px;
+    border: 1px solid var(--gray-color-1);
+    font-size: 0.85rem;
+    color: var(--gray-color-1);
+    transition: var(--transition);
+}
+
+.welcome-cta-wrapper div a.active {
+    background: var(--gray-color-1);
+    color: #000;
+}
+
+.welcome-cta-wrapper div a.active:hover {
+    background: #c3c3c3;
+}
 
 
 /* welcome footer */
