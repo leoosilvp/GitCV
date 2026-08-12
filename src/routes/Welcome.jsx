@@ -34,6 +34,10 @@ const Welcome = () => {
                 </section>
 
                 <section className='welcome-contributionPanel'>
+                    <h3>
+                        “Don't worry about perfection. Make it work first.”
+                        <cite> — Linus Torvalds</cite>
+                    </h3>
                     <article className='download-contribution-card'>
                         <header className="download-contribution-card-header">
                             <div>
