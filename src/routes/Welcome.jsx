@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ContributionPanel from '../components/ContributionPanel'
 import { useGithubContributions } from '../hooks/useGithubContributions'
 import Footer from '../components/welcome/Footer'
+import interfaceHome from '../assets/img/interface-home.png'
 
 const Welcome = () => {
 
@@ -114,6 +115,14 @@ const Welcome = () => {
                             <p>Access structured professional information.</p>
                         </article>
                     </section>
+                </section>
+
+                <section className='welcome-interface'>
+                    <header>
+                        <h1>A minimalist interface,<br /> built for clarity.</h1>
+                        <p>Inspired by <span>IBM Carbon</span>, GitCV combines <span>minimalism, clarity, and consistency</span> to create a focused experience. Every detail is designed to <span>reduce friction</span> and make your developer profile simple to explore, understand, and share.</p>
+                    </header>
+                    <img src={interfaceHome} />
                 </section>
 
                 <section className='welcome-cta'>

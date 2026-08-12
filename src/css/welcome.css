@@ -370,12 +370,51 @@
 }
 
 
+/* welcome interface */
+.welcome-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 50px 40px;
+}
+
+.welcome-interface header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome-interface h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+.welcome-interface p {
+    width: 50%;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.4;
+    color: #c3c3c3;
+}
+
+.welcome-interface p span {
+    color: #57bf4f;
+}
+
+.welcome-interface img {
+    margin-top: 20px;
+    display: flex;
+    width: 800px;
+}
+
+
 
 /* welcome cta */
 .welcome-cta {
     display: flex;
     justify-content: center;
-    padding: 50px 0 120px;
+    padding: 100px 0 150px;
 }
 
 .welcome-cta-wrapper {
