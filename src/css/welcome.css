@@ -189,6 +189,18 @@
 
 
 
+/* welcome contributionPanel */
+.welcome-contributionPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding: 20px 0 70px;
+    background: #080808;
+}
+
+
+
 /* welcome features */
 .welcome-features {
     width: 100vw;
@@ -239,7 +251,7 @@
     justify-content: space-between;
     width: 400px;
     height: 220px;
-    border: 1px solid #c3c3c3;
+    border: 1px solid #858585;
     padding: 20px;
     transition: var(--transition);
 }
@@ -290,16 +302,68 @@
 }
 
 
-/* welcome contributionPanel */
-.welcome-contributionPanel {
+/* welcome recruiters */
+.welcome-recruiters {
     display: flex;
     flex-direction: column;
     padding: 50px 0;
 }
 
+.welcome-recruiters div {
+    display: flex;
+    max-width: 1300px;
+    padding: 0 40px;
+}
+
+.welcome-recruiters h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+.welcome-recruiters p {
+    width: 50%;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.4;
+    color: #c3c3c3;
+}
+
+.welcome-recruiters p span {
+    color: #57bf4f;
+}
+
+.welcome-recruiters-grid {
+    padding: 30px 40px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.welcome-recruiters-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+    gap: 15px;
+    border: 1px solid var(--hover-2);
+    transition: var(--transition);
+    cursor: default;
+}
+
+.welcome-recruiters-card:hover {
+    border-color: var(--gray-color-1);
+}
+
+.welcome-recruiters-card h1 {
+    font-size: 1.3rem;
+}
 
 
-
+.welcome-recruiters-card p {
+    width: 100%;
+    font-size: 0.85rem;
+}
 
 
 

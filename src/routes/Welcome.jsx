@@ -33,6 +33,19 @@ const Welcome = () => {
                     </div>
                 </section>
 
+                <section className='welcome-contributionPanel'>
+                    <article className='download-contribution-card'>
+                        <header className="download-contribution-card-header">
+                            <div>
+                                <h1>@torvalds on GitHub</h1>
+                                <p>Total Contributions: {totalContributions}</p>
+                            </div>
+                            <h2>over the past year</h2>
+                        </header>
+                        <ContributionPanel username='torvalds' isWelcome />
+                    </article>
+                </section>
+
                 <section id='features' className='welcome-features'>
                     <div>
                         <h1>More than a resume. It's your<br />developer identity.</h1>
@@ -71,17 +84,32 @@ const Welcome = () => {
                     </section>
                 </section>
 
-                <section className='welcome-contributionPanel'>
-                    <article className='download-contribution-card'>
-                        <header className="download-contribution-card-header">
-                            <div>
-                                <h1>@leoosilvp on GitHub</h1>
-                                <p>Total Contributions: {totalContributions}</p>
-                            </div>
-                            <h2>over the past year</h2>
-                        </header>
-                        <ContributionPanel username='leoosilvp' isWelcome />
-                    </article>
+                <section className='welcome-recruiters'>
+                    <div>
+                        <h1>Built for developers. Useful for recruiters.</h1>
+                    </div>
+
+                    <section className='welcome-recruiters-grid'>
+                        <article className='welcome-recruiters-card'>
+                            <h1>Technical profile</h1>
+                            <p>Check out technologies, languages, and projects.</p>
+                        </article>
+
+                        <article className='welcome-recruiters-card'>
+                            <h1>Real activity</h1>
+                            <p>Understand the developer's consistency and evolution.</p>
+                        </article>
+
+                        <article className='welcome-recruiters-card'>
+                            <h1>Projects</h1>
+                            <p>Explore what was actually built.</p>
+                        </article>
+
+                        <article className='welcome-recruiters-card'>
+                            <h1>Résumé</h1>
+                            <p>Access structured professional information.</p>
+                        </article>
+                    </section>
                 </section>
 
             </section>
