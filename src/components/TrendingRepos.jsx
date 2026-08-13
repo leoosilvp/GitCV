@@ -1,9 +1,10 @@
+import '../css/trending-repos.css'
 
 const TrendingRepos = () => {
     return (
-        <div>
-
-        </div>
+        <section className="trendingRepos">
+            
+        </section>
     )
 }
 
