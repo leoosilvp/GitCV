@@ -84,10 +84,14 @@ const buildMonthSpans = (weeks) => {
     return spans
 }
 
-const dropEdgeMonths = (spans) => {
+const dropEdgeMonths = (spans, totalWeeks) => {
     if (spans.length === 0) return spans
 
-    const withoutTrailing = spans.slice(0, -1)
+    const last = spans[spans.length - 1]
+    const isTrailingFragment = last && last.span < 2 && last.startIndex + last.span >= totalWeeks
+
+    const withoutTrailing = isTrailingFragment ? spans.slice(0, -1) : spans
+
     const [first, ...rest] = withoutTrailing
 
     if (first && first.startIndex === 0 && first.span < 2) {
@@ -110,7 +114,7 @@ const ContributionPanel = ({ isDownload, isWelcome, username: usernameProp, them
     const { contributions, isLoading, error } = useGithubContributions(username)
 
     const weeks = useMemo(() => buildWeeksMatrix(contributions), [contributions])
-    const monthSpans = useMemo(() => dropEdgeMonths(buildMonthSpans(weeks)), [weeks])
+    const monthSpans = useMemo(() => dropEdgeMonths(buildMonthSpans(weeks), weeks.length), [weeks])
     const themeStyle = useMemo(() => buildContributionThemeStyle(theme), [theme])
 
     return (
