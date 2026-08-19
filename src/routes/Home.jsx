@@ -8,6 +8,7 @@ import GithubStats from '../components/home/GithubStats';
 import News from '../components/home/News';
 import iconMono from '../assets/svg/icon-mono.svg'
 import TopLanguages from '../components/resume/TopLanguages';
+import TrendingRepos from '../components/home/TrendingRepos';
 
 const Home = () => {
 
@@ -55,6 +56,10 @@ const Home = () => {
 
                 <div className='hr' />
 
+                <TrendingRepos />
+
+                <div className='hr' />
+                
                 <News />
 
                 <footer className='home-footer'>

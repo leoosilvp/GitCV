@@ -1,214 +1,104 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { fetchTrendingRepositories, TRENDING_SINCE, TrendingApiError } from '../services/trending.service'
 
-const TRENDING_API_BASE = "https://api.gitterapp.com/repositories";
-const DEFAULT_CACHE_TTL = 5 * 60 * 1000;
-const DEFAULT_RETRY_COUNT = 2;
-const DEFAULT_RETRY_DELAY = 500;
-
-const cacheStore = new Map();
-const inFlightRequests = new Map();
-
-function buildCacheKey(since, language) {
-  return `${since}:${language ? language.toLowerCase() : "all"}`;
+const INITIAL_STATE = {
+  repositories: [],
+  total: 0,
+  page: 0,
+  hasMore: false,
 }
 
-function getCachedEntry(key) {
-  return cacheStore.get(key) ?? null;
-}
+export function useGithubTrending({
+  since = TRENDING_SINCE.DAILY,
+  language,
+  perPage = 25,
+} = {}) {
+  const [data, setData] = useState(INITIAL_STATE)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [error, setError] = useState(null)
 
-function setCachedEntry(key, entry) {
-  cacheStore.set(key, entry);
-}
+  const abortControllerRef = useRef(null)
+  const isMountedRef = useRef(true)
 
-function invalidateCacheEntry(key) {
-  cacheStore.delete(key);
-}
+  const runFetch = useCallback(
+    async (page, { append }) => {
+      abortControllerRef.current?.abort()
+      const controller = new AbortController()
+      abortControllerRef.current = controller
 
-function normalizeRepository(repo) {
-  return {
-    name: repo?.name ?? "",
-    author: repo?.author ?? "",
-    url: repo?.url ?? "",
-    description: repo?.description ?? null,
-    language: repo?.language ?? null,
-    languageColor: repo?.languageColor ?? null,
-    stars: typeof repo?.stars === "number" ? repo.stars : 0,
-    forks: typeof repo?.forks === "number" ? repo.forks : 0,
-    currentPeriodStars:
-      typeof repo?.currentPeriodStars === "number" ? repo.currentPeriodStars : 0,
-    builtBy: Array.isArray(repo?.builtBy) ? repo.builtBy : [],
-  };
-}
-
-async function requestTrendingRepositories(since, language, signal) {
-  const params = new URLSearchParams({ since });
-  if (language) params.set("language", language);
-
-  const response = await fetch(`${TRENDING_API_BASE}?${params.toString()}`, {
-    signal,
-    headers: { Accept: "application/json" },
-  });
-
-  if (!response.ok) {
-    const error = new Error(`Falha ao buscar trending repositories (HTTP ${response.status})`);
-    error.status = response.status;
-    throw error;
-  }
-
-  const payload = await response.json();
-  if (!Array.isArray(payload)) {
-    throw new Error("Resposta inesperada da API de trending repositories");
-  }
-
-  return payload.map(normalizeRepository);
-}
-
-async function requestWithRetry(since, language, signal, retriesLeft, attempt = 0) {
-  try {
-    return await requestTrendingRepositories(since, language, signal);
-  } catch (err) {
-    if (signal.aborted || retriesLeft <= 0) throw err;
-    const delay = DEFAULT_RETRY_DELAY * 2 ** attempt;
-    await new Promise((resolve) => setTimeout(resolve, delay));
-    return requestWithRetry(since, language, signal, retriesLeft - 1, attempt + 1);
-  }
-}
-
-function getOrCreateInFlightRequest(key, since, language, retryCount) {
-  const existing = inFlightRequests.get(key);
-  if (existing) return existing;
-
-  const controller = new AbortController();
-  const promise = requestWithRetry(since, language, controller.signal, retryCount)
-    .then((data) => {
-      inFlightRequests.delete(key);
-      return data;
-    })
-    .catch((err) => {
-      inFlightRequests.delete(key);
-      throw err;
-    });
-
-  inFlightRequests.set(key, promise);
-  return promise;
-}
-
-export function useGitHubTrending(options = {}) {
-  const {
-    since = "daily",
-    language,
-    cacheTTL = DEFAULT_CACHE_TTL,
-    enabled = true,
-    retryCount = DEFAULT_RETRY_COUNT,
-  } = options;
-
-  const cacheKey = buildCacheKey(since, language);
-
-  const [repositories, setRepositories] = useState(() => getCachedEntry(cacheKey)?.data ?? []);
-  const [isLoading, setIsLoading] = useState(() => !getCachedEntry(cacheKey));
-  const [isValidating, setIsValidating] = useState(false);
-  const [error, setError] = useState(null);
-  const [isStale, setIsStale] = useState(() => {
-    const cached = getCachedEntry(cacheKey);
-    return cached ? Date.now() - cached.timestamp >= cacheTTL : false;
-  });
-
-  const isMountedRef = useRef(true);
-  const requestIdRef = useRef(0);
-
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  const load = useCallback(
-    async (opts = {}) => {
-      const { force = false, silent = false } = opts;
-      const currentRequestId = ++requestIdRef.current;
-
-      const cached = getCachedEntry(cacheKey);
-      const cacheIsFresh = cached ? Date.now() - cached.timestamp < cacheTTL : false;
-
-      await Promise.resolve();
-      if (!isMountedRef.current) return;
-
-      if (cached) {
-        setRepositories(cached.data);
-        setIsStale(!cacheIsFresh);
-        setIsLoading(false);
-      }
-
-      if (cacheIsFresh && !force) return;
-
-      if (!silent) setIsLoading(cached === null);
-      setIsValidating(true);
-      setError(null);
+      if (append) setIsLoadingMore(true)
+      else setIsLoading(true)
+      setError(null)
 
       try {
-        const data = await getOrCreateInFlightRequest(cacheKey, since, language, retryCount);
-        if (!isMountedRef.current || currentRequestId !== requestIdRef.current) return;
+        const result = await fetchTrendingRepositories({
+          since,
+          language,
+          page,
+          perPage,
+          signal: controller.signal,
+        })
 
-        setCachedEntry(cacheKey, { data, timestamp: Date.now() });
-        setRepositories(data);
-        setIsStale(false);
-        setError(null);
+        if (!isMountedRef.current) return
+
+        setData((prev) => ({
+          repositories: append ? [...prev.repositories, ...result.repositories] : result.repositories,
+          total: result.total,
+          page: result.page,
+          hasMore: result.page * result.perPage < result.total,
+        }))
       } catch (err) {
-        if (!isMountedRef.current || currentRequestId !== requestIdRef.current) return;
-        if (err?.name === "AbortError") return;
-        setError(err instanceof Error ? err : new Error("Erro desconhecido ao buscar trending repositories"));
+        if (err.name === 'AbortError') return
+        if (!isMountedRef.current) return
+
+        setError(
+          err instanceof TrendingApiError
+            ? err
+            : new TrendingApiError('Erro inesperado ao buscar repositórios em alta.', { cause: err })
+        )
       } finally {
-        if (isMountedRef.current && currentRequestId === requestIdRef.current) {
-          setIsLoading(false);
-          setIsValidating(false);
-        }
+        if (!isMountedRef.current)
+          if (append) setIsLoadingMore(false)
+          else setIsLoading(false)
       }
     },
-    [cacheKey, cacheTTL, since, language, retryCount]
-  );
+    [since, language, perPage]
+  )
 
   useEffect(() => {
-    if (!enabled) return undefined;
-    let cancelled = false;
+    isMountedRef.current = true
 
+    const controller = new AbortController()
+    abortControllerRef.current = controller
     queueMicrotask(() => {
-      if (!cancelled) load();
-    });
+      if (controller.signal.aborted) return
+      runFetch(1, { append: false })
+    })
 
     return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cacheKey, enabled]);
+      isMountedRef.current = false
+      controller.abort()
+    }
+  }, [runFetch])
 
-  const refetch = useCallback(async () => {
-    invalidateCacheEntry(cacheKey);
-    await load({ force: true });
-  }, [cacheKey, load]);
+  const loadMore = useCallback(() => {
+    if (isLoading || isLoadingMore || !data.hasMore) return
+    runFetch(data.page + 1, { append: true })
+  }, [runFetch, isLoading, isLoadingMore, data.hasMore, data.page])
 
-  const mutate = useCallback(
-    (updater) => {
-      const cached = getCachedEntry(cacheKey);
-      const nextData = typeof updater === "function" ? updater(cached?.data ?? []) : updater;
-      setCachedEntry(cacheKey, { data: nextData, timestamp: Date.now() });
-      setRepositories(nextData);
-    },
-    [cacheKey]
-  );
-
-  const clearCache = useCallback(() => {
-    invalidateCacheEntry(cacheKey);
-  }, [cacheKey]);
+  const refresh = useCallback(() => {
+    runFetch(1, { append: false })
+  }, [runFetch])
 
   return {
-    repositories,
+    repositories: data.repositories,
+    total: data.total,
+    hasMore: data.hasMore,
     isLoading,
-    isValidating,
+    isLoadingMore,
     error,
-    isStale,
-    refetch,
-    mutate,
-    clearCache,
-  };
+    loadMore,
+    refresh,
+  }
 }

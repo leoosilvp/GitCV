@@ -124,6 +124,136 @@
 }
 
 
+/* home trending repos */
+.home-trendingRepos {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    max-width: 800px;
+}
+
+.home-trendingRepos-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-trendingRepos-header h1 {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.home-trendingRepos-header a {
+    color: var(--gray-color-2);
+    transition: var(--transition);
+}
+
+.home-trendingRepos-header a:hover {
+    color: var(--gray-color-1);
+}
+
+.home-trendingRepos-grid {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    background: #080808;
+    border: 1px solid var(--hover-2);
+}
+
+.home-trendingRepos-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    gap: 15px;
+    cursor: default;
+}
+
+.home-trendingRepos-card .btn-right {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    height: fit-content;
+    gap: 7px;
+    padding: 5px 10px;
+    border: 1px solid #272727;
+    background: #171717;
+    font-size: 0.8rem;
+    color: var(--gray-color-2);
+    transition: var(--transition);
+}
+
+.home-trendingRepos-card .btn-right:hover {
+    background: var(--gray-color-1);
+    color: #000;
+}
+
+.home-trendingRepos-card div header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-trendingRepos-card div header img {
+    display: flex;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
+.home-trendingRepos-card div header a {
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4493f8;
+    cursor: pointer;
+}
+
+.home-trendingRepos-card div header a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.home-trendingRepos-card div p {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: 0.05px;
+    color: #c3c3c3;
+}
+
+.home-trendingRepos-card footer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-trendingRepos-card footer section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--gray-color-2);
+}
+
+.home-trendingRepos-card footer section div {
+    display: flex;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: red;
+}
+
+.home-trendingRepos-card footer section span {
+    font-size: 0.8rem;
+}
+
+
+
 /* News */
 .home-news-main {
     display: flex;
