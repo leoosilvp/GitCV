@@ -1,41 +1,79 @@
 import { Fork, Launch, License, LogoGithub, Star } from '@carbon/icons-react'
 import { Link } from 'react-router-dom'
+import { useGithubTrending } from '../../hooks/useGithubTrending'
+import { languageColors } from '../../utils/languageColors'
+
+const FALLBACK_LANGUAGE_COLOR = '#8a8a8a'
+
+function formatCount(value) {
+    if (typeof value !== 'number') return '0'
+    return new Intl.NumberFormat('pt-BR', { notation: 'compact', maximumFractionDigits: 1 }).format(value)
+}
 
 const TrendingRepos = () => {
+    const { repositories, isLoading, error, refresh } = useGithubTrending()
 
     return (
         <section className="home-trendingRepos">
             <header className='home-trendingRepos-header'>
-                <h1>Trending Repository</h1>
-                <Link to='https://github.com/leoosilvp/GitCV' target='_blank'><LogoGithub size={20} /></Link>
+                <div>
+                    <h1>Trending Repository</h1>
+                    <p>Projects gaining traction.</p>
+                </div>
+                <Link to='https://github.com' target='_blank'><LogoGithub size={20} /></Link>
             </header>
 
-            <section className='home-trendingRepos-grid'>
-                <article className='home-trendingRepos-card'>
-                    <div>
-                        <header>
-                            <img src="https://avatars.githubusercontent.com/u/307182956?s=40&v=4" />
-                            <Link to='https://github.com/n0shake/Public-APIs' target='_blank'>n0shake/Public-APIs</Link>
-                        </header>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem perferendis consequuntur praesentium iusto sint. Voluptatum quo iste exercitationem beatae facilis commodi temporibus porro. Saepe dolorem nam libero, dolor odit dignissimos!</p>
-                        <footer>
-                            <section>
-                                <div /><span>Python</span>
-                            </section>
-                            <section>
-                                <Star size={16} /><span>2.876</span>
-                            </section>
-                            <section>
-                                <Fork size={16} /><span>1.890</span>
-                            </section>
-                            <section>
-                                <License size={16} /><span>MIT</span>
-                            </section>
-                        </footer>
-                    </div>
-                    <Link className='btn-right'>Visit Repo <Launch size={16} /></Link>
-                </article>
-            </section>
+            {error && (
+                <div className='home-trendingRepos-error'>
+                    <p>Unable to load trending repositories.</p>
+                    <button type='button' onClick={refresh}>Try again</button>
+                </div>
+            )}
+
+            {isLoading && !error && (
+                <div className='home-trendingRepos-loading'>
+                    <p>Loading trending repositories...</p>
+                </div>
+            )}
+
+            {!isLoading && !error && (
+                <section className='home-trendingRepos-grid'>
+                    {repositories.map((repo, index) => (
+                        <>
+                            <article className='home-trendingRepos-card' key={repo.id}>
+                                <div>
+                                    <header>
+                                        <img src={repo.owner.avatarUrl} alt={repo.owner.login} />
+                                        <Link to={repo.url} target='_blank'>{repo.fullName}</Link>
+                                    </header>
+                                    <p>{repo.description}</p>
+                                    <footer>
+                                        {repo.language && (
+                                            <section>
+                                                <div style={{ backgroundColor: languageColors[repo.language] ?? FALLBACK_LANGUAGE_COLOR }} />
+                                                <span>{repo.language}</span>
+                                            </section>
+                                        )}
+                                        <section>
+                                            <Star size={16} /><span>{formatCount(repo.stars)}</span>
+                                        </section>
+                                        <section>
+                                            <Fork size={16} /><span>{formatCount(repo.forks)}</span>
+                                        </section>
+                                        {repo.license && (
+                                            <section>
+                                                <License size={16} /><span>{repo.license}</span>
+                                            </section>
+                                        )}
+                                    </footer>
+                                </div>
+                                <Link className='btn-right' to={repo.url} target='_blank'>Visit Repo <Launch size={16} /></Link>
+                            </article>
+                            {index < repositories.length - 1 && <hr key={`divider-${repo.id}`} />}
+                        </>
+                    ))}
+                </section>
+            )}
         </section>
     )
 }

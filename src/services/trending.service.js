@@ -16,13 +16,11 @@ export class TrendingApiError extends Error {
   }
 }
 
-function buildQueryString({ since, language, page, perPage }) {
+function buildQueryString({ since, language }) {
   const params = new URLSearchParams()
 
   if (since) params.set('since', since)
   if (language) params.set('language', language)
-  if (page) params.set('page', String(page))
-  if (perPage) params.set('perPage', String(perPage))
 
   const query = params.toString()
   return query ? `?${query}` : ''
@@ -40,8 +38,6 @@ async function parseErrorBody(response) {
 export async function fetchTrendingRepositories({
   since = TRENDING_SINCE.DAILY,
   language,
-  page = 1,
-  perPage = 25,
   signal,
 } = {}) {
   const controller = new AbortController()
@@ -53,7 +49,7 @@ export async function fetchTrendingRepositories({
     else signal.addEventListener('abort', onExternalAbort, { once: true })
   }
 
-  const url = `${TRENDING_ENDPOINT}${buildQueryString({ since, language, page, perPage })}`
+  const url = `${TRENDING_ENDPOINT}${buildQueryString({ since, language })}`
 
   try {
     const response = await fetch(url, {

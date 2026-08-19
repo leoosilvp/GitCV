@@ -135,13 +135,25 @@
 .home-trendingRepos-header {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: top;
     justify-content: space-between;
 }
 
-.home-trendingRepos-header h1 {
+.home-trendingRepos-header div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.home-trendingRepos-header div h1 {
     font-size: 1.3rem;
     font-weight: 400;
+}
+
+.home-trendingRepos-header div p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--gray-color-2);
 }
 
 .home-trendingRepos-header a {
@@ -154,11 +166,18 @@
 }
 
 .home-trendingRepos-grid {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     background: #080808;
     border: 1px solid var(--hover-2);
+}
+
+.home-trendingRepos-grid hr {
+    display: flex;
+    height: 1px;
+    border: none;
+    border-bottom: 1px solid var(--hover-2);
 }
 
 .home-trendingRepos-card {
