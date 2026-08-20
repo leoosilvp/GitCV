@@ -16,11 +16,16 @@ const Home = () => {
 
     const username = user?.username
 
+    const { contributions } = useGithubContributions(username)
+
     const FirstName = () => {
         return user?.name?.trim().split(/\s+/).filter(Boolean)[0] || ''
     }
 
-    const { totalCount } = useGithubContributions(username)
+    const totalContributions = contributions?.reduce(
+        (sum, entry) => sum + (entry.count ?? 0),
+        0
+    ) ?? 0
 
     function getTimeOfDay() {
         const hour = new Date().getHours();
@@ -42,7 +47,7 @@ const Home = () => {
             <div className="home-content">
                 <section className='home-welcome'>
                     <h1>Good {getTimeOfDay()}, {FirstName()}!</h1>
-                    <p>You made {totalCount.toLocaleString("en-US")} contributions over the past year.</p>
+                    <p>You made {totalContributions} contributions over the past year.</p>
                     <ContributionPanel isDownload />
                 </section>
 
@@ -59,7 +64,7 @@ const Home = () => {
                 <TrendingRepos />
 
                 <div className='hr' />
-                
+
                 <News />
 
                 <footer className='home-footer'>
