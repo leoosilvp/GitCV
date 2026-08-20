@@ -143,7 +143,7 @@ const SnapshotCard4 = () => {
                     }
                 </div>
             </header>
-            <ContributionPanel isDownload />
+            <ContributionPanel />
             <footer className='snapshot-card-horizontal-footer'>
                 <p>{formattedDate}</p>
             </footer>

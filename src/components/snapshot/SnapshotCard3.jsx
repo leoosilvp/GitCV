@@ -39,11 +39,16 @@ const fileName = 'GitHub - snapshot.png'
 const SnapshotCard3 = () => {
     const { user } = useUser()
 
-    const { contributions, totalCount } = useGithubContributions(user?.username)
+    const { contributions } = useGithubContributions(user?.username)
     const { currentStreak, longestStreak, pullRequestCount, totalStars, isLoading } = useGithubStats(
         user?.username,
         contributions
     )
+
+    const totalContributions = contributions?.reduce(
+        (sum, entry) => sum + (entry.count ?? 0),
+        0
+    ) ?? 0
 
     const [actionStatus, setActionStatus] = useState({})
     const cardRef = useRef(null)
@@ -142,7 +147,7 @@ const SnapshotCard3 = () => {
                         <HeatMap size={33} />
                         <div>
                             <p>Commits</p>
-                            <h1>{isLoading ? '—' : totalCount.toLocaleString('en-US')}</h1>
+                            <h1>{isLoading ? '—' : totalContributions}</h1>
                         </div>
                     </article>
 
