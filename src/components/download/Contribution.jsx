@@ -38,7 +38,12 @@ const ACTION_LABELS = {
 
 const Contribution = () => {
     const { user } = useUser()
-    const { totalCount } = useGithubContributions(user?.username)
+    const { contributions } = useGithubContributions(user?.username)
+
+    const totalContributions = contributions?.reduce(
+        (sum, entry) => sum + (entry.count ?? 0),
+        0
+    ) ?? 0
 
     const [selectedTheme, setSelectedTheme] = useState(DEFAULT_CONTRIBUTION_THEME)
     const [actionStatus, setActionStatus] = useState({})
@@ -151,7 +156,7 @@ const Contribution = () => {
                 <header className="download-contribution-card-header">
                     <div>
                         <h1>@{user?.username} on GitHub</h1>
-                        <p>Total Contributions: {totalCount}</p>
+                        <p>Total Contributions: {totalContributions}</p>
                     </div>
                     <h2>over the past year</h2>
                 </header>
