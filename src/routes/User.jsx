@@ -149,7 +149,7 @@ const UserProfile = ({ username }) => {
                     </div>
 
                     <section className='resume-contributionPanel'>
-                        <ContributionPanel isDownload username={username} />
+                        <ContributionPanel username={username} />
                     </section>
 
                     <div className='resume-divider'>

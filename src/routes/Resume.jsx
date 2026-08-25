@@ -106,7 +106,7 @@ const Resume = () => {
                     </div>
 
                     <section className='resume-contributionPanel'>
-                        <ContributionPanel isDownload />
+                        <ContributionPanel />
                     </section>
 
                     <div className='resume-divider'>
